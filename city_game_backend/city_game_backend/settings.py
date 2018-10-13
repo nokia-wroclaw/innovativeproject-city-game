@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+
+# This is our secret configuration file - if this line throws an exception, check if you have a secret.py file
+# Check `secret_template.py` for further explanation
 from city_game_backend import secret
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)

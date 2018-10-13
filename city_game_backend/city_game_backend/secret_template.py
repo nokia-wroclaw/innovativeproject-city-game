@@ -1,3 +1,5 @@
+# This is how you should configure the secret.py file inside the city_game_backend directory (same as this file)
+
 APP_SECRET = 'write some random letters here'
 
 DATABASES = {
@@ -10,3 +12,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+# Set this to false in production
+DEBUG = True
