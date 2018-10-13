@@ -1,4 +1,5 @@
 # This is how you should configure the secret.py file inside the city_game_backend directory (same as this file)
+# The secret.py file stores the secret configuration that cannot be shared inside VCS for security reasons
 
 APP_SECRET = 'write some random letters here'
 
