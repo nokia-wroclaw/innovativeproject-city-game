@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from city_game_backend import secret
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0_k4ergwd3vmalt=g(syv08!4&3=#s#1t&ypz0wn8f7x$wz3^w'
+SECRET_KEY = secret.APP_SECRET
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = secret.DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -75,12 +76,7 @@ WSGI_APPLICATION = 'city_game_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DATABASES = secret.DATABASES
 
 
 # Password validation
