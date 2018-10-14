@@ -35,13 +35,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MapChunksGenerator.apps.MapchunksgeneratorConfig',
+    'MapChunksGenerator',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +76,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'city_game_backend.wsgi.application'
 
+# Required by Django Channels
+ASGI_APPLICATION = 'city_game_backend.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -119,3 +122,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+        'MapChunksGenerator': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
+    },
+}

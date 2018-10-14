@@ -1,6 +1,8 @@
 import requests
 import xml.etree.ElementTree
+
 import logging
+logger = logging.getLogger(__name__)
 
 from .models import Chunk, RoadNode
 
@@ -32,7 +34,7 @@ def perform_overpass_query(query: str) -> str:
     """
     data = {'data': query}
 
-    logging.debug('Executing a following Overpass query: {}'.format(query))
+    logger.debug('Executing a following Overpass query: {}'.format(query))
 
     request = requests.post(OVERPASS_API_URL, data=data)
 
@@ -77,7 +79,7 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
                 node_next = node_next_list[0]
 
             except IndexError:
-                logging.warning('Could not found a road node with id: {}, skipping it'.format(ref))
+                logger.warning('Could not found a road node with id: {}, skipping it'.format(ref))
                 continue
 
             if node_previous is None:
@@ -95,6 +97,7 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
             road_node.save()
 
 
+# generator.batch_chunks_loading(51.09, 17.00, 3) is a cool place to start
 def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_size):
     """
     Generates map chunks starting from the given latitude and longitude,
@@ -116,10 +119,14 @@ def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_siz
     ^ the lower left corner is your starting point - (lower_lat, lower_long)
     """
 
-    for chunk_x_offset in range(square_size):
-        for chunk_y_offset in range(square_size):
+    for x_offset in range(square_size):
+        for y_offset in range(square_size):
 
-            logging.info(
+            # Converting the offsets to 'chunk units'
+            chunk_x_offset = x_offset * CHUNK_SIZE
+            chunk_y_offset = y_offset * CHUNK_SIZE
+
+            logger.info(
                 'Downloading data for chunk {}, {}'.format(
                     lower_longitude_start + chunk_y_offset,
                     lower_latitude_start + chunk_x_offset
@@ -134,8 +141,8 @@ def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_siz
             )
             data = perform_overpass_query(query)
 
-            logging.info(
-                'Saving chunk {}, {}'.format(
+            logger.debug(
+                '\tSaving chunk {}, {}'.format(
                     lower_longitude_start + chunk_y_offset,
                     lower_latitude_start + chunk_x_offset
                 )
@@ -143,12 +150,12 @@ def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_siz
 
             save_one_chunk(
                 data,
-                lower_longitude_start,
-                lower_latitude_start
+                lower_longitude_start + chunk_y_offset,
+                lower_latitude_start + chunk_x_offset
             )
 
-            logging.info(
-                'Data chunk {}, {} saved!'.format(
+            logger.debug(
+                '\tData chunk {}, {} saved!'.format(
                     lower_longitude_start + chunk_y_offset,
                     lower_latitude_start + chunk_x_offset
                 )
