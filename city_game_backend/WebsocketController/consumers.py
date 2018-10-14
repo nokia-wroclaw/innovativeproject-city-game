@@ -6,6 +6,7 @@ from django.core import serializers
 
 logger = logging.getLogger(__name__)
 
+
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
         logger.info('New websocket connection')
@@ -22,18 +23,16 @@ class ChatConsumer(WebsocketConsumer):
 
         if message_type == 'get_map':
 
-            correct_chunk: Chunk
             correct_chunk = Chunk.objects.filter(
                 latitude_lower_bound=float(text_data_json['lat'])
             ).filter(
                 longitude_lower_bound=float(text_data_json['lon'])
             ).first()
-
-            print(correct_chunk.id)
+            correct_chunk: Chunk
 
             road_nodes = correct_chunk.roadnode_set.all()
             #print(road_nodes[0])
 
             self.send(text_data=json.dumps({
-                'message': serializers.serialize('json', road_nodes)
+                'get_map': serializers.serialize('json', road_nodes)
             }))
