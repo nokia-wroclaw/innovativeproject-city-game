@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 from .models import Chunk, RoadNode
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
-CHUNK_SIZE = 0.01
+CHUNK_SIZE = 0.05
 STANDARD_QUERY = '''
 way
   (
@@ -93,11 +93,13 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
                 longitude_end=node_next.get('lon')
             )
 
+            node_previous = node_next
+
             road_node.chunk = new_chunk
             road_node.save()
 
 
-# generator.batch_chunks_loading(51.09, 17.00, 3) is a cool place to start
+# generator.batch_chunks_loading(51.1, 17.09, 10) is a cool place to start
 def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_size):
     """
     Generates map chunks starting from the given latitude and longitude,
