@@ -4,6 +4,7 @@ import json
 
 SERVER_URL = "ws://localhost:8000/ws/"
 
+
 def load_chunk():
     w.delete('all')
     lon = float(lon_entry.get())
