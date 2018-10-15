@@ -1,7 +1,7 @@
 from channels.generic.websocket import WebsocketConsumer
 import json
 import logging
-from MapChunksGenerator.models import Chunk, RoadNode
+from game_map.models import Chunk, RoadNode
 from django.core import serializers
 
 logger = logging.getLogger(__name__)
