@@ -3,7 +3,8 @@ from websocket import create_connection
 import json
 
 SERVER_URL = "ws://localhost:8000/ws/"
-SCALE = 20000
+SCALE = 40000
+CHUNK_SIZE = 0.01
 
 
 def load_chunk():
@@ -29,11 +30,11 @@ def load_chunk():
     message = json.loads(message)
     for model in message:
         node = model['fields']
-        lat_start = node['latitude_start'] - lat
-        lat_end = node['latitude_end'] - lat
+        lat_start = node['latitude_start'] - lat + CHUNK_SIZE
+        lat_end = node['latitude_end'] - lat + CHUNK_SIZE
 
-        lon_start = node['longitude_start'] - lon
-        lon_end = node['longitude_end'] - lon
+        lon_start = node['longitude_start'] - lon + CHUNK_SIZE
+        lon_end = node['longitude_end'] - lon + CHUNK_SIZE
 
         lat_start *= SCALE
         lat_end *= SCALE
@@ -60,7 +61,7 @@ lat_entry.insert(0, "51.1")
 
 lon_entry = Entry(master)
 lon_entry.pack()
-lon_entry.insert(0, "17.04")
+lon_entry.insert(0, "17.09")
 
 
 confirm = Button(master, text='load', command=load_chunk)

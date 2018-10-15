@@ -24,9 +24,9 @@ class ChatConsumer(WebsocketConsumer):
         if message_type == 'get_map':
 
             correct_chunk = Chunk.objects.filter(
-                latitude_lower_bound=float(text_data_json['lat'])
+                latitude_lower_bound__gte=float(text_data_json['lat'])
             ).filter(
-                longitude_lower_bound=float(text_data_json['lon'])
+                longitude_lower_bound__gte=float(text_data_json['lon'])
             ).first()
             correct_chunk: Chunk
 

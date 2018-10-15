@@ -2,21 +2,21 @@ import requests
 import xml.etree.ElementTree
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 from .models import Chunk, RoadNode
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
-CHUNK_SIZE = 0.05
+CHUNK_SIZE = 0.01  # About 111x111 meters
 STANDARD_QUERY = '''
 way
   (
 {}, {},
 {}, {}
 )
-  [highway=residential]
-  //[surface=asphalt]
-  ;
+
+["highway"~"primary|secondary|tertiary|residential|living_street|service"];
 
 (._;>;);
 
@@ -123,7 +123,6 @@ def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_siz
 
     for x_offset in range(square_size):
         for y_offset in range(square_size):
-
             # Converting the offsets to 'chunk units'
             chunk_x_offset = x_offset * CHUNK_SIZE
             chunk_y_offset = y_offset * CHUNK_SIZE

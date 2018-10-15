@@ -13,6 +13,9 @@ class Chunk(models.Model):
     latitude_upper_bound = models.FloatField()
     longitude_upper_bound = models.FloatField()
 
+    def __str__(self):
+        return f"Chunk: {self.latitude_lower_bound}, {self.longitude_lower_bound}"
+
 
 class RoadNode(models.Model):
     """
