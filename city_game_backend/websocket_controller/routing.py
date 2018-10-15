@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import consumers
+from websocket_controller import consumers
 
 """
 JUST THE ROUTING FOR THE WEBSOCKETS

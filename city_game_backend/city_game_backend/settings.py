@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MapChunksGenerator',
+
+    'game_map'
 ]
 
 MIDDLEWARE = [
@@ -136,7 +137,7 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
         },
-        'MapChunksGenerator': {
+        'game_map': {
             'handlers': ['console'],
             'level': 'INFO',
         },
