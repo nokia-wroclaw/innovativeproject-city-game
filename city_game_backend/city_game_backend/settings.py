@@ -141,5 +141,9 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'INFO',
         },
+        'websocket_controller': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        }
     },
 }
