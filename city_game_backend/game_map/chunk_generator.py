@@ -1,7 +1,8 @@
-from .models import Chunk, RoadNode
+from .models import Chunk
 
 import requests
 import xml.etree.ElementTree
+import json
 
 import logging
 
@@ -59,7 +60,8 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
         longitude_upper_bound=lower_longitude + CHUNK_SIZE
     )
 
-    new_chunk.save()
+    # Will be used to store all the nodes of all roads, later saved to the Chunk as a JSON
+    road_nodes = []
 
     # Going through all the roads - collections of points inside the XML
     for road in root.findall('way'):
@@ -87,17 +89,18 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
                 node_previous = node_next
                 continue
 
-            road_node = RoadNode(
-                latitude_start=node_previous.get('lat'),
-                latitude_end=node_next.get('lat'),
-                longitude_start=node_previous.get('lon'),
-                longitude_end=node_next.get('lon')
-            )
+            road_nodes.append({
+                'lat_start': float(node_previous.get('lat')),
+                'lat_end': float(node_next.get('lat')),
+                'lon_start': float(node_previous.get('lon')),
+                'lon_end': float(node_next.get('lon')),
+
+            })
 
             node_previous = node_next
 
-            road_node.chunk = new_chunk
-            road_node.save()
+    new_chunk.road_nodes = json.dumps(road_nodes)
+    new_chunk.save()
 
 
 # chunk_generator.batch_chunks_loading(51.1, 17.09, 10) is a cool place to start

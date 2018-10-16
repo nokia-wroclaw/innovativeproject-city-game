@@ -1,10 +1,11 @@
 from channels.generic.websocket import WebsocketConsumer
 import json
 import logging
-from game_map.models import Chunk, RoadNode
-from django.core import serializers
+from game_map.models import Chunk
 
 logger = logging.getLogger(__name__)
+
+MAP_DATA_MESSAGE_TYPE = 'map_data'
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -23,16 +24,24 @@ class ChatConsumer(WebsocketConsumer):
 
         if message_type == 'get_map':
 
-            correct_chunk = Chunk.objects.filter(
+            correct_chunk: Chunk = Chunk.objects.filter(
                 latitude_lower_bound__gte=float(text_data_json['lat'])
             ).filter(
                 longitude_lower_bound__gte=float(text_data_json['lon'])
             ).first()
-            correct_chunk: Chunk
 
-            road_nodes = correct_chunk.roadnode_set.all()
-            #print(road_nodes[0])
+            print(correct_chunk.id)
 
-            self.send(text_data=json.dumps({
-                'get_map': serializers.serialize('json', road_nodes)
-            }))
+            # TODO: THIS LOOKS UGLY BUT WORKS AS INTENDED, CHECK FOR A CLEANER WAY
+            # Explanation: I only want road_nodes to keep the ROADS DATA, not the chunk_id
+            # or the message_type (see, below). Another thing - deserializing the JSON just to add two keys
+            # and then serialize it back is a waste of time. I hope that justifies the code below
+            self.send(text_data=
+                      '{"message_type": "' +
+                      MAP_DATA_MESSAGE_TYPE +
+                      '",  "chunk_id":' +
+                      str(correct_chunk.id) +
+                      ', "road_nodes":' +
+                      correct_chunk.road_nodes +
+                      '}'
+            )

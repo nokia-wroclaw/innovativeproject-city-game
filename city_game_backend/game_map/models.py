@@ -13,18 +13,8 @@ class Chunk(models.Model):
     latitude_upper_bound = models.FloatField()
     longitude_upper_bound = models.FloatField()
 
+    # All the roads inside a json
+    road_nodes = models.TextField()
+
     def __str__(self):
         return f"Chunk: {self.latitude_lower_bound}, {self.longitude_lower_bound}"
-
-
-class RoadNode(models.Model):
-    """
-    A Chunk owns many RoadNodes that store the position of roads inside a given chunk
-    """
-    chunk = models.ForeignKey(Chunk, on_delete=models.CASCADE)
-
-    latitude_start = models.FloatField()
-    latitude_end = models.FloatField()
-
-    longitude_start = models.FloatField()
-    longitude_end = models.FloatField()

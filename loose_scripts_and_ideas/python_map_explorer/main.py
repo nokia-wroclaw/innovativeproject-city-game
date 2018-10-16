@@ -23,18 +23,17 @@ def load_chunk():
     print("Sent")
     print("Receiving...")
     result = ws.recv()
-    #print("Received '%s'" % result)
+    print("Received '%s'" % result)
     ws.close()
     print('Done receiving')
-    message = json.loads(result)['get_map']
-    message = json.loads(message)
-    for model in message:
-        node = model['fields']
-        lat_start = node['latitude_start'] - lat + CHUNK_SIZE
-        lat_end = node['latitude_end'] - lat + CHUNK_SIZE
+    message = json.loads(result)
+    for node in message['road_nodes']:
+        print(node)
+        lat_start = node['lat_start'] - lat + CHUNK_SIZE
+        lat_end = node['lat_end'] - lat + CHUNK_SIZE
 
-        lon_start = node['longitude_start'] - lon + CHUNK_SIZE
-        lon_end = node['longitude_end'] - lon + CHUNK_SIZE
+        lon_start = node['lon_start'] - lon + CHUNK_SIZE
+        lon_end = node['lon_end'] - lon + CHUNK_SIZE
 
         lat_start *= SCALE
         lat_end *= SCALE
