@@ -20,14 +20,15 @@ def load_chunk():
 
     ws = create_connection(SERVER_URL)
     ws.send(json.dumps(data))
-    print("Sent")
-    print("Receiving...")
+    #print("Sent")
+    #print("Receiving...")
     result = ws.recv()
-    #print("Received '%s'" % result)
+    #print("Received") 
+    print(result)
     ws.close()
-    print('Done receiving')
-    message = json.loads(result)['get_map']
-    message = json.loads(message)
+    #print('Done receiving')
+    #message = json.loads(result)['get_map']
+    message = json.loads(result)
     for model in message:
         node = model['fields']
         lat_start = node['latitude_start'] - lat + CHUNK_SIZE
