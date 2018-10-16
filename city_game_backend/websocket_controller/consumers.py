@@ -43,5 +43,4 @@ class ChatConsumer(WebsocketConsumer):
                       str(correct_chunk.id) +
                       ', "road_nodes":' +
                       correct_chunk.road_nodes +
-                      '}'
-            )
+                      '}')
