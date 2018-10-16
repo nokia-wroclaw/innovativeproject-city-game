@@ -35,7 +35,6 @@ def load_chunk():
         lon_start = node['lon_start'] - lon + CHUNK_SIZE
         lon_end = node['lon_end'] - lon + CHUNK_SIZE
 
-
         lat_start *= SCALE
         lat_end *= SCALE
         lon_start *= SCALE
