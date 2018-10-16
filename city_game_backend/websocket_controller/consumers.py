@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 MAP_DATA_MESSAGE_TYPE = 'map_data'
 
 
-class ChatConsumer(WebsocketConsumer):
+class ClientCommunicationConsumer(WebsocketConsumer):
     def connect(self):
         logger.info('New websocket connection')
         self.accept()

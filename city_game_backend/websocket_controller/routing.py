@@ -8,5 +8,5 @@ That's how the Channels library works ;)
 """
 
 websocket_urlpatterns = [
-    url(r'^ws/$', consumers.ChatConsumer),
+    url(r'^ws/$', consumers.ClientCommunicationConsumer),
 ]
