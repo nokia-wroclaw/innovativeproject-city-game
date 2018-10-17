@@ -23,6 +23,7 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         super().__init__(*args, **kwargs)
         self.user = None  # Link to the user account
         self.player = None  # Link to the player data of this account
+        self.activePlayerData = None  # Storage for player's location
 
     def connect(self):
         logger.info('New websocket connection')

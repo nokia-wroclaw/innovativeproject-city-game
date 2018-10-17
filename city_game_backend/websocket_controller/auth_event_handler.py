@@ -66,7 +66,12 @@ def handle_auth_event(message: dict, websocket):
         # Saving the websocket connection
         websocket.user = user
         websocket.player = player
+        websocket.active_player_data = new_active_player
+
+        # Adding the websocket into the collection of connections
         ActiveConnectionsStorage.add(user.id, websocket)
+
+        # Sending the success message to the client
         websocket.send(
             json.dumps({'auth_event': 'success'})  # TODO: think about where to put those success/failure messages
         )
