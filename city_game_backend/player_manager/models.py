@@ -11,7 +11,7 @@ class Player(models.Model):
     every Player has one User account
     """
     nickname = models.CharField(max_length=20)
-    account = models.OneToOneField(
+    user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         null=False,
@@ -24,17 +24,22 @@ class ActivePlayer(models.Model):
     Each player that is currently logged in the game and his temporary data - position, chunk number
     """
 
-    account = models.OneToOneField(
+    player = models.OneToOneField(
         Player,
         null=False,
         blank=False,
         on_delete=models.CASCADE
     )
 
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.FloatField(
+        null=True
+    )
+    longitude = models.FloatField(
+        null=True
+    )
 
     on_which_chunk = models.ForeignKey(
         Chunk,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True
     )

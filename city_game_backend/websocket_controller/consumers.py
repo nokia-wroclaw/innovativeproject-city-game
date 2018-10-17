@@ -6,6 +6,7 @@ import json
 import logging
 from .location_event_handler import handle_location_event
 from .auth_event_handler import handle_auth_event
+from .disconnect_event_handler import handle_disconnect_event
 
 logger = logging.getLogger(__name__)
 
@@ -20,15 +21,16 @@ class ClientCommunicationConsumer(WebsocketConsumer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.user = None
+        self.user = None  # Link to the user account
+        self.player = None  # Link to the player data of this account
 
     def connect(self):
         logger.info('New websocket connection')
         self.accept()
 
     def disconnect(self, close_code):
+        handle_disconnect_event(self)
         logger.info('Websocket disconnected!')
-        pass
 
     def receive(self, text_data):
         logger.debug(text_data)
