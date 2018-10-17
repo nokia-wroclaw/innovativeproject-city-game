@@ -1,40 +1,42 @@
 from tkinter import *
-from websocket import create_connection
+import websocket
+try:
+    import thread
+except ImportError:
+    import _thread as thread
+
 import json
 
 SERVER_URL = "ws://localhost:8000/ws/"
 SCALE = 40000
 CHUNK_SIZE = 0.01
 
+AUTH_EVENT = 'auth_event'
+LOCATION_EVENT = 'location_event'
 
-def load_chunk():
+LOGIN_DATA = {
+    'type': AUTH_EVENT,
+    'login': 'baczek',
+    'pass': 'baczekbezraczek'
+}
+
+
+def on_message(ws, message):
+    #print(message)
+
     w.delete('all')
+
     lon = float(lon_entry.get())
     lat = float(lat_entry.get())
 
-    data = {
-        'type': 'get_map',
-        'lon': lon,
-        'lat': lat
-    }
-
-    ws = create_connection(SERVER_URL)
-    ws.send(json.dumps(data))
-    #print("Sent")
-    #print("Receiving...")
-    result = ws.recv()
-    print("Received '%s'" % result)
-    ws.close()
-    print('Done receiving')
-    message = json.loads(result)
+    message = json.loads(message)
     for node in message['road_nodes']:
-        print(node)
+
         lat_start = node['lat_start'] - lat + CHUNK_SIZE
         lat_end = node['lat_end'] - lat + CHUNK_SIZE
 
         lon_start = node['lon_start'] - lon + CHUNK_SIZE
         lon_end = node['lon_end'] - lon + CHUNK_SIZE
-
 
         lat_start *= SCALE
         lat_end *= SCALE
@@ -47,9 +49,43 @@ def load_chunk():
             fill='white'
         )
 
-        #print(lat_start, lat_end, lon_start, lon_end)
+
+def on_error(ws, error):
+    print(error)
 
 
+def on_close(ws):
+    print("### closed ###")
+
+
+def on_open(ws):
+    print('### connection established ###')
+    ws.send(json.dumps(LOGIN_DATA))
+
+
+
+def send_map_request():
+    lon = float(lon_entry.get())
+    lat = float(lat_entry.get())
+
+    data = {
+        'type': LOCATION_EVENT,
+        'lon': lon,
+        'lat': lat
+    }
+
+    ws.send(json.dumps(data))
+
+
+ws = websocket.WebSocketApp(
+    SERVER_URL,
+    on_message = on_message,
+    on_error = on_error,
+    on_close = on_close)
+
+ws.on_open = on_open
+
+thread.start_new_thread(ws.run_forever, ())
 
 
 master = Tk()
@@ -64,7 +100,7 @@ lon_entry.pack()
 lon_entry.insert(0, "17.09")
 
 
-confirm = Button(master, text='load', command=load_chunk)
+confirm = Button(master, text='load', command=send_map_request)
 confirm.pack()
 
 w = Canvas(master, width=1000, height=1000)
