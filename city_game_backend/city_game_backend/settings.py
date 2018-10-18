@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'game_map'
+    'game_map',
+    'player_manager',
 ]
 
 MIDDLEWARE = [
@@ -142,6 +143,10 @@ LOGGING = {
             'level': 'INFO',
         },
         'websocket_controller': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'player_manager': {
             'handlers': ['console'],
             'level': 'INFO',
         }
