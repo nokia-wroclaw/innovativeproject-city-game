@@ -144,7 +144,7 @@ LOGGING = {
         },
         'websocket_controller': {
             'handlers': ['console'],
-            'level': 'INFO',
+            'level': 'DEBUG',
         },
         'player_manager': {
             'handlers': ['console'],
