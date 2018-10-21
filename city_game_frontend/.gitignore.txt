@@ -1,0 +1,4 @@
+.vs/
+obj/
+mainPhone.apk
+ProjectSettings/
