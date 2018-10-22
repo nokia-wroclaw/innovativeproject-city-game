@@ -18,6 +18,18 @@ public class ServerSocket : MonoBehaviour {
         Debug.Log(i);
 
         initSocket();
+
+        /*using (var ws = new WebSocket("ws://127.0.0.1:8000/ws/"))
+        {
+            Debug.Log("loading");
+            ws.OnMessage += (sender, e) =>
+                Debug.Log("Laputa says: " + e.Data);
+
+            ws.Connect();
+            ws.OnMessage += (sender, e) => 
+                ws.Send("BALUS");
+            //Debug.ReadKey(true);
+        }*/
     }
 	
 	// Update is called once per frame
@@ -32,9 +44,23 @@ public class ServerSocket : MonoBehaviour {
 
     private void initSocket()
     {
-        socket = new WebSocket("ws://"+Const.SERVER_IP + ":" + Const.SERVER_PORT);
-        socket.Connect();
-
+        socket = new WebSocket("ws://"+Const.SERVER_URL);
         
+        //socket.Send("{'login':'baczek','pass': 'baczekbezraczek'}");
+        socket.OnOpen += (m, e) =>
+        {
+            socket.Send("{\"login\":\"baczek\",\"pass\": \"baczekbezraczek\", \"type\":\"auth_event\"}");
+
+            Debug.Log("Connected!!");
+        };
+
+        socket.OnMessage += (m, e) =>
+        {
+
+            Debug.Log(e.Data);
+
+        };
+
+        socket.Connect();
     }
 }

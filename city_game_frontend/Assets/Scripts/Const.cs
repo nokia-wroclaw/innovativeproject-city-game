@@ -7,7 +7,6 @@
  */
 public static class Const
 {
-    public static string SERVER_IP = "192.168.7.50"; //!< djungo server's ip
-    public static string SERVER_PORT = "2004"; //!< djungo server's port
+    public static string SERVER_URL = "127.0.0.1:8000/ws/"; //!< djungo server's ip
 }
 
