@@ -6,7 +6,9 @@ using WebSocketSharp;
 
 public class ServerSocket : MonoBehaviour {
 
-    
+    private WebSocket socket; //!< socket object
+
+    private bool loggedIn; //!< true if socket is logged into djungo
 
 	// Use this for initialization
 	void Start ()
@@ -15,15 +17,7 @@ public class ServerSocket : MonoBehaviour {
         Assets.DataManager.instance().setI(20);
         Debug.Log(i);
 
-        using (var ws = new WebSocket(Const.SERVER_IP+":"+Const.SERVER_PORT))
-        {
-            /*ws.OnMessage += (sender, e) =>
-                Console.WriteLine("Laputa says: " + e.Data);
-
-            ws.Connect();
-            ws.Send("BALUS");
-            Console.ReadKey(true);*/
-        }
+        initSocket();
     }
 	
 	// Update is called once per frame
@@ -31,8 +25,16 @@ public class ServerSocket : MonoBehaviour {
         
 	}
 
-    void loadChank()
+    private void loadChank()
     {
 
+    }
+
+    private void initSocket()
+    {
+        socket = new WebSocket("ws://"+Const.SERVER_IP + ":" + Const.SERVER_PORT);
+        socket.Connect();
+
+        
     }
 }
