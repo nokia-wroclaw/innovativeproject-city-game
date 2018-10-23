@@ -18,6 +18,15 @@ namespace Assets.Sockets
 
         public bool loggedIn { set; get; } //!< is player logged in server
 
+        /**
+         * check if there is some new data
+         */
+        public bool isData { get
+            {
+                return received.Count > 0;
+            }
+        }
+
         private bool busy = false; //!< true if socket is waiting for respons from server
 
         public WebSocket()
@@ -45,6 +54,7 @@ namespace Assets.Sockets
             {
                 Debug.Log("Socket " + actualURL + " received a data: " + e.Data);
                 busy = false; //socket is ready to send and receive next data
+                received.Add(e.Data); //add data to received list
             };
 
             //on open event
@@ -89,13 +99,8 @@ namespace Assets.Sockets
         }
 
         /**
-         * Check if there is some new data in received list
+         * Disconnect from the server
          */
-        public bool isData()
-        {
-            return received.Count > 0;
-        }
-
         public void disconnect()
         {
             socket.Close(); //close the connection with status 1005
@@ -128,6 +133,13 @@ namespace Assets.Sockets
             toSend.RemoveAt(0);
             busy = true; //socket has just send data. Waiting for response
             Debug.Log("Socket " + actualURL + " send data. last: " + toSend.Count);
+        }
+
+        public string getData()
+        {
+            string buf = received.ElementAt(0);
+            received.RemoveAt(0);
+            return buf;
         }
     }
 }

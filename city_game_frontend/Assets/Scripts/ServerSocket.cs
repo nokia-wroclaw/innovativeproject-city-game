@@ -38,12 +38,14 @@ public class ServerSocket : MonoBehaviour {
 	void Update () {
         socket.processOrders();
 
-        Debug.Log(timer.isTimeEx(1000));
-
         if (timer.isTimeEx(1000))
         {
             timer.update();
-            Debug.Log("TimeEx");
+        }
+
+        if (socket.isData)
+        {
+            Debug.Log("New data: "+ socket.getData());
         }
     }
 
