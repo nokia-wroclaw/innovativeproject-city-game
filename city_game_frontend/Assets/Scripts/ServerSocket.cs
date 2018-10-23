@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,9 +9,12 @@ public class ServerSocket : MonoBehaviour {
 
     private bool loggedIn; //!< true if socket is logged into djungo
 
+    private Assets.TimerSync timer = new Assets.TimerSync();
+
 	// Use this for initialization
 	void Start ()
     {
+
         int i = Assets.DataManager.instance().getI();
         Assets.DataManager.instance().setI(20);
         Debug.Log(i);
@@ -33,6 +37,14 @@ public class ServerSocket : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         socket.processOrders();
+
+        Debug.Log(timer.isTimeEx(1000));
+
+        if (timer.isTimeEx(1000))
+        {
+            timer.update();
+            Debug.Log("TimeEx");
+        }
     }
 
     private void loadChank()
@@ -46,6 +58,7 @@ public class ServerSocket : MonoBehaviour {
         socket = new Assets.Sockets.WebSocket();
         socket.connect(Const.SERVER_URL);
 
-        socket.send("{\"login\":\"baczek\",\"pass\": \"baczekbezraczek\", \"type\":\"auth_event\"}");
+        socket.sendLogReq("baczek", "baczekbezraczek");
+        socket.sendChunkReq(17.11, 51.18);
     }
 }

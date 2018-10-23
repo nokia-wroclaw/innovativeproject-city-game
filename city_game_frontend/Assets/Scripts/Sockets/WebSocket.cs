@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using System;
+
 
 namespace Assets.Sockets
 {
@@ -14,7 +16,9 @@ namespace Assets.Sockets
         private List<string> received; //!< received data 
         private List<string> toSend; //!< to send data 
 
-        public bool loggedIn { set; get; }
+        public bool loggedIn { set; get; } //!< is player logged in server
+
+        private bool busy = false; //!< true if socket is waiting for respons from server
 
         public WebSocket()
         {
@@ -40,7 +44,7 @@ namespace Assets.Sockets
             socket.OnMessage += (sender, e) =>
             {
                 Debug.Log("Socket " + actualURL + " received a data: " + e.Data);
-            
+                busy = false; //socket is ready to send and receive next data
             };
 
             //on open event
@@ -61,8 +65,27 @@ namespace Assets.Sockets
          * Send function add new frame to sending list
          */ 
         public void send(string data)
-        {
+        { 
+            Debug.Log("Socket " + actualURL + " received a send order: " + data);
             toSend.Add(data);
+        }
+
+        /**
+         * Specialized function to send Login request
+         */
+        public void sendLogReq(string user, string pass)
+        {
+            string req = "{\"login\":\"" + user + "\",\"pass\": \"" + pass + "\", \"type\":\"auth_event\"}";
+            send(req);
+        }
+
+        /**
+         * Specialized function to send chunk request
+         */
+        public void sendChunkReq(double longitute, double latitude)
+        {
+            string req = "{\"lat\":\"" + latitude + "\",\"lon\": \"" + longitute+ "\", \"type\":\"location_event\"}";
+            send(req);
         }
 
         /**
@@ -93,14 +116,17 @@ namespace Assets.Sockets
          */
         public void processOrders()
         {
-            if (toSend.Count <= 0 ||
-                isConnected() == false) return;
-
+            if (toSend.Count <= 0 || //no data to send
+                isConnected() == false || //isn't connected
+                busy == true) //waiting for response
+                return;
+            
             //send data
             socket.Send(toSend.ElementAt(0));
 
             //remove it from the list
             toSend.RemoveAt(0);
+            busy = true; //socket has just send data. Waiting for response
             Debug.Log("Socket " + actualURL + " send data. last: " + toSend.Count);
         }
     }
