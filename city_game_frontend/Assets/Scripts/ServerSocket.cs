@@ -45,6 +45,7 @@ public class ServerSocket : MonoBehaviour {
 
         if (socket.isData)
         {
+            //socket.getData() returns json from djungo
             Debug.Log("New data: "+ socket.getData());
         }
     }
