@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using WebSocketSharp;
-
 public class ServerSocket : MonoBehaviour {
 
-    private WebSocket socket; //!< socket object
+    private Assets.Sockets.WebSocket socket; //!< socket object
 
     private bool loggedIn; //!< true if socket is logged into djungo
 
@@ -34,8 +32,8 @@ public class ServerSocket : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-	}
+        socket.processOrders();
+    }
 
     private void loadChank()
     {
@@ -44,23 +42,10 @@ public class ServerSocket : MonoBehaviour {
 
     private void initSocket()
     {
-        socket = new WebSocket("ws://"+Const.SERVER_URL);
-        
-        //socket.Send("{'login':'baczek','pass': 'baczekbezraczek'}");
-        socket.OnOpen += (m, e) =>
-        {
-            socket.Send("{\"login\":\"baczek\",\"pass\": \"baczekbezraczek\", \"type\":\"auth_event\"}");
+        Debug.Log("Trying connect");
+        socket = new Assets.Sockets.WebSocket();
+        socket.connect(Const.SERVER_URL);
 
-            Debug.Log("Connected!!");
-        };
-
-        socket.OnMessage += (m, e) =>
-        {
-
-            Debug.Log(e.Data);
-
-        };
-
-        socket.Connect();
+        socket.send("{\"login\":\"baczek\",\"pass\": \"baczekbezraczek\", \"type\":\"auth_event\"}");
     }
 }
