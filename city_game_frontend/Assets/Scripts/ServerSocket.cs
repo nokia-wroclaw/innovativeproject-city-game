@@ -1,41 +1,53 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using WebSocketSharp;
-
 public class ServerSocket : MonoBehaviour {
 
-    private WebSocket socket; //!< socket object
+    private Assets.Sockets.WebSocket socket; //!< socket object
 
     private bool loggedIn; //!< true if socket is logged into djungo
+
+    private Assets.TimerSync timer = new Assets.TimerSync();
 
 	// Use this for initialization
 	void Start ()
     {
+
         int i = Assets.DataManager.instance().getI();
         Assets.DataManager.instance().setI(20);
         Debug.Log(i);
 
         initSocket();
 
-        /*using (var ws = new WebSocket("ws://127.0.0.1:8000/ws/"))
-        {
-            Debug.Log("loading");
-            ws.OnMessage += (sender, e) =>
-                Debug.Log("Laputa says: " + e.Data);
+        /*Assets.Messages.Message m = JsonUtility.FromJson
+            <Assets.Messages.Message>("{\"message_type\": \"auth\", \"message\":\"ala ma kota\"}");
 
-            ws.Connect();
-            ws.OnMessage += (sender, e) => 
-                ws.Send("BALUS");
-            //Debug.ReadKey(true);
-        }*/
+        Debug.Log("parsed: " + m.message_type + ", " + m.message);
+
+
+        Assets.Messages.Message m2 = JsonUtility.FromJson
+            <Assets.Messages.Message>("{\"message_type\": \"auth\", \"message\":\"ala ma kota\"}");
+
+        Debug.Log("parsed: " + m.message_type + ", " + m.message);*/
     }
 	
 	// Update is called once per frame
 	void Update () {
-        
-	}
+        socket.processOrders();
+
+        if (timer.isTimeEx(1000))
+        {
+            timer.update();
+        }
+
+        if (socket.isData)
+        {
+            //socket.getData() returns json from djungo
+            Debug.Log("New data: "+ socket.getData());
+        }
+    }
 
     private void loadChank()
     {
@@ -44,23 +56,11 @@ public class ServerSocket : MonoBehaviour {
 
     private void initSocket()
     {
-        socket = new WebSocket("ws://"+Const.SERVER_URL);
-        
-        //socket.Send("{'login':'baczek','pass': 'baczekbezraczek'}");
-        socket.OnOpen += (m, e) =>
-        {
-            socket.Send("{\"login\":\"baczek\",\"pass\": \"baczekbezraczek\", \"type\":\"auth_event\"}");
+        Debug.Log("Trying connect");
+        socket = new Assets.Sockets.WebSocket();
+        socket.connect(Const.SERVER_URL);
 
-            Debug.Log("Connected!!");
-        };
-
-        socket.OnMessage += (m, e) =>
-        {
-
-            Debug.Log(e.Data);
-
-        };
-
-        socket.Connect();
+        socket.sendLogReq("baczek", "baczekbezraczek");
+        socket.sendChunkReq(17.11, 51.18);
     }
 }
