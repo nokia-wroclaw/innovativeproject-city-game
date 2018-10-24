@@ -7,5 +7,6 @@ namespace Assets.Scripts.Sockets.Messages
 {
     class AuthMessage
     {
+
     }
 }

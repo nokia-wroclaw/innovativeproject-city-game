@@ -19,9 +19,9 @@ public class ServerSocket : MonoBehaviour {
         Assets.DataManager.instance().setI(20);
         Debug.Log(i);
 
-        //initSocket();
+        initSocket();
 
-        Assets.Messages.Message m = JsonUtility.FromJson
+        /*Assets.Messages.Message m = JsonUtility.FromJson
             <Assets.Messages.Message>("{\"message_type\": \"auth\", \"message\":\"ala ma kota\"}");
 
         Debug.Log("parsed: " + m.message_type + ", " + m.message);
@@ -30,12 +30,12 @@ public class ServerSocket : MonoBehaviour {
         Assets.Messages.Message m2 = JsonUtility.FromJson
             <Assets.Messages.Message>("{\"message_type\": \"auth\", \"message\":\"ala ma kota\"}");
 
-        Debug.Log("parsed: " + m.message_type + ", " + m.message);
+        Debug.Log("parsed: " + m.message_type + ", " + m.message);*/
     }
 	
 	// Update is called once per frame
 	void Update () {
-        /*socket.processOrders();
+        socket.processOrders();
 
         if (timer.isTimeEx(1000))
         {
@@ -46,7 +46,7 @@ public class ServerSocket : MonoBehaviour {
         {
             //socket.getData() returns json from djungo
             Debug.Log("New data: "+ socket.getData());
-        }*/
+        }
     }
 
     private void loadChank()
