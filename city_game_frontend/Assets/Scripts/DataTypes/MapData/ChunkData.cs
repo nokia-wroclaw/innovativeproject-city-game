@@ -8,6 +8,7 @@ namespace Assets
     /**
      * Class contains chanks data
      */
+    [System.Serializable]
     class ChunkData
     {
         public float latitude;//!< position of the beginnig of chunk

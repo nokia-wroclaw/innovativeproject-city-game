@@ -5,6 +5,7 @@ using System.Text;
 
 namespace Assets
 {
+    [System.Serializable]
     class PathData
     {
         //!< it could be Vector2 p1, and Vector2 p2
