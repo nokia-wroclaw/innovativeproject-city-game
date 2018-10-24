@@ -31,11 +31,16 @@ public class ServerSocket : MonoBehaviour {
             <Assets.Messages.Message>("{\"message_type\": \"auth\", \"message\":\"ala ma kota\"}");
 
         Debug.Log("parsed: " + m.message_type + ", " + m.message);*/
+
+        Assets.ChunkData m2 = JsonUtility.FromJson<Assets.ChunkData>
+        ("{\"id\": 88,\"road_nodes\": [{\"lat_start\": 51.1685915, \"lat_end\": 51.1687291, \"lon_start\": 17.1102712, \"lon_end\": 17.1102226}, {\"lat_start\": 51.1687291, \"lat_end\": 51.1687663, \"lon_start\": 17.1102226, \"lon_end\": 17.1102016}]}");
+
+        Debug.Log(m2.road_nodes.Length);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        socket.processOrders();
+        /*socket.processOrders();
 
         if (timer.isTimeEx(1000))
         {
@@ -46,7 +51,7 @@ public class ServerSocket : MonoBehaviour {
         {
             //socket.getData() returns json from djungo
             Debug.Log("New data: "+ socket.getData());
-        }
+        }*/
     }
 
     private void loadChank()

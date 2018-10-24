@@ -8,13 +8,13 @@ namespace Assets
     class PathData
     {
         //!< it could be Vector2 p1, and Vector2 p2
-        public float P1Lat { set; get; }
-        public float P1Long { set; get; }
-        public float P2Lat { set; get; }
-        public float P2Long { set; get; }
+        public float lat_start;
+        public float lon_start;
+        public float lat_end;
+        public float lon_end;
 
 
-        PathData()
+        /*PathData()
         {
             //set default value
             P1Lat  = 0;
@@ -30,7 +30,7 @@ namespace Assets
             this.P1Long = P1Long;
             this.P2Lat  = P2Lat;
             this.P2Long = P2Long;
-        }
+        }*/
 
     }
 }

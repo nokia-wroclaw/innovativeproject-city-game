@@ -10,12 +10,12 @@ namespace Assets
      */
     class ChunkData
     {
-        public float latitude { private set; get; } //!< position of the beginnig of chunk
-        public float longitude { private set; get; }
+        public float latitude;//!< position of the beginnig of chunk
+        public float longitude;
 
         public int id;
 
-        private List<PathData> paths; //!< paths list
+        public List<PathData> road_nodes; //!< paths list
 
     }
 }
