@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using System;
-
 
 namespace Assets.Sockets
 {
@@ -133,7 +131,7 @@ namespace Assets.Sockets
         public void processOrders()
         {
             if (toSend.Count <= 0 || //no data to send
-                isConnected() == false || //isn't connected
+                isConnected == false || //isn't connected
                 busy == true) //waiting for response
                 return;
             

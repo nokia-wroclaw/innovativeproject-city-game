@@ -19,24 +19,23 @@ public class ServerSocket : MonoBehaviour {
         Assets.DataManager.instance().setI(20);
         Debug.Log(i);
 
-        initSocket();
+        //initSocket();
 
-        /*using (var ws = new WebSocket("ws://127.0.0.1:8000/ws/"))
-        {
-            Debug.Log("loading");
-            ws.OnMessage += (sender, e) =>
-                Debug.Log("Laputa says: " + e.Data);
+        Assets.Messages.Message m = JsonUtility.FromJson
+            <Assets.Messages.Message>("{\"message_type\": \"auth\", \"message\":\"ala ma kota\"}");
 
-            ws.Connect();
-            ws.OnMessage += (sender, e) => 
-                ws.Send("BALUS");
-            //Debug.ReadKey(true);
-        }*/
+        Debug.Log("parsed: " + m.message_type + ", " + m.message);
+
+
+        Assets.Messages.Message m2 = JsonUtility.FromJson
+            <Assets.Messages.Message>("{\"message_type\": \"auth\", \"message\":\"ala ma kota\"}");
+
+        Debug.Log("parsed: " + m.message_type + ", " + m.message);
     }
 	
 	// Update is called once per frame
 	void Update () {
-        socket.processOrders();
+        /*socket.processOrders();
 
         if (timer.isTimeEx(1000))
         {
@@ -47,7 +46,7 @@ public class ServerSocket : MonoBehaviour {
         {
             //socket.getData() returns json from djungo
             Debug.Log("New data: "+ socket.getData());
-        }
+        }*/
     }
 
     private void loadChank()
