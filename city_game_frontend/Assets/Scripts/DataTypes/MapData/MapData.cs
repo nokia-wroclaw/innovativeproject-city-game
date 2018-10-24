@@ -8,10 +8,15 @@ namespace Assets
     /**
      * Chanks menager class. it stores chanks and has functions to menage them
      */
-    class ChanksContainer
+    class MapData
     {
+        public int CountChunks { get
+            {
+                return chunks.Count;
+            }
+        }
 
-        private List<ChunkData> chunks;
+        private List<ChunkData> chunks = new List<ChunkData>();
 
         /**
          * Function add Chunk to the chunks list

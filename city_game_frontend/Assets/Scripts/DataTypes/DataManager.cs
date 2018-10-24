@@ -14,12 +14,15 @@ namespace Assets
      */
     class DataManager
     {
-        private int i;
+        public int i { set; get; } 
         private static DataManager c_instance; //!< instance of the Menager class
+
+        public MapData map { private set; get; }
 
         private DataManager()
         {
             i = 0;
+            map = new MapData();
         }
 
         public static DataManager instance()
@@ -28,16 +31,6 @@ namespace Assets
                 c_instance = new DataManager();
 
             return c_instance;
-        }
-
-        public void setI(int i)
-        {
-            this.i = i;
-        }
-
-        public int getI()
-        {
-            return i;
         }
 
     }

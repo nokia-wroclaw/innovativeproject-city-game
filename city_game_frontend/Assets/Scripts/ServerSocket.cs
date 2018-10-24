@@ -15,8 +15,8 @@ public class ServerSocket : MonoBehaviour {
 	void Start ()
     {
 
-        int i = Assets.DataManager.instance().getI();
-        Assets.DataManager.instance().setI(20);
+        int i = Assets.DataManager.instance().i;
+        Assets.DataManager.instance().i = 200;
         Debug.Log(i);
 
         initSocket();
@@ -36,8 +36,9 @@ public class ServerSocket : MonoBehaviour {
         ("{\"id\": 88,\"road_nodes\": [{\"lat_start\": 51.1685915, \"lat_end\": 51.1687291, \"lon_start\": 17.1102712, \"lon_end\": 17.1102226}, {\"lat_start\": 51.1687291, \"lat_end\": 51.1687663, \"lon_start\": 17.1102226, \"lon_end\": 17.1102016}]}");
 
         Debug.Log(JsonUtility.ToJson(m2));
-
-        Debug.Log(m2.road_nodes.Count);
+        
+        Assets.DataManager.instance().map.addChank(m2);
+        Debug.Log("Global data: "+Assets.DataManager.instance().map.CountChunks);
     }
 	
 	// Update is called once per frame
