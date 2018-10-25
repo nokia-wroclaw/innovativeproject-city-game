@@ -29,7 +29,8 @@ SECRET_KEY = secret.APP_SECRET
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = secret.DEBUG
 
-ALLOWED_HOSTS = []
+# Todo: check if this matters when running inside docker
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
