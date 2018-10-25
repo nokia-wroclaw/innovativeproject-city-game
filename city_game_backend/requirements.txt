@@ -3,3 +3,4 @@ requests
 Django==2.1.2
 mysqlclient==1.3.13
 pytz==2018.5
+psycopg2

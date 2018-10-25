@@ -37,6 +37,9 @@ media
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+# Docker postgres data
+postgres-data/
+
 # Gradle
 .idea/**/gradle.xml
 .idea/**/libraries
