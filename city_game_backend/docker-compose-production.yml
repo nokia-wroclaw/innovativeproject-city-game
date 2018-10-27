@@ -4,19 +4,16 @@ services:
   db:
     image: postgres
     volumes:
-    - ../postgres-data:/var/lib/postgresql/data
+    - ../postgres-data-production:/var/lib/postgresql/data
   web:
-    #env_file:
-    #- ./web-variables.env
-    image: city-game-development-image
+    image: wnt3rmute/city-game:latest
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile_Release
+    env_file:
+    - ./web-variables.env
     command: python3 manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
-
