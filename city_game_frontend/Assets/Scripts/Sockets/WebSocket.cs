@@ -6,15 +6,33 @@ using UnityEngine;
 
 namespace Assets.Sockets
 {
+    
+
+
     public class WebSocket
     {
+
+        public delegate void receiveFunc(string error, string data);
+        public delegate void callbackFunc(string error, string data); //type of callback funcion
+
+        /**
+         * Private class contains data for one request
+         */
+        private class Data
+        {
+            
+
+            public callbackFunc callback; //receive data callback
+            public string data; //data to send byte array 
+            public int transaction; //transaction id 
+        }
+
         private WebSocketSharp.WebSocket socket;
         private string url = "";
 
-        private List<string> received; //!< received data 
-        private List<string> toSend; //!< to send data 
+        private List<Data> sendData; //!< send data and callbacks
 
-        public bool loggedIn { set; get; } //!< is player logged in server
+        public receiveFunc received { set; private get; }
 
         /**
          * Get connected status. if true then connection is established and
@@ -34,19 +52,23 @@ namespace Assets.Sockets
         /**
          * check if there is some new data
          */
-        public bool isData { get
+        /*public bool isData { get
             {
-                return received.Count > 0;
+                //return received.Count > 0;
             }
-        }
+        }*/
 
-        public bool busy = false; //!< true if socket is waiting for respons from server
+        //public bool busy = false; //!< true if socket is waiting for respons from server
 
         public WebSocket()
         {
-            toSend = new List<string>();
-            received = new List<string>();
+            //toSend = new List<string>();
+            //received = new List<string>();
 
+            received = new receiveFunc((string error, string data) =>
+            {
+                Debug.Log("received funcion is not implemented");
+            });
         }
 
         public void connect(string url)
@@ -59,15 +81,33 @@ namespace Assets.Sockets
             this.url = url;
 
             //clear toSend before next send
-            toSend.Clear();
+            //toSend.Clear();
 
 
             //on received event
             socket.OnMessage += (sender, e) =>
             {
-                Debug.Log("Socket " + this.url + " received a data: " + e.Data);
-                busy = false; //socket is ready to send and receive next data
-                received.Add(e.Data); //add data to received list
+                //Debug.Log("Socket " + this.url + " received a data: " + e.Data);
+                //busy = false; //socket is ready to send and receive next data
+                //received.Add(e.Data); //add data to received list
+
+                //parse data to get transaction id
+
+                int transaction = 0; //received transaction id
+                foreach (Data d in sendData)
+                {
+                    //finde right callback
+                    if(d.transaction == transaction)
+                    {
+                        //collback when server responsed
+                        d.callback("",e.Data);
+                        return;
+                    }
+                }
+
+                //server push data to client
+                this.received("", e.Data);
+
             };
 
             //on open event
@@ -83,33 +123,44 @@ namespace Assets.Sockets
 
             };
         }
+        
 
         /**
          * Send function add new frame to sending list
-         */ 
-        public void send(string data)
+         */
+        public void send(string data, callbackFunc callback)
         { 
             Debug.Log("Socket " + url + " received a send order: " + data);
-            toSend.Add(data);
+
+            //process data.
+
+            Data d = new Data();
+            d.callback = callback;
+            d.data = data;
+            d.transaction = 0; //transaction id
+
+            sendData.Add(d);
+
+            socket.Send(data); //send 
         }
 
         /**
          * Specialized function to send Login request
          */
-        public void sendLogReq(string user, string pass)
+        /*public void sendLogReq(string user, string pass)
         {
             string req = "{\"login\":\"" + user + "\",\"pass\": \"" + pass + "\", \"type\":\"auth_event\"}";
             send(req);
-        }
+        }*/
 
         /**
          * Specialized function to send chunk request
          */
-        public void sendChunkReq(double longitute, double latitude)
+        /*public void sendChunkReq(double longitute, double latitude)
         {
             string req = "{\"lat\":\"" + latitude + "\",\"lon\": \"" + longitute+ "\", \"type\":\"location_event\"}";
             send(req);
-        }
+        }*/
 
         /**
          * Disconnect from the server
@@ -128,7 +179,7 @@ namespace Assets.Sockets
          * Function check if there is something to send, and send it.
          * It could be run in subroutine
          */
-        public void processOrders()
+        /*public void processOrders()
         {
             if (toSend.Count <= 0 || //no data to send
                 isConnected == false || //isn't connected
@@ -149,6 +200,6 @@ namespace Assets.Sockets
             string buf = received.ElementAt(0);
             received.RemoveAt(0);
             return buf;
-        }
+        }*/
     }
 }
