@@ -12,12 +12,16 @@ namespace Assets
      * 
      * 
      */
+
     class DataManager
     {
         public int i { set; get; } 
-        private static DataManager c_instance; //!< instance of the Menager class
+        private static DataManager c_instance; //!< instance of the Manager class
 
         public MapData map { private set; get; }
+
+        public float latitude { get { return GPSManager.Instance.latitude; } }
+        public float longitude { get { return GPSManager.Instance.longitude; } }
 
         private DataManager()
         {
