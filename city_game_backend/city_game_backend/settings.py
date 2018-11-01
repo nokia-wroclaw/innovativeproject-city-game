@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-# This is our secret configuration file - if this line throws an exception, check if you have a secret.py file
-# Check `secret_template.py` for further explanation
-from city_game_backend import secret
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,11 +19,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
+SECRET_KEY = 'development_secret_key'
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = secret.APP_SECRET
+if 'APP_SECRET' in os.environ:
+    SECRET_KEY = os.environ['APP_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = secret.DEBUG
+DEBUG = True
+if 'PRODUCTION' in os.environ:
+    DEBUG = False
 
 # Todo: check if this matters when running inside docker
 ALLOWED_HOSTS = ['*']
@@ -85,7 +85,16 @@ ASGI_APPLICATION = 'city_game_backend.routing.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = secret.DATABASES
+# They run inside a sealed container so it should not matter
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',   # Or an IP Address that your DB is hosted on
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation
