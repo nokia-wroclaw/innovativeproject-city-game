@@ -68,7 +68,7 @@ public class ServerSocket : MonoBehaviour {
         socket = new Assets.Sockets.WebSocket();
         socket.connect(Const.SERVER_URL);
 
-        socket.sendLogReq("baczek", "baczekbezraczek");
-        socket.sendChunkReq(17.11, 51.18);
+        //socket.sendLogReq("baczek", "baczekbezraczek");
+        //socket.sendChunkReq(17.11, 51.18);
     }
 }
