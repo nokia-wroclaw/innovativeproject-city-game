@@ -13,19 +13,20 @@ SCALE = 27000
 CHUNK_SIZE = 0.01
 MARGIN = 0.002
 
-AUTH_EVENT = 'auth_event'
+AUTH_EVENT = 0
 LOCATION_EVENT = 'location_event'
 WINDOW_SIZE = 1000
 
 LOGIN_DATA = {
     'type': AUTH_EVENT,
     'login': 'baczek',
-    'pass': 'baczekbezraczek'
+    'pass': 'baczekbezraczek',
+    'id': 12
 }
 
 
 def on_message(ws, message):
-    #print(message)
+    print(message)
 
     w.delete('all')
 

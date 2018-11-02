@@ -7,11 +7,10 @@ import logging
 from .location_event_handler import handle_location_event
 from .auth_event_handler import handle_auth_event
 from .disconnect_event_handler import handle_disconnect_event
+from .message_type import MessageType
+from .message_utils import error_message
 
 logger = logging.getLogger(__name__)
-
-AUTH_EVENT = 'auth_event'
-LOCATION_EVENT = 'location_event'
 
 
 class ClientCommunicationConsumer(WebsocketConsumer):
@@ -38,20 +37,38 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         try:
             message = json.loads(text_data)
         except json.JSONDecodeError:
-            print(f'NOT A JSON MESSAGE: {text_data}')
-            # TODO: should a websocket close after receiving an invalid message?
+            self.send('Invalid json')
             self.close()
             return
 
-        message_type = message['type']
+        message_type = None
+        transaction_id = None
+        try:
+            transaction_id = message['id']
+            message_type = MessageType(int(message['type']))
+        except KeyError:
+            self.send(error_message('No message type/transaction id'))
+            return
 
+        response = {
+            'id': transaction_id,
+            'message': json.dumps(self.handle_message(message, message_type))
+        }
+        self.send(json.dumps(response))
+
+    def handle_message(self, message: dict, message_type: MessageType) -> str:
         # If user is not authenticated, we only let him to send an auth message
+        print('Handling', message_type.value)
         if self.user is None:
-            if message_type == AUTH_EVENT:
-                handle_auth_event(message, self)
+            if message_type == MessageType.AUTH_EVENT:
+                return handle_auth_event(message, self)
             else:  # TODO: IMPLEMENT SOME SORT OF LOGIN TIMEOUT INSTEAD OF WAITING FOR A MESSAGE
+                self.send('User not authorised')
                 self.close()
 
         # If the user is authenticated, other actions are available to him
-        if message_type == LOCATION_EVENT:
-            handle_location_event(message, self)
+        if message_type == MessageType.LOCATION_EVENT:
+            return handle_location_event(message, self)
+        # ... another message type handlers here ...
+        else:
+            self.send('Wrong message type')

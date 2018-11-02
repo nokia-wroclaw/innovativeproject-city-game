@@ -3,6 +3,8 @@ from game_map.chunk_generator import CHUNK_SIZE
 
 import logging
 import math
+from .message_utils import SUCCESS_MESSAGE
+
 
 logger = logging.getLogger(__name__)
 
@@ -29,7 +31,6 @@ def handle_location_event(message: dict, websocket):
     ).first()
 
     if on_which_chunk_now is None:
-        # TODO: IMPLEMENT AUTOMATIC CHUNK GENERATION HERE
         logger.critical('No chunk at this position, cannot generate new chunk at the moment!')
         return
 
@@ -43,13 +44,18 @@ def handle_location_event(message: dict, websocket):
     websocket.active_player_data.longitude = new_longitude
     websocket.active_player_data.save()
 
+    return SUCCESS_MESSAGE
+
 
 def round_down(n):
     return math.floor(n * 100) / 100
 
 
 def handle_chunk_change(on_which_chunk_now, websocket) -> None:
+    return
     """
+    DEPRECATED: THINKING FOR A NEW SYSTEM FOR CHUNK REQUESTING
+    
     Sends the chunk data to the client if he moves into a different chunk
     """
 
