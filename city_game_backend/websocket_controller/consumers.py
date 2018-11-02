@@ -44,15 +44,26 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         message_type = None
         transaction_id = None
         try:
+            # This is the message metadata, used to handle the message it send it back signed correctly
             transaction_id = message['id']
+
+            # The actual message data
+            message = json.loads(message['data'])
             message_type = MessageType(int(message['type']))
         except KeyError:
             self.send(error_message('No message type/transaction id'))
             return
+        except json.JSONDecodeError:
+            self.send('Invalid json')
+            self.close()
+            return
+
+        response_message = self.handle_message(message, message_type)
+        response_message = json.dumps(response_message)
 
         response = {
             'id': transaction_id,
-            'message': json.dumps(self.handle_message(message, message_type))
+            'message': response_message
         }
         self.send(json.dumps(response))
 

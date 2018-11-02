@@ -7,6 +7,6 @@
  */
 public static class Const
 {
-    public static string SERVER_URL = "127.0.0.1:8000/ws/"; //!< djungo server's ip
+    public static string SERVER_URL = "filipplotnicki.com:8000/ws/"; //!< django server's ip
 }
 
