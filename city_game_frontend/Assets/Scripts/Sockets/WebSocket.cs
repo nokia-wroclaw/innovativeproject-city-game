@@ -6,8 +6,24 @@ using UnityEngine;
 
 namespace Assets.Sockets
 {
-    
+    /*
+     * Every message from the server is a JSON string containing the following elements:
+     * - Transaction id ('id' key) - used to determine the callback function that the message is adressed to
+     * - The response message ('message' key) - this is the actual message transferred to the callback function
+     */
+    [System.Serializable]
+    class RawReceivedMessage
+    {
+        public int id;
+        public string message;
+    }
 
+    [System.Serializable]
+    class RequestData
+    {
+        public string data; //data that will be send to the server
+        public int id; //transaction id
+    }
 
     public class WebSocket
     {
@@ -15,22 +31,31 @@ namespace Assets.Sockets
         public delegate void receiveFunc(string error, string data);
         public delegate void callbackFunc(string error, string data); //type of callback funcion
 
+        private int current_transaction_number = 0; // each request gets a transaction ID, which will be incremented during every single request
+        // this way we can find the right callback function for each request, when the reponse comes
+
+
+        
         /**
          * Private class contains data for one request
          */
-        private class Data
+        private class Request
         {
-            
-
             public callbackFunc callback; //receive data callback
-            public string data; //data to send byte array 
-            public int transaction; //transaction id 
+            public RequestData requestData;
+
+            public Request()
+            {
+                requestData = new RequestData();
+            }
         }
+
+
 
         private WebSocketSharp.WebSocket socket;
         private string url = "";
 
-        private List<Data> sendData; //!< send data and callbacks
+        private List<Request> sendData = new List<Request>(); //!< send data and callbacks
 
         public receiveFunc received { set; private get; }
 
@@ -92,20 +117,20 @@ namespace Assets.Sockets
                 //received.Add(e.Data); //add data to received list
 
                 //parse data to get transaction id
-
-                int transaction = 0; //received transaction id
-                foreach (Data d in sendData)
+                RawReceivedMessage receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
+                foreach (Request d in sendData)
                 {
                     //finde right callback
-                    if(d.transaction == transaction)
+                    if(d.requestData.id == receivedMessage.id)
                     {
-                        //collback when server responsed
+                        //callback when server responsed
                         d.callback("",e.Data);
                         return;
                     }
                 }
 
                 //server push data to client
+                // what is this can somebody explain
                 this.received("", e.Data);
 
             };
@@ -128,20 +153,23 @@ namespace Assets.Sockets
         /**
          * Send function add new frame to sending list
          */
-        public void send(string data, callbackFunc callback)
+        public void send(string messageToSend, callbackFunc callback)
         { 
-            Debug.Log("Socket " + url + " received a send order: " + data);
+            Debug.Log("Socket " + url + " received a send order: " + messageToSend);
 
             //process data.
 
-            Data d = new Data();
-            d.callback = callback;
-            d.data = data;
-            d.transaction = 0; //transaction id
+            Request request = new Request();
+            request.callback = callback;
+            request.requestData.data = messageToSend;
+            request.requestData.id = this.current_transaction_number++; //transaction id
 
-            sendData.Add(d);
+            if (sendData == null)
+                Debug.Log("Senddata is null!");
 
-            socket.Send(data); //send 
+            sendData.Add(request);
+
+            socket.Send(JsonUtility.ToJson(request.requestData)); //send 
         }
 
         /**
