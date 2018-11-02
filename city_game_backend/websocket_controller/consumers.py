@@ -58,9 +58,12 @@ class ClientCommunicationConsumer(WebsocketConsumer):
             self.close()
             return
 
+        response_message = self.handle_message(message, message_type)
+        response_message = json.dumps(response_message)
+
         response = {
             'id': transaction_id,
-            'message': json.dumps(self.handle_message(message, message_type))
+            'message': response_message
         }
         self.send(json.dumps(response))
 
