@@ -44,9 +44,12 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         message_type = None
         transaction_id = None
         try:
+            # This is the message metadata, used to handle the message it send it back signed correctly
             transaction_id = message['id']
-            message_type = MessageType(int(message['type']))
+
+            # The actual message data
             message = message['data']
+            message_type = MessageType(int(message['type']))
         except KeyError:
             self.send(error_message('No message type/transaction id'))
             return
