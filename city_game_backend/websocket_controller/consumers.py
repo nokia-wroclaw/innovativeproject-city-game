@@ -48,10 +48,14 @@ class ClientCommunicationConsumer(WebsocketConsumer):
             transaction_id = message['id']
 
             # The actual message data
-            message = message['data']
+            message = json.loads(message['data'])
             message_type = MessageType(int(message['type']))
         except KeyError:
             self.send(error_message('No message type/transaction id'))
+            return
+        except json.JSONDecodeError:
+            self.send('Invalid json')
+            self.close()
             return
 
         response = {
