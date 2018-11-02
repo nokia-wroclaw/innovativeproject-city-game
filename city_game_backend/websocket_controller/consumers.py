@@ -46,6 +46,7 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         try:
             transaction_id = message['id']
             message_type = MessageType(int(message['type']))
+            message = message['data']
         except KeyError:
             self.send(error_message('No message type/transaction id'))
             return
