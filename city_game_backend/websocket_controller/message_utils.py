@@ -1,7 +1,7 @@
 import json
 
 
-SUCCESS_MESSAGE = {'status', 'success'}
+SUCCESS_MESSAGE = {'status': 'success'}
 
 
 def error_message(message):
