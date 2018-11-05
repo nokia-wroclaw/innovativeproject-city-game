@@ -14,7 +14,7 @@ class Chunk(models.Model):
     longitude_upper_bound = models.FloatField()
 
     # All the roads inside a json
-    road_nodes = models.TextField()
+    roads = models.TextField()
 
     def __str__(self):
         return f"Chunk: {self.latitude_lower_bound}, {self.longitude_lower_bound}"

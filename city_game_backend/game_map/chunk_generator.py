@@ -60,13 +60,14 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
         longitude_upper_bound=lower_longitude + CHUNK_SIZE
     )
 
-    # Will be used to store all the nodes of all roads, later saved to the Chunk as a JSON
-    road_nodes = []
+    # Will be used to store all the nodes of all roads, later saved to the Chunk object in the DB as a JSON
+    roads = []
 
     # Going through all the roads - collections of points inside the XML
     for road in root.findall('way'):
 
-        node_previous = None
+        # Each road is a list of points
+        road_nodes = []
 
         # the <way> point collections don't contain the road points coordintates, they just contain a reference
         # to a specific <node id="reference">
@@ -85,25 +86,20 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
                 logger.warning('Could not found a road node with id: {}, skipping it'.format(ref))
                 continue
 
-            if node_previous is None:
-                node_previous = node_next
-                continue
+            road_nodes.append(
+                {
+                    'lon': node_next.get('lon'),
+                    'lan': node_next.get('lat')
+                }
+            )
 
-            road_nodes.append({
-                'lat_start': float(node_previous.get('lat')),
-                'lat_end': float(node_next.get('lat')),
-                'lon_start': float(node_previous.get('lon')),
-                'lon_end': float(node_next.get('lon')),
+        roads.append(road_nodes)
 
-            })
-
-            node_previous = node_next
-
-    new_chunk.road_nodes = json.dumps(road_nodes)
+    new_chunk.roads = json.dumps(roads)
     new_chunk.save()
 
 
-# chunk_generator.batch_chunks_loading(51.1, 17.09, 10) is a cool place to start
+# chunk_generator.batch_chunks_loading(51.07, 17.00, 20) is a cool place to start, generates the whole Wrocław
 def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_size):
     """
     Generates map chunks starting from the given latitude and longitude,
