@@ -9,6 +9,7 @@ from .auth_event_handler import handle_auth_event
 from .disconnect_event_handler import handle_disconnect_event
 from .message_type import MessageType
 from .message_utils import error_message
+from .chunk_request_handler import handle_chunk_request
 
 logger = logging.getLogger(__name__)
 
@@ -80,6 +81,8 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         # If the user is authenticated, other actions are available to him
         if message_type == MessageType.LOCATION_EVENT:
             return handle_location_event(message, self)
-        # ... another message type handlers here ...
+        elif message_type == MessageType.CHUNK_REQUEST:
+            return handle_chunk_request(message, self)
+        # ... another message type handlers down here ...
         else:
             self.send('Wrong message type')
