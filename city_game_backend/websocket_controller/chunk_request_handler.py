@@ -2,6 +2,7 @@ import math
 from game_map.models import Chunk
 from .message_utils import error_message
 
+
 def handle_chunk_request(message, websocket) -> str:
     """
     Retrieve the chunk data for a given location
@@ -13,7 +14,7 @@ def handle_chunk_request(message, websocket) -> str:
         )
 
         chunk_lon = round_down(
-            message['lat']
+            message['lon']
         )
     except KeyError or TypeError:
         return error_message('Wrong lat/lon data')
