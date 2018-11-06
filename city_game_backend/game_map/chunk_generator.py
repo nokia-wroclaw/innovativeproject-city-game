@@ -89,7 +89,7 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
             road_nodes.append(
                 {
                     'lon': node_next.get('lon'),
-                    'lan': node_next.get('lat')
+                    'lat': node_next.get('lat')
                 }
             )
 
