@@ -3,4 +3,4 @@
 docker-compose down
 git pull
 docker-compose start
-docker-compose logs -t
+docker-compose logs -f
