@@ -89,15 +89,5 @@ public class ServerSocket : MonoBehaviour {
         Debug.Log("Trying connect");
         socket = new Assets.Sockets.WebSocket();
         socket.connect(Const.SERVER_URL);
-
-<<<<<<< HEAD
-        //socket.sendLogReq("baczek", "baczekbezraczek");
-        //socket.sendChunkReq(17.11, 51.18);
-=======
-        /*
-        socket.sendLogReq("baczek", "baczekbezraczek");
-        socket.sendChunkReq(17.11, 51.18);
-        */
->>>>>>> 688c9456f9b6a448d06c4ace2fb47b8c80b15c71
     }
 }
