@@ -6,17 +6,17 @@ using System.Text;
 namespace Assets
 {
     [System.Serializable]
-    class Road
+    public class Road
     {
         public List<RoadNode> nodes;
     }
 
     [System.Serializable]
-    class RoadNode
+    public class RoadNode
     {
         
-        public float lon;
-        public float lat;
+        public float lon; //y
+        public float lat; //x
         
 
         /*PathData()

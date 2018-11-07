@@ -173,23 +173,6 @@ namespace Assets.Sockets
             socket.Send(JsonUtility.ToJson(request.requestData)); //send 
         }
 
-        /**
-         * Specialized function to send Login request
-         */
-        /*public void sendLogReq(string user, string pass)
-        {
-            string req = "{\"login\":\"" + user + "\",\"pass\": \"" + pass + "\", \"type\":\"auth_event\"}";
-            send(req);
-        }*/
-
-        /**
-         * Specialized function to send chunk request
-         */
-        /*public void sendChunkReq(double longitute, double latitude)
-        {
-            string req = "{\"lat\":\"" + latitude + "\",\"lon\": \"" + longitute+ "\", \"type\":\"location_event\"}";
-            send(req);
-        }*/
 
         /**
          * Disconnect from the server
@@ -201,34 +184,5 @@ namespace Assets.Sockets
         }
 
 
-
-
-
-        /**
-         * Function check if there is something to send, and send it.
-         * It could be run in subroutine
-         */
-        /*public void processOrders()
-        {
-            if (toSend.Count <= 0 || //no data to send
-                isConnected == false || //isn't connected
-                busy == true) //waiting for response
-                return;
-            
-            //send data
-            socket.Send(toSend.ElementAt(0));
-
-            //remove it from the list
-            toSend.RemoveAt(0);
-            busy = true; //socket has just send data. Waiting for response
-            Debug.Log("Socket " + url + " send data. last: " + toSend.Count);
-        }
-
-        public string getData()
-        {
-            string buf = received.ElementAt(0);
-            received.RemoveAt(0);
-            return buf;
-        }*/
     }
 }
