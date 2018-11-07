@@ -117,14 +117,14 @@ namespace Assets.Sockets
                 //received.Add(e.Data); //add data to received list
 
                 //parse data to get transaction id
-                RawReceivedMessage receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
+                var receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
                 foreach (Request d in sendData)
                 {
                     //finde right callback
                     if (d.requestData.id == receivedMessage.id)
                     {
                         //callback when server responsed
-                        d.callback("", e.Data);
+                        d.callback("", receivedMessage.message);
                         return;
                     }
                 }
@@ -145,6 +145,7 @@ namespace Assets.Sockets
             socket.OnError += (sender, e) =>
             {
                 Debug.Log("Socket " + this.url + " received an error: " + e.Message);
+                Debug.Log(e.Exception);
 
             };
         }

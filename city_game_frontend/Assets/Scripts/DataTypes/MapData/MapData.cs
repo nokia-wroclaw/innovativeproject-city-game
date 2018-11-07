@@ -24,7 +24,7 @@ namespace Assets
          * 
          * @pre c has to be initialized. 
          */
-        public void addChank(ChunkData item)
+        public void addChunk(ChunkData item)
         {
             chunks.Add(item);
         }

@@ -1,8 +1,9 @@
 web-variables.env
 .vs
-
+.idea/inspectionProfiles
+*.un~
 # Created by https://www.gitignore.io/api/python,django,pycharm
-
+#.idea/
 ### Django ###
 *.log
 *.pot

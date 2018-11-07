@@ -20,16 +20,45 @@ public class ServerSocket : MonoBehaviour {
         public string pass = "baczekbezraczek";
     }
 
+    [System.Serializable]
+    public class MapRequestData
+    {
+        public int type = 2;
+        public float lon;
+        public float lat;
+
+        public MapRequestData(float longitude, float latitude)
+        {
+            this.lon = longitude;
+            this.lat = latitude;
+        }
+    }
+
 	// Use this for initialization
 	void Start ()
     {
-
+        Debug.Log("Websocket!!");
         initSocket();
+
+        WebSocket.callbackFunc mapDataCallbackFunction = new WebSocket.callbackFunc((string error, string data) =>
+        {
+            Debug.Log(data);
+            var chunkData = JsonUtility.FromJson<Assets.ChunkData>(data);
+
+            //Debug.Log(chunkData.roads[0][0].lat);
+            Debug.Log(chunkData.latitude_lower_bound);
+
+            if (chunkData.roads == null)
+                Debug.Log("Is unll!");
+            else
+                Debug.Log(chunkData.roads[0].nodes.Count);
+        });
 
         WebSocket.callbackFunc loginCallbackFunction = new WebSocket.callbackFunc((string error, string data) =>
         {
             Debug.Log("FUCKING SUCCESS");
             Debug.Log(data);
+            socket.send(JsonUtility.ToJson(new MapRequestData(17.01F, 51.1F)), mapDataCallbackFunction);
         });
 
         socket.send(JsonUtility.ToJson(new LoginData()), loginCallbackFunction);
