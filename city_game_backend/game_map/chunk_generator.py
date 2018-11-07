@@ -93,7 +93,11 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
                 }
             )
 
-        roads.append(road_nodes)
+        roads.append(
+            {
+                'nodes': road_nodes
+            }
+        )
 
     new_chunk.roads = json.dumps({
         'roads': roads,
