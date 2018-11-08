@@ -8,6 +8,7 @@ namespace Assets
 
     class GPSManager : MonoBehaviour
     {
+        public GameManager gameManager;
 
         //that let us use GPS services wherever we want
         public static GPSManager Instance { set; get; }
@@ -16,23 +17,24 @@ namespace Assets
 
         private void Start()
         {
-            //for landscape view
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
             Instance = this;
             //to have unbreakable connection between app and GPS services
             DontDestroyOnLoad(gameObject);
             StartCoroutine(InitializationOfLocationService());
+            InvokeRepeating("updateCoordinates", 2.0f, 2.0f);
         }
 
         private void updateCoordinates()
         {
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
+
+            gameManager.OnLocationChanged(latitude, longitude);
         }
 
         private void Update()
         {
-            updateCoordinates();
+
         }
 
         private IEnumerator InitializationOfLocationService()
@@ -57,7 +59,7 @@ namespace Assets
             }
             if (Input.location.status == LocationServiceStatus.Failed)
             {
-                Debug.Log("Unable to determin device location");
+                Debug.Log("Unable to determine device location");
                 yield break;
             }
             updateCoordinates();

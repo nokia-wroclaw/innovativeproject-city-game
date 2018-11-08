@@ -6,8 +6,16 @@ public class MapManager : MonoBehaviour {
 
     public ServerSocket server;
 
+
+    //TODO: SET THEM DYNAMICALLY
     const float LATITUDE_OFFSET = 51.1F;
     const float LONGITUDE_OFFSET = 17.09F;
+
+    /*
+     * We store all the chunk object references inside this dictionary
+     */
+    Dictionary<Vector2, GameObject> chunks = new Dictionary<Vector2, GameObject>();
+
 
     // Use this for initialization
     void Start () {
@@ -23,12 +31,22 @@ public class MapManager : MonoBehaviour {
 
     public void drawChunk(Assets.ChunkData chunkData)
     {
+        Vector2 key = new Vector2(chunkData.longitude_lower_bound, chunkData.latitude_lower_bound);
+        if (chunks.ContainsKey(key))
+        {
+            Debug.Log("Recreating chunk at " + key);
+            Destroy(chunks[key]);
+            chunks.Remove(key);
+            
+        }
+
+
         var emptyChunk = new GameObject("Chunk");
+        chunks.Add(key, emptyChunk);
 
-
-        GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
-
-        plane.transform.parent = emptyChunk.transform;
+        //TODO: ENABLE THIS BACK AFTER WE HAVE TEXTURES
+        //GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        //plane.transform.parent = emptyChunk.transform;
 
         foreach (var road in chunkData.roads)
         {
