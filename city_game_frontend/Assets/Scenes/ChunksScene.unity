@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   server: {fileID: 787719985}
+  mapManager: {fileID: 403958491}
 --- !u!4 &14023412
 Transform:
   m_ObjectHideFlags: 0

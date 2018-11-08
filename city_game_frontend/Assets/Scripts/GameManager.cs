@@ -1,41 +1,40 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Sockets;
+
+
 
 public class GameManager : MonoBehaviour {
 
-    //this is controlled by GPSManager
-    bool positionChanged = true;
-
     public ServerSocket server;
+    public MapManager mapManager;
+    //public GPSManager gpsManager; // TODO
 
+    // TODO: Find a way to make this non-static
+    public static Queue<Request> callbacksToProcess = new Queue<Request>();
 
-    float time_to_wait = 1;
+    void Start()
+    {
 
-	// Use this for initialization
-	void Start () {
- }
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        ProcessCallbacks();
+    }
 
-        time_to_wait -= Time.deltaTime;
-
-        if(time_to_wait < 0) { 
-        server.updateChunks(17.1011F, 51.106F);
-            time_to_wait = float.PositiveInfinity;
-        }
-        else
+    void ProcessCallbacks()
+    {
+        if (callbacksToProcess.Count > 0)
         {
-            if(time_to_wait < 9999)
-                Debug.Log(time_to_wait);
+            Request eventToHandle = callbacksToProcess.Dequeue();
+            eventToHandle.performCallback();
         }
+    }
 
-        /*
-                if(positionChanged)
-                {
-                    server.updateChunks(17.1011F, 51.106F);
-                    //TODO reset here positionChanged
-                }*/
+    public void OnLogin()
+    {
+        
     }
 }
