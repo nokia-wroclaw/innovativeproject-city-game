@@ -23,7 +23,7 @@ public class ServerSocket : MonoBehaviour {
 
         //Debug.Log(chunkData.latitude_lower_bound);
 
-        sender.GetComponent<ServerSocket>().mapManager.redrawMap(chunkData);
+        sender.GetComponent<ServerSocket>().mapManager.drawChunk(chunkData);
 
     });
 
@@ -62,7 +62,7 @@ public class ServerSocket : MonoBehaviour {
         socket.send(gameObject, JsonUtility.ToJson(new LoginData()), loginCallbackFunction);
     }
 
-    public void updateChunks(float longitude, float latitude)
+    public void sendChunkRequest(float longitude, float latitude)
     {
         socket.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
     }

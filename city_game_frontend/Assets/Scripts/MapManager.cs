@@ -5,27 +5,23 @@ using UnityEngine;
 public class MapManager : MonoBehaviour {
 
     public ServerSocket server;
-   // public ChunkManager chunkManager;
-   public static List<Assets.ChunkData> chunksToDraw = new List<Assets.ChunkData>();
 
-	// Use this for initialization
-	void Start () {
+    const float LATITUDE_OFFSET = 51.1F;
+    const float LONGITUDE_OFFSET = 17.09F;
+
+    // Use this for initialization
+    void Start () {
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (chunksToDraw.Count > 0)
-        {
-            Debug.Log("Can draw");
-            redrawMap(chunksToDraw[0]); //TODO AFRICA
-            chunksToDraw.RemoveAt(0);
-        }
+
 	}
 
 
 
-    public void redrawMap(Assets.ChunkData chunkData)
+    public void drawChunk(Assets.ChunkData chunkData)
     {
         var emptyChunk = new GameObject("Chunk");
 
@@ -66,11 +62,22 @@ public class MapManager : MonoBehaviour {
             for (int i = 0; i < road.nodes.Count; i++)
             {
                 lines.SetPosition(i, new Vector3(
-                    (road.nodes[i].lat - chunkData.latitude_lower_bound)*2000, 
-                    0, 
-                    (road.nodes[i].lon - chunkData.longitude_lower_bound)*2000));
+                    LatitudeToGameCoordinate(road.nodes[i].lat),
+                    0,
+                    LongitudeToGameCoordinate(road.nodes[i].lon)
+                    ));
             }
         }
 
+    }
+
+    public static float LatitudeToGameCoordinate(float lat)
+    {
+        return (lat - LATITUDE_OFFSET) * 2000;
+    }
+
+    public static float LongitudeToGameCoordinate(float lon)
+    {
+        return (lon - LONGITUDE_OFFSET) * 2000;
     }
 }
