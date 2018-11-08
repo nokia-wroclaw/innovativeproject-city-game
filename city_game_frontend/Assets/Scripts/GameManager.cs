@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Sockets;
-
+using UnityEditor;
 
 
 public class GameManager : MonoBehaviour {
@@ -11,11 +11,9 @@ public class GameManager : MonoBehaviour {
     public MapManager mapManager;
     //public GPSManager gpsManager; // TODO
 
-    /*
-     * TEMPORARILY STORING THE GPS CORDS HERE FOR EASIER DEBUGGING
-     */
-    public float gps_lat = 51.106840F;
-    public float gps_lon = 17.093805F;
+    public bool fakeLocation = false;
+    public float fake_lat = 51.107621F;
+    public float fake_lon = 17.103190F;
 
     public float current_chunk_lat = -10000;
     public float current_chunk_lon = -10000;
@@ -53,13 +51,21 @@ public class GameManager : MonoBehaviour {
     public void OnLocationChanged(float lon, float lat)
     {
 
+        if (fakeLocation)
+        {
+            lon = fake_lon;
+            lat = fake_lat;
+        }
+
+
         locationIndicator.transform.position = new Vector3(
-            MapManager.LatitudeToGameCoordinate(gps_lat),
+            MapManager.LatitudeToGameCoordinate(lat),
             2,
-            MapManager.LongitudeToGameCoordinate(gps_lon)
+            MapManager.LongitudeToGameCoordinate(lon)
 
             );
 
+        
         if (roundDownToChunkCords(lon) == current_chunk_lon && roundDownToChunkCords(lat) == current_chunk_lat)
         {
             Debug.Log("Location has changed, but you are still on the same chunk!");
@@ -70,10 +76,22 @@ public class GameManager : MonoBehaviour {
         {
             Debug.Log("Location changed");
 
-            current_chunk_lat = roundDownToChunkCords(gps_lat);
-            current_chunk_lon = roundDownToChunkCords(gps_lon);
+            current_chunk_lat = roundDownToChunkCords(lat);
+            current_chunk_lon = roundDownToChunkCords(lon);
 
-            server.sendChunkRequest(gps_lon, gps_lat);
+            server.sendChunkRequest(lon, lat);
+
+
+            server.sendChunkRequest(lon + Const.CHUNK_SIZE, lat + Const.CHUNK_SIZE);
+            server.sendChunkRequest(lon + Const.CHUNK_SIZE, lat - Const.CHUNK_SIZE);
+            server.sendChunkRequest(lon - Const.CHUNK_SIZE, lat + Const.CHUNK_SIZE);
+            server.sendChunkRequest(lon - Const.CHUNK_SIZE, lat - Const.CHUNK_SIZE);
+
+            server.sendChunkRequest(lon, lat + Const.CHUNK_SIZE);
+            server.sendChunkRequest(lon, lat - Const.CHUNK_SIZE);
+            server.sendChunkRequest(lon + Const.CHUNK_SIZE, lat);
+            server.sendChunkRequest(lon - Const.CHUNK_SIZE, lat);
+
 
         }
 
@@ -84,7 +102,10 @@ public class GameManager : MonoBehaviour {
     [ContextMenu("On Location Changed")]
     public void forceOnLocationChanged()
     {
-        this.OnLocationChanged(gps_lon, gps_lat);
+        Debug.Log("Currently disabled");
+        /*
+        this.OnLocationChanged(lat, lon);
+        */
     }
 
     float roundDownToChunkCords(float x)
