@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreentouchSupport : MonoBehaviour {
+public class PinchZoom : MonoBehaviour {
 
     float previousDistance;
     public float zoomSpeed = 1f;

@@ -6,9 +6,11 @@ using Assets.Sockets;
 
 public class ServerSocket : MonoBehaviour {
 
-    public GameManager gameManager;
-    public MapManager mapManager; //= GameObject.Find("MapManager").GetComponent<MapManager>();
-    public WebSocket socket; //!< socket object
+    public static ServerSocket Instance { set; get; }
+
+    GameManager gameManager;
+    MapManager mapManager; //= GameObject.Find("MapManager").GetComponent<MapManager>();
+    WebSocket socket; //!< socket object
 
     private bool loggedIn; //!< true if socket is logged into django
 
@@ -33,17 +35,22 @@ public class ServerSocket : MonoBehaviour {
         sender.GetComponent<ServerSocket>().gameManager.OnLogin();
         
     });
-    
+
+    private void Awake()
+    {
+        ServerSocket.Instance = this;
+
+        Debug.Log("Socket server created!");
+    }
+
     // Use this for initialization
     void Start ()
     {
-        
+        gameManager = GameManager.Instance;
+        mapManager = MapManager.Instance;
+
         initSocket();
-
         login();
-        
-
- 
     }
 	
 	// Update is called once per frame

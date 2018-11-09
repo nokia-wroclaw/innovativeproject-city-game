@@ -140,9 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edaa94f6c07d3254d9c5cc5c1dc664b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  server: {fileID: 787719985}
-  mapManager: {fileID: 403958491}
-  fakeLocation: 0
+  fakeLocation: 1
   fake_lat: 51.10762
   fake_lon: 17.10319
   current_chunk_lat: -10000
@@ -339,7 +337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75430fcf82c73a349a92768a07e19d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  server: {fileID: 787719985}
 --- !u!4 &403958492
 Transform:
   m_ObjectHideFlags: 0
@@ -532,8 +529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a952813c3b817af42b1ead36be0712d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 14023411}
-  mapManager: {fileID: 403958491}
 --- !u!4 &787719986
 Transform:
   m_ObjectHideFlags: 0

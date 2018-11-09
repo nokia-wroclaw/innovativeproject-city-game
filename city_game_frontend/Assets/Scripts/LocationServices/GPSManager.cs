@@ -29,7 +29,7 @@ namespace Assets
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
 
-            gameManager.OnLocationChanged(latitude, longitude);
+            gameManager.OnLocationChanged(longitude, latitude);
         }
 
         private void Update()

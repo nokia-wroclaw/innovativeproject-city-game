@@ -7,9 +7,10 @@ using UnityEditor;
 
 public class GameManager : MonoBehaviour {
 
-    public ServerSocket server;
-    public MapManager mapManager;
-    //public GPSManager gpsManager; // TODO
+    public static GameManager Instance { set; get; }
+
+    ServerSocket server;
+    MapManager mapManager;
 
     public bool fakeLocation = false;
     public float fake_lat = 51.107621F;
@@ -24,9 +25,15 @@ public class GameManager : MonoBehaviour {
     // TODO: Find a way to make this non-static
     public static Queue<Request> callbacksToProcess = new Queue<Request>();
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     void Start()
     {
-
+        server = ServerSocket.Instance;
+        mapManager = MapManager.Instance;
     }
 	
 	// Update is called once per frame
@@ -79,6 +86,7 @@ public class GameManager : MonoBehaviour {
             current_chunk_lat = roundDownToChunkCords(lat);
             current_chunk_lon = roundDownToChunkCords(lon);
 
+            Debug.Log(server == null);
             server.sendChunkRequest(lon, lat);
 
 

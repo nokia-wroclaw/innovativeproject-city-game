@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class MapManager : MonoBehaviour {
 
-    public ServerSocket server;
+    public static MapManager Instance { set; get; }
+
+    ServerSocket server = ServerSocket.Instance;
 
 
     //TODO: SET THEM DYNAMICALLY
@@ -16,11 +18,15 @@ public class MapManager : MonoBehaviour {
      */
     Dictionary<Vector2, GameObject> chunks = new Dictionary<Vector2, GameObject>();
 
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Use this for initialization
     void Start () {
 
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
