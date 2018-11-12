@@ -14,7 +14,7 @@
 4. UI
   * Just show basic player stats
   * [Make a context menu with focused-object-specific actions]
-    FIRST DEMO
+FIRST DEMO
   5. Player stats system
   6. PvE fights system
   7. Party system - fight together
