@@ -1,6 +1,7 @@
 # innovativeproject-city-game
 
 ## Milestones
+### First Demo:
 1. Generate random structures:
   * Just mock it, no enough time, place them once and keep that
   * Non-interactive structs generated client-side
@@ -15,9 +16,7 @@
   * Just show basic player stats
   * [Make a context menu with focused-object-specific actions]
   
-  
-FIRST DEMO
-
+### Second Demo - some of theese:  
 
   5. Player stats system
   6. PvE fights system
