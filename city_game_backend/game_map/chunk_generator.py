@@ -5,12 +5,11 @@ import xml.etree.ElementTree
 import json
 
 import logging
-
+from city_game_backend.CONSTANTS import CHUNK_SIZE
 logger = logging.getLogger(__name__)
 
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
-CHUNK_SIZE = 0.01  # About 111x111 meters
 STANDARD_QUERY = '''
 way
   (
