@@ -6,6 +6,55 @@ using UnityEngine;
 
 namespace Assets.Sockets
 {
+    
+    /*
+     * Wraps around every single websocket request
+     */
+    public class Request
+    {
+
+        /*
+         * Since the messages are received inside the Websocket object, which works asynchronously, 
+         * they cannot use the Unity's functions and classes (game object spawning, modyfying them, etc)
+         * 
+         * This is why the callbacks will be passed to the GameManager's event queue,
+         * and then processed synchronically within the GameManager's Update function.
+         * 
+         * Since the sender object reference won't be available in the callback function (no this.transform etc, since this becomes something else)
+         * we will pass the sender's reference to be able to use its methods in the callbacks
+         * 
+         */
+        public delegate void callbackFunc(GameObject sender, string error, string data);
+        public callbackFunc callback; 
+
+        public RequestData requestData;
+        private ResponseData responseData = null;
+
+        public void setReponseData(ResponseData receivedData)
+        {
+            this.responseData = receivedData;
+        }
+
+        /*
+         * This will ONLY be called from the game manager AFTER the websocket has written the response data into the Request object
+         * via the setResponseData method
+         */
+        public void performCallback()
+        {
+            this.callback(
+                this.requestData.getSender(),
+                this.responseData.error,
+                this.responseData.message
+            );
+        }
+
+        public Request()
+        {
+            requestData = new RequestData();
+        }
+    }
+
+
     /*
      * Every message from the server is a JSON string containing the following elements:
      * - Transaction id ('id' key) - used to determine the callback function that the message is adressed to
@@ -19,46 +68,57 @@ namespace Assets.Sockets
     }
 
     [System.Serializable]
-    class RequestData
+    public class RequestData
     {
         public string data; //data that will be send to the server
         public int id; //transaction id
+
+        // Is private so it won't be serialized
+        private GameObject sender;
+
+        // TODO: Check the c# properties instead of using standard setters/getters
+        public void setSender(GameObject sender)
+        {
+            this.sender = sender;
+        }
+
+        public GameObject getSender()
+        {
+            return this.sender;
+        }
+    }
+
+    public class ResponseData
+    {
+        public string error;
+        public string message;
+
+        public ResponseData(string error, string message)
+        {
+            this.error = error;
+            this.message = message;
+        }
     }
 
     public class WebSocket
     {
-
-        public delegate void receiveFunc(string error, string data);
-        public delegate void callbackFunc(string error, string data); //type of callback funcion
-
-        private int current_transaction_number = 0; // each request gets a transaction ID, which will be incremented during every single request
-                                                    // this way we can find the right callback function for each request, when the reponse comes
+        public GameManager gameManager;
 
 
-
-        /**
-         * Private class contains data for one request
+        /*
+         * each request gets a transaction ID, which will be incremented during every single request
+         * this way we can find the right callback function for each request, when the reponse comes
          */
-        private class Request
-        {
-            public callbackFunc callback; //receive data callback
-            public RequestData requestData;
-
-            public Request()
-            {
-                requestData = new RequestData();
-            }
-        }
+        private int current_transaction_number = 0; 
 
 
 
         private WebSocketSharp.WebSocket socket;
         private string url = "";
 
-        private List<Request> sendData = new List<Request>(); //!< send data and callbacks
+        private List<Request> sentData = new List<Request>(); //!< send data and callbacks
 
-        public receiveFunc received { set; private get; }
-
+        
         /**
          * Get connected status. if true then connection is established and
          * data transmision is possible
@@ -74,30 +134,10 @@ namespace Assets.Sockets
             }
         }
 
-        /**
-         * check if there is some new data
-         */
-        /*public bool isData { get
-            {
-                //return received.Count > 0;
-            }
-        }*/
-
-        //public bool busy = false; //!< true if socket is waiting for respons from server
-
-        public WebSocket()
+      
+        public WebSocket(string url)
         {
-            //toSend = new List<string>();
-            //received = new List<string>();
 
-            received = new receiveFunc((string error, string data) =>
-            {
-                Debug.Log("received funcion is not implemented");
-            });
-        }
-
-        public void connect(string url)
-        {
             //is socket connected end function
             if (this.isConnected == true) return;
 
@@ -105,34 +145,19 @@ namespace Assets.Sockets
             socket.Connect();
             this.url = url;
 
-            //clear toSend before next send
-            //toSend.Clear();
-
-
-            //on received event
+           //on received event
             socket.OnMessage += (sender, e) =>
             {
-                //Debug.Log("Socket " + this.url + " received a data: " + e.Data);
-                //busy = false; //socket is ready to send and receive next data
-                //received.Add(e.Data); //add data to received list
-
+    
                 //parse data to get transaction id
-                RawReceivedMessage receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
-                foreach (Request d in sendData)
-                {
-                    //finde right callback
-                    if (d.requestData.id == receivedMessage.id)
-                    {
-                        //callback when server responsed
-                        d.callback("", e.Data);
-                        return;
-                    }
-                }
+                var receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
 
-                //server push data to client
-                // what is this can somebody explain
-                this.received("", e.Data);
-
+                Request request = sentData.Find(r => r.requestData.id == receivedMessage.id);
+                request.setReponseData(
+                    new ResponseData(/* TODO: Add error handling and put it there -> */ "", receivedMessage.message)
+                );
+                GameManager.callbacksToProcess.Enqueue(request);
+                sentData.Remove(request);
             };
 
             //on open event
@@ -145,50 +170,41 @@ namespace Assets.Sockets
             socket.OnError += (sender, e) =>
             {
                 Debug.Log("Socket " + this.url + " received an error: " + e.Message);
+                Debug.Log(e.Exception);
 
             };
         }
 
 
         /**
-         * Send function add new frame to sending list
+         * Send a new request
          */
-        public void send(string messageToSend, callbackFunc callback)
+        public void send(GameObject sender, string messageToSend, Request.callbackFunc callback)
         {
             Debug.Log("Socket " + url + " received a send order: " + messageToSend);
 
-            //process data.
-
+            
+            //TODO: DESPAGHETTIZE
+            // create a Request constructor
             Request request = new Request();
             request.callback = callback;
+
+            request.requestData.setSender(sender);
+
+
             request.requestData.data = messageToSend;
             request.requestData.id = this.current_transaction_number++; //transaction id
 
-            if (sendData == null)
+
+            // huh?
+            if (sentData == null)
                 Debug.Log("Senddata is null!");
 
-            sendData.Add(request);
+            sentData.Add(request);
 
             socket.Send(JsonUtility.ToJson(request.requestData)); //send 
         }
 
-        /**
-         * Specialized function to send Login request
-         */
-        /*public void sendLogReq(string user, string pass)
-        {
-            string req = "{\"login\":\"" + user + "\",\"pass\": \"" + pass + "\", \"type\":\"auth_event\"}";
-            send(req);
-        }*/
-
-        /**
-         * Specialized function to send chunk request
-         */
-        /*public void sendChunkReq(double longitute, double latitude)
-        {
-            string req = "{\"lat\":\"" + latitude + "\",\"lon\": \"" + longitute+ "\", \"type\":\"location_event\"}";
-            send(req);
-        }*/
 
         /**
          * Disconnect from the server
@@ -200,34 +216,5 @@ namespace Assets.Sockets
         }
 
 
-
-
-
-        /**
-         * Function check if there is something to send, and send it.
-         * It could be run in subroutine
-         */
-        /*public void processOrders()
-        {
-            if (toSend.Count <= 0 || //no data to send
-                isConnected == false || //isn't connected
-                busy == true) //waiting for response
-                return;
-            
-            //send data
-            socket.Send(toSend.ElementAt(0));
-
-            //remove it from the list
-            toSend.RemoveAt(0);
-            busy = true; //socket has just send data. Waiting for response
-            Debug.Log("Socket " + url + " send data. last: " + toSend.Count);
-        }
-
-        public string getData()
-        {
-            string buf = received.ElementAt(0);
-            received.RemoveAt(0);
-            return buf;
-        }*/
     }
 }
