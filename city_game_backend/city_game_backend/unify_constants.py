@@ -1,4 +1,10 @@
 import CONSTANTS
+from sys import platform
+
+if platform != "linux" and platform != "linux2":
+    print('THIS CAN ONLY RUN ON LINUX BECAUSE I DON\'T HAVE TIME TO FIX THE WINDOWS PATH SYSTEM')
+    exit(2137)
+
 """
     We need to have the same constants file in both Python and C# so I built a simple converter.
 
@@ -36,5 +42,5 @@ generated_code += '''
 }
 '''
 
-with open('..\..\city_game_frontend\Assets\Scripts\Const.cs', 'w') as out_file:
+with open('../../city_game_frontend/Assets/Scripts/Const.cs', 'w') as out_file:
     out_file.write(generated_code)
