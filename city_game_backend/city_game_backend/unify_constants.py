@@ -6,8 +6,7 @@ import CONSTANTS
 """
 
 # Let's start from an empty class
-generated_code = '''
-/**
+generated_code = '''/**
  * @file contains all const data used in the aplication
  * 
  * 
@@ -24,7 +23,7 @@ variables =  [variable for variable in dir(CONSTANTS) if not variable.startswith
 for variable in variables:
     value = getattr(CONSTANTS, variable)
     
-    generated_code += 'public static '
+    generated_code += '\tpublic static '
     if isinstance(value, str):
         generated_code += f'string {variable} = "{value}";\n'
     elif isinstance(value, int):
@@ -37,4 +36,5 @@ generated_code += '''
 }
 '''
 
-print(generated_code)
+with open('..\..\city_game_frontend\Assets\Scripts\Const.cs', 'w') as out_file:
+    out_file.write(generated_code)
