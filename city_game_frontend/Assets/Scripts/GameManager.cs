@@ -87,18 +87,18 @@ public class GameManager : MonoBehaviour {
             current_chunk_lon = roundDownToChunkCords(lon);
 
             Debug.Log(server == null);
-            server.sendChunkRequest(lon, lat);
+            mapManager.sendChunkRequest(lon, lat);
 
 
-            server.sendChunkRequest(lon + Const.CHUNK_SIZE, lat + Const.CHUNK_SIZE);
-            server.sendChunkRequest(lon + Const.CHUNK_SIZE, lat - Const.CHUNK_SIZE);
-            server.sendChunkRequest(lon - Const.CHUNK_SIZE, lat + Const.CHUNK_SIZE);
-            server.sendChunkRequest(lon - Const.CHUNK_SIZE, lat - Const.CHUNK_SIZE);
+            mapManager.sendChunkRequest(lon + Const.CHUNK_SIZE, lat + Const.CHUNK_SIZE);
+            mapManager.sendChunkRequest(lon + Const.CHUNK_SIZE, lat - Const.CHUNK_SIZE);
+            mapManager.sendChunkRequest(lon - Const.CHUNK_SIZE, lat + Const.CHUNK_SIZE);
+            mapManager.sendChunkRequest(lon - Const.CHUNK_SIZE, lat - Const.CHUNK_SIZE);
 
-            server.sendChunkRequest(lon, lat + Const.CHUNK_SIZE);
-            server.sendChunkRequest(lon, lat - Const.CHUNK_SIZE);
-            server.sendChunkRequest(lon + Const.CHUNK_SIZE, lat);
-            server.sendChunkRequest(lon - Const.CHUNK_SIZE, lat);
+            mapManager.sendChunkRequest(lon, lat + Const.CHUNK_SIZE);
+            mapManager.sendChunkRequest(lon, lat - Const.CHUNK_SIZE);
+            mapManager.sendChunkRequest(lon + Const.CHUNK_SIZE, lat);
+            mapManager.sendChunkRequest(lon - Const.CHUNK_SIZE, lat);
 
 
         }

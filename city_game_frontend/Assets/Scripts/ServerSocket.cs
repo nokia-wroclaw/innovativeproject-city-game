@@ -16,19 +16,6 @@ public class ServerSocket : MonoBehaviour {
 
     private Assets.TimerSync timer = new Assets.TimerSync();
 
-    // retrieve chunk data class depending on given position
-    Request.callbackFunc mapDataCallbackFunction = new Request.callbackFunc((GameObject sender,string error, string data) =>
-    {
-        
-        //Debug.Log(data);
-        var chunkData = JsonUtility.FromJson<Assets.ChunkData>(data);
-
-        //Debug.Log(chunkData.latitude_lower_bound);
-
-        sender.GetComponent<ServerSocket>().mapManager.drawChunk(chunkData);
-
-    });
-
     Request.callbackFunc loginCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
         Debug.Log("Login success!");
@@ -58,6 +45,11 @@ public class ServerSocket : MonoBehaviour {
 
     }
 
+    public void send(GameObject sender, String data, Request.callbackFunc callback)
+    {
+        socket.send(sender, data, callback);
+    }
+
     private void initSocket()
     {
         Debug.Log("Trying connect");
@@ -69,8 +61,4 @@ public class ServerSocket : MonoBehaviour {
         socket.send(gameObject, JsonUtility.ToJson(new LoginData()), loginCallbackFunction);
     }
 
-    public void sendChunkRequest(float longitude, float latitude)
-    {
-        socket.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
-    }
 }

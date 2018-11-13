@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Sockets;
 
 public class MapManager : MonoBehaviour {
 
@@ -25,7 +26,7 @@ public class MapManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        server = ServerSocket.Instance;
     }
 	
 	// Update is called once per frame
@@ -33,7 +34,28 @@ public class MapManager : MonoBehaviour {
 
 	}
 
+    public void sendChunkRequest(float longitude, float latitude)
+    {
+        if(isChunkLoadedOnCoords(longitude, latitude))
+        {
+            Debug.Log("Chunk already there, not loading!");
+        } else { 
+        server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
+        }
+    }
 
+    // retrieve chunk data class depending on given position
+    Request.callbackFunc mapDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+
+        //Debug.Log(data);
+        var chunkData = JsonUtility.FromJson<Assets.ChunkData>(data);
+
+        //Debug.Log(chunkData.latitude_lower_bound);
+
+        sender.GetComponent<MapManager>().drawChunk(chunkData);
+
+    });
 
     public void drawChunk(Assets.ChunkData chunkData)
     {
@@ -103,5 +125,22 @@ public class MapManager : MonoBehaviour {
     public static float LongitudeToGameCoordinate(float lon)
     {
         return (lon - LONGITUDE_OFFSET) * 2000;
+    }
+
+    bool isChunkLoadedOnCoords(float lon, float lat)
+    {
+        if (chunks.ContainsKey(new Vector2(
+            roundDownToChunkCords(lon),
+            roundDownToChunkCords(lat)
+            )))
+            return true;
+
+        return false;
+    }
+
+    // TODO: Move into utils ore something
+    float roundDownToChunkCords(float x)
+    {
+        return Mathf.Floor(x * 100) / 100;
     }
 }
