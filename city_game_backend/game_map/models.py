@@ -1,4 +1,10 @@
 from django.db import models
+import math
+import city_game_backend.CONSTANTS as CONSTANTS
+
+
+def round_down(n):
+    return math.floor(n * 100) / 100
 
 
 class Chunk(models.Model):
@@ -18,3 +24,50 @@ class Chunk(models.Model):
 
     def __str__(self):
         return f"Chunk: {self.latitude_lower_bound}, {self.longitude_lower_bound}"
+
+
+class Structure(models.Model):
+    """
+    Every structure visible to other players that is, in some way, interactive
+    * Mineral sources
+    * Mineral mines, built by the players
+    * Other player-built structures
+    """
+
+    # Location data
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    chunk = models.ForeignKey(Chunk, on_delete=models.CASCADE)
+
+    # Gameplay-specific data
+    taken_over = models.BooleanField(default=False)
+    owner = models.ForeignKey('player_manager.Player', on_delete=models.CASCADE, default=None, null=True, blank=True)
+    tier = models.IntegerField(default=1)
+
+    # Resources types
+    # # We'll think about names later
+    GAME_RESOURCES = (
+        (CONSTANTS.RESOURCE_TYPE_1, 'Resource 1'),
+        (CONSTANTS.RESOURCE_TYPE_2, 'Resource 2'),
+        (CONSTANTS.RESOURCE_TYPE_3, 'Resource 3'),
+    )
+
+    resource_type = models.IntegerField(choices=GAME_RESOURCES)
+    resources_left = models.FloatField(default=100)  # TODO: think on the default values
+
+    # Automatic setting of the chunk field
+    def save(self, *args, **kwargs):
+        chunk_longitude = round_down(self.longitude)
+        chunk_latitude = round_down(self.latitude)
+
+        on_which_chunk: Chunk = Chunk.objects.filter(
+            longitude_lower_bound=chunk_longitude,
+            latitude_lower_bound=chunk_latitude
+        ).first()
+
+        if on_which_chunk is None:
+            raise Exception("No chunk to place the Structure on!")
+
+        self.chunk = on_which_chunk
+
+        super(Structure, self).save(*args, **kwargs)

@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from game_map.models import Chunk
 # Create your models here.
 
 
@@ -17,6 +16,9 @@ class Player(models.Model):
         null=False,
         blank=False
     )
+
+    def __str__(self):
+        return f'Player {self.nickname}'
 
 
 class ActivePlayer(models.Model):
@@ -39,7 +41,7 @@ class ActivePlayer(models.Model):
     )
 
     on_which_chunk = models.ForeignKey(
-        Chunk,
+        'game_map.Chunk',
         on_delete=models.CASCADE,
         null=True
     )
