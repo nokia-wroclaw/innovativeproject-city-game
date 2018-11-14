@@ -105,7 +105,7 @@ public class MapManager : MonoBehaviour {
             lines.material = roadMaterial;
             lines.textureMode = LineTextureMode.RepeatPerSegment;
             lines.material.mainTextureScale = new Vector2(1.0f, 1.0f);
-
+            
             lines.useWorldSpace = true;
 
             lines.positionCount = road.nodes.Count;
