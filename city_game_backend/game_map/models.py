@@ -1,10 +1,6 @@
 from django.db import models
-import math
+from .utils import round_down
 import city_game_backend.CONSTANTS as CONSTANTS
-
-
-def round_down(n):
-    return math.floor(n * 100) / 100
 
 
 class Chunk(models.Model):
