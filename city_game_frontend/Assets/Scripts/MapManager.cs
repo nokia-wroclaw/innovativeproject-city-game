@@ -5,6 +5,8 @@ using Assets.Sockets;
 
 public class MapManager : MonoBehaviour {
 
+    public Material roadMaterial;
+
     public static MapManager Instance { set; get; }
 
     ServerSocket server = ServerSocket.Instance;
@@ -98,8 +100,11 @@ public class MapManager : MonoBehaviour {
                 );
             lines.colorGradient = gradient;
 
-            Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
-            lines.material = whiteDiffuseMat;
+            //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
+            //lines.material = whiteDiffuseMat;
+            lines.material = roadMaterial;
+            lines.textureMode = LineTextureMode.RepeatPerSegment;
+            lines.material.mainTextureScale = new Vector2(1.0f, 1.0f);
 
             lines.useWorldSpace = true;
 
