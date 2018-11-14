@@ -8,7 +8,7 @@ except ImportError:
 import json
 import time
 
-SERVER_URL = "ws://localhost:8000/ws/"
+SERVER_URL = "ws://filipplotnicki.com:8000/ws/"
 SCALE = 27000
 CHUNK_SIZE = 0.01
 MARGIN = 0.002
@@ -17,11 +17,20 @@ AUTH_EVENT = 0
 LOCATION_EVENT = 'location_event'
 WINDOW_SIZE = 1000
 
+
+def create_message(data):
+    transaction = 1
+
+    return json.dumps({
+        'id': transaction,
+        'data': json.dumps(data)
+    })
+
+
 LOGIN_DATA = {
     'type': AUTH_EVENT,
-    'login': 'baczek',
+    'login': 'gracz',
     'pass': 'baczekbezraczek',
-    'id': 12
 }
 
 
@@ -70,7 +79,7 @@ def on_close(ws):
 
 def on_open(ws):
     print('### connection established ###')
-    ws.send(json.dumps(LOGIN_DATA))
+    ws.send(create_message(LOGIN_DATA))
 
 
 
