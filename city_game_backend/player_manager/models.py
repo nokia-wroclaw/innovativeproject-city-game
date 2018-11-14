@@ -40,11 +40,5 @@ class ActivePlayer(models.Model):
         null=True
     )
 
-    on_which_chunk = models.ForeignKey(
-        'game_map.Chunk',
-        on_delete=models.CASCADE,
-        null=True
-    )
-
     def __str__(self):
         return f'{self.player.nickname} at {self.longitude}, {self.latitude}'
