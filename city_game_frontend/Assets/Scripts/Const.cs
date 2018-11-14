@@ -11,6 +11,9 @@ public static class Const
 	public static int MESSAGE_TYPE_AUTH_EVENT = 0;
 	public static int MESSAGE_TYPE_CHUNK_REQUEST = 2;
 	public static int MESSAGE_TYPE_LOCATION_EVENT = 1;
+	public static int RESOURCE_TYPE_1 = 1;
+	public static int RESOURCE_TYPE_2 = 2;
+	public static int RESOURCE_TYPE_3 = 3;
 	public static string SERVER_URL = "filipplotnicki.com:8000/ws/";
 
 }
