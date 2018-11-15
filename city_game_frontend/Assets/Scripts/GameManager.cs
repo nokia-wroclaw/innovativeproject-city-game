@@ -46,10 +46,22 @@ public class GameManager : MonoBehaviour {
         if (callbacksToProcess.Count > 0)
         {
             Request eventToHandle = callbacksToProcess.Dequeue();
+
+            if (eventToHandle.getResponseData().isSpecialMessage)
+            {
+                handleSpecialEvent(eventToHandle);
+            }
+
             eventToHandle.performCallback();
         }
     }
 
+    void handleSpecialEvent(Request eventToHandle)
+    {
+        Debug.Log("Handling special event!");
+    }
+
+    
     public void OnLogin()
     {
         
