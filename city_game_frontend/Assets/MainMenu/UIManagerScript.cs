@@ -15,6 +15,11 @@ public class UIManagerScript : MonoBehaviour {
         Application.Quit();
     }
 
+    public void StartTheGame()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
     
 
 	// Use this for initialization
