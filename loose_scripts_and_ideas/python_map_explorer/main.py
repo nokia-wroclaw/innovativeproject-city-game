@@ -14,7 +14,7 @@ CHUNK_SIZE = 0.01
 MARGIN = 0.002
 
 AUTH_EVENT = 0
-LOCATION_EVENT = 'location_event'
+LOCATION_EVENT = 1
 WINDOW_SIZE = 1000
 
 
@@ -82,7 +82,6 @@ def on_open(ws):
     ws.send(create_message(LOGIN_DATA))
 
 
-
 def send_map_request():
     lon = float(lon_entry.get())
     lat = float(lat_entry.get())
@@ -93,7 +92,7 @@ def send_map_request():
         'lat': lat
     }
 
-    ws.send(json.dumps(data))
+    ws.send(create_message(data))
 
 
 ws = websocket.WebSocketApp(
