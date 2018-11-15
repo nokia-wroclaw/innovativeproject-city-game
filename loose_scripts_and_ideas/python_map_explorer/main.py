@@ -8,13 +8,15 @@ except ImportError:
 import json
 import time
 
-SERVER_URL = "ws://filipplotnicki.com:8000/ws/"
+SERVER_URL = "ws://localhost:8000/ws/"
 SCALE = 27000
 CHUNK_SIZE = 0.01
 MARGIN = 0.002
 
 AUTH_EVENT = 0
 LOCATION_EVENT = 1
+MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3
+
 WINDOW_SIZE = 1000
 
 
@@ -87,7 +89,7 @@ def send_map_request():
     lat = float(lat_entry.get())
 
     data = {
-        'type': LOCATION_EVENT,
+        'type': MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST,
         'lon': lon,
         'lat': lat
     }
@@ -111,11 +113,11 @@ master.configure(background='#263238')
 
 lat_entry = Entry(master)
 lat_entry.pack()
-lat_entry.insert(0, "51.11")
+lat_entry.insert(0, "51.23")
 
 lon_entry = Entry(master)
 lon_entry.pack()
-lon_entry.insert(0, "17.06")
+lon_entry.insert(0, "17.10")
 
 
 confirm = Button(master, text='load', command=send_map_request)

@@ -10,6 +10,7 @@ public static class Const
 	public static float CHUNK_SIZE = 0.01F;
 	public static int MESSAGE_TYPE_AUTH_EVENT = 0;
 	public static int MESSAGE_TYPE_CHUNK_REQUEST = 2;
+	public static int MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3;
 	public static int MESSAGE_TYPE_LOCATION_EVENT = 1;
 	public static int RESOURCE_TYPE_1 = 1;
 	public static int RESOURCE_TYPE_2 = 2;

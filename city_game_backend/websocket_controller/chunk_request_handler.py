@@ -1,6 +1,6 @@
 import math
 from game_map.models import Chunk
-from .message_utils import error_message
+from .message_utils import error_message, round_down
 
 
 def handle_chunk_request(message, websocket) -> str:
@@ -31,6 +31,4 @@ def handle_chunk_request(message, websocket) -> str:
     return chunk_to_send.roads
 
 
-def round_down(n):
-    return math.floor(n * 100) / 100
 

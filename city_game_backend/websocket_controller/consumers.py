@@ -4,14 +4,18 @@ from channels.generic.websocket import WebsocketConsumer
 
 import json
 import logging
+import city_game_backend.CONSTANTS as CONSTANTS
+from .message_utils import error_message
+
 from .location_event_handler import handle_location_event
 from .auth_event_handler import handle_auth_event
 from .disconnect_event_handler import handle_disconnect_event
-import city_game_backend.CONSTANTS as CONSTANTS
-from .message_utils import error_message
 from .chunk_request_handler import handle_chunk_request
+from .dynamic_chunk_data_request_handler import handle_dynamic_chunk_data_request
+
 
 logger = logging.getLogger(__name__)
+
 
 class ClientCommunicationConsumer(WebsocketConsumer):
     """
@@ -81,6 +85,8 @@ class ClientCommunicationConsumer(WebsocketConsumer):
             return handle_location_event(message, self)
         elif message_type == CONSTANTS.MESSAGE_TYPE_CHUNK_REQUEST:
             return handle_chunk_request(message, self)
+        elif message_type == CONSTANTS.MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST:
+            return handle_dynamic_chunk_data_request(message, self)
         # ... another message type handlers down here ...
         else:
             self.send('Wrong message type')
