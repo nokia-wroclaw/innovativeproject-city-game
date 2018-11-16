@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: FadeOut
+  m_Name: FadeInOut
   m_Shader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -64,6 +64,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Edges: 0.35
+    - _FadeFromTime: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
