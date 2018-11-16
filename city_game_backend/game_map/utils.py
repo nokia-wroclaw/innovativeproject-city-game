@@ -4,7 +4,7 @@ import json
 from player_manager.models import ActivePlayer
 from city_game_backend.CONSTANTS import CHUNK_SIZE
 from websocket_controller.active_connections_storage import ActiveConnectionsStorage
-
+from city_game_backend import CONSTANTS
 
 def round_down(n):
     return math.floor(n * 100) / 100
@@ -25,10 +25,15 @@ def notify_dynamic_map_structure_change(structure):
         latitude__gte=lower_latitude
     )
 
-    for receiver in notification_receivers:
-        ActiveConnectionsStorage.get(receiver.player.user.id).send(json.dumps({
+    message_to_send: str = json.dumps({
+        'id': CONSTANTS.SPECIAL_MESSAGE_MAP_UPDATE,
+        'message': json.dumps({
             'structures': struct_2_dict(structure)
-        }))
+        })
+    })
+
+    for receiver in notification_receivers:
+        ActiveConnectionsStorage.get(receiver.player.user.id).send(message_to_send)
 
 
 def struct_2_dict(struct):
