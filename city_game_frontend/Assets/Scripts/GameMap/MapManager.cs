@@ -19,6 +19,13 @@ public class MapManager : MonoBehaviour {
      */
     Dictionary<Vector2, GameObject> chunks = new Dictionary<Vector2, GameObject>();
 
+
+    /*
+     * Dynamic struct that will change during ruyntime are stored separately
+     * the dictionary key is the ID of the struct
+     */
+    Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
+
     private void Awake()
     {
         Instance = this;
@@ -42,6 +49,8 @@ public class MapManager : MonoBehaviour {
         } else { 
         server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
         }
+
+        server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
     }
 
     // retrieve chunk data class depending on given position
@@ -56,6 +65,38 @@ public class MapManager : MonoBehaviour {
         sender.GetComponent<MapManager>().drawChunk(chunkData);
 
     });
+
+    /*
+     * Retrieve dynamic chunks that are located on a given chunk
+     */
+    Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+        DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
+
+        foreach( var structureData in structsData.structures)
+        {
+
+            MapManager.Instance.addOrUpdateStruct(structureData);
+        }
+    });
+
+    void addOrUpdateStruct(DynamicStructData structData)
+    {
+        if(dynamicStructs.ContainsKey(structData.id)) {
+
+            Destroy(dynamicStructs[structData.id]);
+            dynamicStructs.Remove(structData.id);
+
+        }
+
+        GameObject structureObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+        structureObject.transform.position = new Vector3(
+            LatitudeToGameCoordinate(structData.lat),
+            2,
+            LongitudeToGameCoordinate(structData.lon));
+
+        dynamicStructs.Add(structData.id, structureObject);
+    }
 
     public void drawChunk(Assets.ChunkData chunkData)
     {
