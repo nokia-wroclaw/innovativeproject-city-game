@@ -1,20 +1,22 @@
 from game_map.models import Structure, Chunk
-from .message_utils import round_down, error_message
+from .message_utils import round_down, error_message, require_message_content
 from city_game_backend import CONSTANTS
 # from django.core import serializers
 import json
 
-def handle_dynamic_chunk_data_request(message, websocket) -> str:
-    try:
-        chunk_lat = round_down(
-            message['lat']
-        )
 
-        chunk_lon = round_down(
-            message['lon']
-        )
-    except KeyError or TypeError:
-        return error_message('Wrong lat/lon data')
+@require_message_content(
+    ('lat', float),
+    ('lon', float)
+)
+def handle_dynamic_chunk_data_request(message, websocket) -> str:
+    chunk_lat = round_down(
+        message['lat']
+    )
+
+    chunk_lon = round_down(
+        message['lon']
+    )
 
     requested_chunk: Chunk = Chunk.objects.filter(
         latitude_lower_bound=chunk_lat,
