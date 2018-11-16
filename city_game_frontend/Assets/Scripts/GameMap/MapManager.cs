@@ -10,6 +10,7 @@ public class MapManager : MonoBehaviour {
     ServerSocket server = ServerSocket.Instance;
 
     public GameObject element;
+    public Material roadMaterial;
 
     const int MAP_SCALE_FACTOR = 20000;
 
@@ -51,10 +52,11 @@ public class MapManager : MonoBehaviour {
         {
             Debug.Log("Chunk already there, not loading!");
         } else { 
-        server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
+            server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
+            server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
         }
 
-        server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
+        
     }
 
     // retrieve chunk data class depending on given position
@@ -99,13 +101,6 @@ public class MapManager : MonoBehaviour {
             0,
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
 
-        /*
-        GameObject structureObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-        structureObject.transform.position = new Vector3(
-            LatitudeToGameCoordinate(structData.lat),
-            2,
-            LongitudeToGameCoordinate(structData.lon));
-            */
         dynamicStructs.Add(structData.id, structureObject);
     }
 
@@ -150,7 +145,7 @@ public class MapManager : MonoBehaviour {
                 );
             lines.colorGradient = gradient;
 
-            Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
+            Material whiteDiffuseMat = roadMaterial;
             lines.material = whiteDiffuseMat;
 
             lines.useWorldSpace = true;
