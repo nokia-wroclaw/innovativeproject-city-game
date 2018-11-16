@@ -9,6 +9,10 @@ public class MapManager : MonoBehaviour {
 
     ServerSocket server = ServerSocket.Instance;
 
+    public GameObject element;
+
+    const int MAP_SCALE_FACTOR = 20000;
+
 
     //TODO: SET THEM DYNAMICALLY
     const float LATITUDE_OFFSET = 51.1F;
@@ -88,13 +92,20 @@ public class MapManager : MonoBehaviour {
             dynamicStructs.Remove(structData.id);
 
         }
+        
 
+        GameObject structureObject = Instantiate(element, new Vector3(
+            LatitudeToGameCoordinate(structData.lat),
+            0,
+            LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
+
+        /*
         GameObject structureObject = GameObject.CreatePrimitive(PrimitiveType.Capsule);
         structureObject.transform.position = new Vector3(
             LatitudeToGameCoordinate(structData.lat),
             2,
             LongitudeToGameCoordinate(structData.lon));
-
+            */
         dynamicStructs.Add(structData.id, structureObject);
     }
 
@@ -127,8 +138,8 @@ public class MapManager : MonoBehaviour {
             var lines = roadObject.GetComponent<LineRenderer>();
             lines.transform.Rotate(new Vector3(90, 0, 0));
             lines.alignment = LineAlignment.Local;
-            lines.startWidth= 0.1F;
-            lines.endWidth = 0.1F;
+            lines.startWidth= 1F;
+            lines.endWidth = 1F;
 
             // A simple 2 color gradient with a fixed alpha of 1.0f.
             float alpha = 1.0f;
@@ -160,12 +171,12 @@ public class MapManager : MonoBehaviour {
 
     public static float LatitudeToGameCoordinate(float lat)
     {
-        return (lat - LATITUDE_OFFSET) * 2000;
+        return (lat - LATITUDE_OFFSET) * MAP_SCALE_FACTOR;
     }
 
     public static float LongitudeToGameCoordinate(float lon)
     {
-        return (lon - LONGITUDE_OFFSET) * 2000;
+        return (lon - LONGITUDE_OFFSET) * MAP_SCALE_FACTOR;
     }
 
     bool isChunkLoadedOnCoords(float lon, float lat)
