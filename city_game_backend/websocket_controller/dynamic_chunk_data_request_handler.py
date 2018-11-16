@@ -1,6 +1,7 @@
 from game_map.models import Structure, Chunk
 from .message_utils import round_down, error_message, require_message_content
 from city_game_backend import CONSTANTS
+from game_map.utils import struct_2_dict
 # from django.core import serializers
 import json
 
@@ -39,21 +40,7 @@ def handle_dynamic_chunk_data_request(message, websocket) -> str:
     ))
     """
 
-    structures_to_send = [
-        {
-            'id': struct.pk,
-
-            'lat': struct.latitude,
-            'lon': struct.longitude,
-
-            'taken_over': struct.taken_over,
-            'owner': struct.owner.nickname if struct.taken_over else '',  # Is this spaghetti ?
-
-            'resource_type': struct.resource_type,
-            'resources_left': struct.resources_left
-        }
-        for struct in requested_structures
-    ]
+    structures_to_send = [struct_2_dict(struct) for struct in requested_structures]
 
     response = {
         'structures': structures_to_send
