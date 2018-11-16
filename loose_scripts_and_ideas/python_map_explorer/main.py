@@ -16,8 +16,7 @@ MARGIN = 0.002
 AUTH_EVENT = 0
 LOCATION_EVENT = 1
 MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3
-
-WINDOW_SIZE = 1000
+MESSAGE_TYPE_OVERTAKE_REQUEST = 4
 
 
 def create_message(data):
@@ -84,12 +83,19 @@ def on_open(ws):
     ws.send(create_message(LOGIN_DATA))
 
 
+def send_overtake_struct_request():
+    ws.send(create_message({
+        'type': MESSAGE_TYPE_OVERTAKE_REQUEST,
+        'id': int(overtake_id.get())
+    }))
+
+
 def send_map_request():
     lon = float(lon_entry.get())
     lat = float(lat_entry.get())
 
     data = {
-        'type': MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST,
+        'type': LOCATION_EVENT,
         'lon': lon,
         'lat': lat
     }
@@ -120,12 +126,14 @@ lon_entry.pack()
 lon_entry.insert(0, "17.10")
 
 
-confirm = Button(master, text='load', command=send_map_request)
-confirm.pack()
+location = Button(master, text='Send location', command=send_map_request)
+location.pack()
 
-w = Canvas(master, width=WINDOW_SIZE*1.3, height=WINDOW_SIZE)
-w.configure(background='#263238')
+overtake = Button(master, text='Overtake struct', command=send_overtake_struct_request)
+overtake.pack()
 
-w.pack()
+overtake_id = Entry(master)
+overtake_id.pack()
+overtake_id.insert(0, "1")
 
 mainloop()
