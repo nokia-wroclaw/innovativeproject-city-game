@@ -2,11 +2,15 @@ from django.contrib.auth import authenticate
 import logging
 from .active_connections_storage import ActiveConnectionsStorage
 from player_manager.models import Player, ActivePlayer
-from .message_utils import SUCCESS_MESSAGE, error_message
+from .message_utils import SUCCESS_MESSAGE, error_message, require_message_content
 
 logger = logging.getLogger(__name__)
 
 
+@require_message_content(
+    ('login', str),
+    ('pass', str)
+)
 def handle_auth_event(message: dict, websocket):
     """
     In order to authenticate, the user must send the following:
@@ -37,7 +41,6 @@ def handle_auth_event(message: dict, websocket):
     if player is None:
         logger.critical(f'PLAYER ACCOUNT CONFIGURED WRONGLY, USERNAME: {user.username}')
         return error_message('Player account not configured, have u created the Player object in the db?')
-
 
     # Checking if the player is not logged in already
     check_if_logged_in = ActivePlayer.objects.filter(
