@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour {
             );
 
         
-        if (/*roundDownToChunkCords(lon) == current_chunk_lon && roundDownToChunkCords(lat) == current_chunk_lat*/ false)
+        if (roundDownToChunkCords(lon) == current_chunk_lon && roundDownToChunkCords(lat) == current_chunk_lat)
         {
             Debug.Log("Location has changed, but you are still on the same chunk!");
             Debug.Log("Won't draw now..");

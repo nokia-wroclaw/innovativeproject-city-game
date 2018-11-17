@@ -42,8 +42,8 @@ public class CameraHandler : MonoBehaviour
                 if (Input.GetTouch(0).phase == TouchPhase.Moved)
                 {
                     Vector3 NewPosition = GetWorldPosition();
-                    Vector3 PositionDifference = NewPosition - StartPosition;
-                    camera.transform.Translate(-PositionDifference);
+                    float PositionDifference = NewPosition.x - StartPosition.x;
+                    camera.transform.Rotate(new Vector3(0, PositionDifference, 0));
                 }
                 StartPosition = GetWorldPosition();
                 Debug.Log("Hello");

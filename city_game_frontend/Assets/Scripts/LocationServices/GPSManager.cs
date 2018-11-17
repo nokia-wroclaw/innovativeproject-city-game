@@ -29,6 +29,8 @@ namespace Assets
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
 
+            Debug.Log("GPS: " + latitude + ", " + longitude);
+
             gameManager.OnLocationChanged(longitude, latitude);
         }
 
@@ -39,6 +41,12 @@ namespace Assets
 
         private IEnumerator InitializationOfLocationService()
         {
+            // Wait until the editor and unity remote are connected before starting a location service
+            if (true)
+            {
+                yield return new WaitForSeconds(5);
+            }
+
             if (!Input.location.isEnabledByUser)
             {
                 Debug.Log("Location services have been disabled");
