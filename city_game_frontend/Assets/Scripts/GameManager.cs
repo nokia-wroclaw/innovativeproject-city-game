@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour {
 
         locationIndicator.transform.position = new Vector3(
             MapManager.LatitudeToGameCoordinate(lat),
-            2,
+            locationIndicator.transform.position.y,
             MapManager.LongitudeToGameCoordinate(lon)
 
             );

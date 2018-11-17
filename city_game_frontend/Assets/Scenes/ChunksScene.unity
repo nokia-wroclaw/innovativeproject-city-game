@@ -248,8 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75430fcf82c73a349a92768a07e19d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: {fileID: 100006, guid: 0e603406d410c0542988245cf2c31e49, type: 3}
   roadMaterial: {fileID: 2100000, guid: 8fec9b8ce158a954b9be39ce8ac2c8ec, type: 2}
+  element: {fileID: 100006, guid: 0e603406d410c0542988245cf2c31e49, type: 3}
 --- !u!4 &403958492
 Transform:
   m_ObjectHideFlags: 0
