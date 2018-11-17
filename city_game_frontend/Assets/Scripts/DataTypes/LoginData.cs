@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class LoginData
 {
-    public int type = 0;
+    public int type = Const.MESSAGE_TYPE_AUTH_EVENT;
     public string login = "gracz";
     public string pass = "baczekbezraczek";
 

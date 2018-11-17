@@ -12,10 +12,6 @@ public class GameManager : MonoBehaviour {
     ServerSocket server;
     MapManager mapManager;
 
-    public bool fakeLocation = false;
-    public float fake_lat = 51.107621F;
-    public float fake_lon = 17.103190F;
-
     public float current_chunk_lat = -10000;
     public float current_chunk_lon = -10000;
 
@@ -46,10 +42,22 @@ public class GameManager : MonoBehaviour {
         if (callbacksToProcess.Count > 0)
         {
             Request eventToHandle = callbacksToProcess.Dequeue();
+
+            if (eventToHandle.getResponseData().isSpecialMessage)
+            {
+                handleSpecialEvent(eventToHandle);
+            }
+
             eventToHandle.performCallback();
         }
     }
 
+    void handleSpecialEvent(Request eventToHandle)
+    {
+        Debug.Log("Handling special event!");
+    }
+
+    
     public void OnLogin()
     {
         
@@ -58,16 +66,9 @@ public class GameManager : MonoBehaviour {
     public void OnLocationChanged(float lon, float lat)
     {
 
-        if (fakeLocation)
-        {
-            lon = fake_lon;
-            lat = fake_lat;
-        }
-
-
         locationIndicator.transform.position = new Vector3(
             MapManager.LatitudeToGameCoordinate(lat),
-            2,
+            locationIndicator.transform.position.y,
             MapManager.LongitudeToGameCoordinate(lon)
 
             );

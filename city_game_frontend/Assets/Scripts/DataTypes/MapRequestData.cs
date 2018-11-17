@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class MapRequestData
 {
-    public int type = 2;
+    public int type = Const.MESSAGE_TYPE_CHUNK_REQUEST;
     public float lon;
     public float lat;
 

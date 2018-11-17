@@ -35,6 +35,11 @@ namespace Assets.Sockets
             this.responseData = receivedData;
         }
 
+        public ResponseData getResponseData()
+        {
+            return this.responseData;
+        }
+
         /*
          * This will ONLY be called from the game manager AFTER the websocket has written the response data into the Request object
          * via the setResponseData method
@@ -93,10 +98,16 @@ namespace Assets.Sockets
         public string error;
         public string message;
 
+        // The two below only apply if the message is a special, not used in the standard request -> callback mechanism
+        public bool isSpecialMessage;
+        public int specialMessageID;
+
         public ResponseData(string error, string message)
         {
             this.error = error;
             this.message = message;
+
+            isSpecialMessage = false;
         }
     }
 
@@ -109,7 +120,7 @@ namespace Assets.Sockets
          * each request gets a transaction ID, which will be incremented during every single request
          * this way we can find the right callback function for each request, when the reponse comes
          */
-        private int current_transaction_number = 0; 
+        private int current_transaction_number = 101; 
 
 
 
@@ -152,11 +163,28 @@ namespace Assets.Sockets
                 //parse data to get transaction id
                 var receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
 
+                /* 
+                 * Special messages - the ones that are not client requests, but a info pushed from the server without asking for it
+                 * such as notifications and map structures changes have ids smaller than 100. They are treated differently
+                 */
+                if (receivedMessage.id < 100)
+                {
+                    Request newSpecialRequest = new Request();
+                    ResponseData specialResponseData = new ResponseData("", receivedMessage.message);
+                    specialResponseData.isSpecialMessage = true;
+                    specialResponseData.specialMessageID = receivedMessage.id;
+
+                    newSpecialRequest.setReponseData(
+                        specialResponseData
+                    );
+                }
+                 
                 Request request = sentData.Find(r => r.requestData.id == receivedMessage.id);
                 request.setReponseData(
                     new ResponseData(/* TODO: Add error handling and put it there -> */ "", receivedMessage.message)
                 );
                 GameManager.callbacksToProcess.Enqueue(request);
+                
                 sentData.Remove(request);
             };
 

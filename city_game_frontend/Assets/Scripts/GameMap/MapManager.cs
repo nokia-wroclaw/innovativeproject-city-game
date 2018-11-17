@@ -11,6 +11,11 @@ public class MapManager : MonoBehaviour {
 
     ServerSocket server = ServerSocket.Instance;
 
+    public GameObject element;
+    //public Material roadMaterial;
+
+    const int MAP_SCALE_FACTOR = 20000;
+
 
     //TODO: SET THEM DYNAMICALLY
     const float LATITUDE_OFFSET = 51.1F;
@@ -20,6 +25,13 @@ public class MapManager : MonoBehaviour {
      * We store all the chunk object references inside this dictionary
      */
     Dictionary<Vector2, GameObject> chunks = new Dictionary<Vector2, GameObject>();
+
+
+    /*
+     * Dynamic struct that will change during ruyntime are stored separately
+     * the dictionary key is the ID of the struct
+     */
+    Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
 
     private void Awake()
     {
@@ -42,8 +54,11 @@ public class MapManager : MonoBehaviour {
         {
             Debug.Log("Chunk already there, not loading!");
         } else { 
-        server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
+            server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
+            server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
         }
+
+        
     }
 
     // retrieve chunk data class depending on given position
@@ -58,6 +73,38 @@ public class MapManager : MonoBehaviour {
         sender.GetComponent<MapManager>().drawChunk(chunkData);
 
     });
+
+    /*
+     * Retrieve dynamic chunks that are located on a given chunk
+     */
+    Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+        DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
+
+        foreach( var structureData in structsData.structures)
+        {
+
+            MapManager.Instance.addOrUpdateStruct(structureData);
+        }
+    });
+
+    void addOrUpdateStruct(DynamicStructData structData)
+    {
+        if(dynamicStructs.ContainsKey(structData.id)) {
+
+            Destroy(dynamicStructs[structData.id]);
+            dynamicStructs.Remove(structData.id);
+
+        }
+        
+
+        GameObject structureObject = Instantiate(element, new Vector3(
+            LatitudeToGameCoordinate(structData.lat),
+            0,
+            LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
+
+        dynamicStructs.Add(structData.id, structureObject);
+    }
 
     public void drawChunk(Assets.ChunkData chunkData)
     {
@@ -88,8 +135,8 @@ public class MapManager : MonoBehaviour {
             var lines = roadObject.GetComponent<LineRenderer>();
             lines.transform.Rotate(new Vector3(90, 0, 0));
             lines.alignment = LineAlignment.Local;
-            lines.startWidth= 0.1F;
-            lines.endWidth = 0.1F;
+            lines.startWidth= 1F;
+            lines.endWidth = 1F;
 
             // A simple 2 color gradient with a fixed alpha of 1.0f.
             float alpha = 1.0f;
@@ -100,12 +147,18 @@ public class MapManager : MonoBehaviour {
                 );
             lines.colorGradient = gradient;
 
+            /*
+            Material whiteDiffuseMat = roadMaterial;
+            lines.material = whiteDiffuseMat;
+            */
+
             //Material whiteDiffuseMat = new Material(Shader.Find("Unlit/Texture"));
             //lines.material = whiteDiffuseMat;
             lines.material = roadMaterial;
             lines.textureMode = LineTextureMode.RepeatPerSegment;
             lines.material.mainTextureScale = new Vector2(1.0f, 1.0f);
             
+
             lines.useWorldSpace = true;
 
             lines.positionCount = road.nodes.Count;
@@ -124,12 +177,12 @@ public class MapManager : MonoBehaviour {
 
     public static float LatitudeToGameCoordinate(float lat)
     {
-        return (lat - LATITUDE_OFFSET) * 2000;
+        return (lat - LATITUDE_OFFSET) * MAP_SCALE_FACTOR;
     }
 
     public static float LongitudeToGameCoordinate(float lon)
     {
-        return (lon - LONGITUDE_OFFSET) * 2000;
+        return (lon - LONGITUDE_OFFSET) * MAP_SCALE_FACTOR;
     }
 
     bool isChunkLoadedOnCoords(float lon, float lat)
