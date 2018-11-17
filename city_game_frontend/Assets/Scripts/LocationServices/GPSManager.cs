@@ -15,6 +15,12 @@ namespace Assets
 
         public float latitude, longitude;
 
+#if UNITY_EDITOR
+        public float fakeLatitude;
+        public float fakeLongitude;
+        public bool fakeLocation = false;
+#endif
+
         private void Start()
         {
             Instance = this;
@@ -29,9 +35,20 @@ namespace Assets
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
 
-            Debug.Log("GPS: " + latitude + ", " + longitude);
+#if UNITY_EDITOR
+            if (fakeLocation)
+            {
+                longitude = fakeLongitude;
+                latitude = fakeLatitude;
+            }
+#endif
 
-            gameManager.OnLocationChanged(longitude, latitude);
+            if (latitude != 0.0F && longitude != 0.0F) { 
+                gameManager.OnLocationChanged(longitude, latitude);
+                Debug.Log("No gps connection!");
+            }
+
+            Debug.Log("GPS: " + latitude + ", " + longitude);
         }
 
         private void Update()
@@ -41,11 +58,14 @@ namespace Assets
 
         private IEnumerator InitializationOfLocationService()
         {
+
             // Wait until the editor and unity remote are connected before starting a location service
-            if (true)
+#if UNITY_EDITOR
+            if (UnityEditor.EditorApplication.isRemoteConnected)
             {
                 yield return new WaitForSeconds(5);
             }
+#endif
 
             if (!Input.location.isEnabledByUser)
             {
