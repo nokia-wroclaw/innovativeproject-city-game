@@ -44,26 +44,26 @@
 			
 			void surf(Input IN, inout SurfaceOutputStandard o) {
 
-				
+
 				if (_FadeFromTime == 1) {
-					_Level = abs(sin(_Time[1]));
+					_Level = sin(_Time[1]) + 0.5;
 				}
 
 				fixed4 c = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 				fixed4 cutout = tex2D(_DissolveTex, IN.uv_MainTex).g;
 
 				o.Albedo = c.rgb;
+				//o.Albedo = lerp(_EdgeColour1, _EdgeColour2, (c.rgb - _Level) / _Edges);
 
-				
 
 
 				o.Metallic = _Metallic;
 				o.Smoothness = _Glossiness;
-				if (_Level == 0) {
-					o.Alpha = 0;
-				}
-				else {
-					o.Alpha = lerp(_EdgeColour1, _EdgeColour2, (cutout.a - _Level) / _Edges);
+
+				o.Alpha = lerp(_EdgeColour1, _EdgeColour2, (cutout.a - _Level) / _Edges);
+				if (o.Alpha > 0.4 && o.Alpha < 0.6) {
+					o.Albedo = _EdgeColour1;
+					o.Alpha = 0.9;
 				}
 			}
 		ENDCG
