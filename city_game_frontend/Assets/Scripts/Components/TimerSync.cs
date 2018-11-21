@@ -44,6 +44,14 @@ namespace Assets
 
             return ((now - d) > timeInMilliseconds); //calc time diff
         }
+
+        public double deltaTime()
+        {
+            //get current time in millisecs
+            double now = DateTime.Now.TimeOfDay.TotalMilliseconds;
+
+            return now - d; //calc time diff
+        }
     }
 
 }
