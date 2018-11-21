@@ -68,12 +68,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Edges: 0.2
-    - _FadeFromTime: 1
+    - _FadeFromTime: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GreenLevel: 0
-    - _Level: 0.37
+    - _Level: 1
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -82,6 +82,7 @@ Material:
     - _ShakeDisplacement: 0.49
     - _ShakeTime: 1
     - _ShakeWindspeed: 0
+    - _Shininess: 0.078125
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1

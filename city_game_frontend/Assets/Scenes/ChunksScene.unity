@@ -203,6 +203,18 @@ Prefab:
       propertyPath: m_Name
       value: tree1 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 25.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -30.77
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
   m_IsPrefabParent: 0
@@ -688,6 +700,10 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1230776545 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
+  m_PrefabInternal: {fileID: 390325156}
 --- !u!1 &1254907990
 GameObject:
   m_ObjectHideFlags: 0
@@ -698,7 +714,7 @@ GameObject:
   - component: {fileID: 1254907992}
   - component: {fileID: 1254907991}
   m_Layer: 0
-  m_Name: FaderManager
+  m_Name: FadeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -712,11 +728,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1254907990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31ab220f5a01a65499c852e231ff751a, type: 3}
+  m_Script: {fileID: 11500000, guid: 2bdc73104b7940b49918fdad80a61905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Obj:
+  _InitObjects:
   - {fileID: 863774387}
+  - {fileID: 1230776545}
+  animationDuration: 1000
+  _ShowIndex: -1
+  _HideIndex: -1
 --- !u!4 &1254907992
 Transform:
   m_ObjectHideFlags: 0
@@ -888,7 +908,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400006, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.8
+      value: 100.2
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
       propertyPath: m_LocalPosition.y
@@ -938,7 +958,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400006, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 34.652893
+      value: 59.48
       objectReference: {fileID: 0}
     - target: {fileID: 400006, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
       propertyPath: m_LocalPosition.y
