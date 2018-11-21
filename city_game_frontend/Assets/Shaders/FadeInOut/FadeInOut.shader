@@ -4,8 +4,8 @@
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_DissolveTex("Dissolve Texture", 2D) = "white" {}
 		_Level("Dissolution level", Range(0.0, 1.0)) = 0.1
-		_EdgeColour1("Edge colour 1", Color) = (1.0, 1.0, 1.0, 1.0)
-		_EdgeColour2("Edge colour 2", Color) = (1.0, 1.0, 1.0, 1.0)
+		_EdgeColour1("Edge colour 1", Color) = (1.0, 0, 0, 1.0)
+		_EdgeColour2("Edge colour 2", Color) = (0, 0, 0, 1.0)
 		_Edges("Edge width", Range(0.0, 1.0)) = 0.1
 		_FadeFromTime("timeFading", Range(0.0, 1.0)) = 1
 
