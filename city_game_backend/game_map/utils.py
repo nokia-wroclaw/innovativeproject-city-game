@@ -28,7 +28,7 @@ def notify_dynamic_map_structure_change(structure):
     message_to_send: str = json.dumps({
         'id': CONSTANTS.SPECIAL_MESSAGE_MAP_UPDATE,
         'message': json.dumps({
-            'structures': struct_2_dict(structure)
+            'structures': [struct_2_dict(structure)] # This has to be in an array, so it can be used by the same client callback as the dynamic structures data request
         })
     })
 
