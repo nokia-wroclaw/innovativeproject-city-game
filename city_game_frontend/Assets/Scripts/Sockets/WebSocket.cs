@@ -170,13 +170,25 @@ namespace Assets.Sockets
                 if (receivedMessage.id < 100)
                 {
                     Request newSpecialRequest = new Request();
+
+
                     ResponseData specialResponseData = new ResponseData("", receivedMessage.message);
                     specialResponseData.isSpecialMessage = true;
                     specialResponseData.specialMessageID = receivedMessage.id;
 
+                    // Need to fake some RequestData, it's not used but the callbacks throw exception if there is no data sent
+                    // TODO: RETHINK
+                    RequestData specialRequestData = new RequestData();
+                    specialRequestData.setSender(null);
+
+
                     newSpecialRequest.setReponseData(
                         specialResponseData
                     );
+
+                    GameManager.callbacksToProcess.Enqueue(newSpecialRequest);
+
+                    return;
                 }
                  
                 Request request = sentData.Find(r => r.requestData.id == receivedMessage.id);
@@ -209,7 +221,7 @@ namespace Assets.Sockets
          */
         public void send(GameObject sender, string messageToSend, Request.callbackFunc callback)
         {
-            Debug.Log("Socket " + url + " received a send order: " + messageToSend);
+            //Debug.Log("Socket " + url + " received a send order: " + messageToSend);
 
             
             //TODO: DESPAGHETTIZE

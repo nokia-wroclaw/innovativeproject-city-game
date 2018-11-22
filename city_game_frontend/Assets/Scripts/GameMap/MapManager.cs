@@ -10,15 +10,12 @@ public class MapManager : MonoBehaviour {
     public static MapManager Instance { set; get; }
 
     ServerSocket server = ServerSocket.Instance;
-
-    public GameObject element;
-    //public Material roadMaterial;
-
+    
     const int MAP_SCALE_FACTOR = 20000;
 
 
     //TODO: SET THEM DYNAMICALLY
-    const float LATITUDE_OFFSET = 51.1F;
+    const float LATITUDE_OFFSET = 51.1F;        
     const float LONGITUDE_OFFSET = 17.09F;
 
     /*
@@ -53,12 +50,14 @@ public class MapManager : MonoBehaviour {
         if(isChunkLoadedOnCoords(longitude, latitude))
         {
             Debug.Log("Chunk already there, not loading!");
-        } else { 
+        } else {
+
             server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
             server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
+
         }
 
-        
+
     }
 
     // retrieve chunk data class depending on given position
@@ -77,8 +76,9 @@ public class MapManager : MonoBehaviour {
     /*
      * Retrieve dynamic chunks that are located on a given chunk
      */
-    Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    public Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
+        Debug.Log(data);
         DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
 
         foreach( var structureData in structsData.structures)
@@ -96,12 +96,36 @@ public class MapManager : MonoBehaviour {
             dynamicStructs.Remove(structData.id);
 
         }
-        
 
+        // We have no actual game models so I won't spawn any random models
+        // I'll use primitives
+
+        /*
         GameObject structureObject = Instantiate(element, new Vector3(
             LatitudeToGameCoordinate(structData.lat),
             0,
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
+            */
+
+        GameObject structureObject = null;
+
+        if (structData.taken_over)
+        {
+            structureObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Debug.Log("Creating a taken over object!");
+        } else
+        {
+            structureObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Debug.Log("Creating a free object!");
+        }
+
+        structureObject.transform.position = new Vector3(
+            LatitudeToGameCoordinate(structData.lat),
+            3,
+            LongitudeToGameCoordinate(structData.lon)
+        );
+
+        structureObject.transform.localScale = new Vector3(5, 5, 5);
 
         dynamicStructs.Add(structData.id, structureObject);
     }

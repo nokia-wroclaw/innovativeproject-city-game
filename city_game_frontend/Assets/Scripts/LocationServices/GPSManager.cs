@@ -45,10 +45,13 @@ namespace Assets
 
             if (latitude != 0.0F && longitude != 0.0F) { 
                 gameManager.OnLocationChanged(longitude, latitude);
+                
+            } else
+            {
                 Debug.Log("No gps connection!");
             }
 
-            Debug.Log("GPS: " + latitude + ", " + longitude);
+            //Debug.Log("GPS: " + latitude + ", " + longitude);
         }
 
         private void Update()
@@ -60,12 +63,10 @@ namespace Assets
         {
 
             // Wait until the editor and unity remote are connected before starting a location service
-#if UNITY_EDITOR
-            if (UnityEditor.EditorApplication.isRemoteConnected)
-            {
-                yield return new WaitForSeconds(5);
-            }
-#endif
+            
+                
+            yield return new WaitForSeconds(5);
+            
 
             if (!Input.location.isEnabledByUser)
             {

@@ -2,7 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FadeManager : MonoBehaviour {
+
+public class Fadable : MonoBehaviour {
+
+    public void startFade()
+    {
+        int gameTime = 0; // some fancy time getter
+        Debug.Log("Fadin");
+    }
+
+}
+
+
+public class FadeManager : Fadable {
+
+    public bool STOP = false;
+
     public class AnimateObject
     {
         public AnimateObject(GameObject o) {
@@ -30,6 +45,7 @@ public class FadeManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        startFade();
         //rewrite gameobject array into list object with animation status params
         foreach (GameObject o in _InitObjects)
         {
@@ -69,7 +85,8 @@ public class FadeManager : MonoBehaviour {
                 a.status += (float)delta / animationDuration * a.direction;
 
                 Renderer renderer = a.obj.GetComponent<Renderer>();
-                renderer.material.SetFloat("_Level", a.status); //set level in shader
+                if (!STOP)
+                    renderer.material.SetFloat("_Level", a.status); //set level in shader
 
                 //animation done
                 if (a.status < -0.20f) a.done = true; 
