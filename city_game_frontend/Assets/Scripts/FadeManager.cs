@@ -3,15 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class Fadable : MonoBehaviour {
-
-    public void startFade()
-    {
-        int gameTime = 0; // some fancy time getter
-        Debug.Log("Fadin");
-    }
-
-}
 
 
 public class FadeManager : Fadable {
@@ -44,8 +35,7 @@ public class FadeManager : Fadable {
     
     // Use this for initialization
     void Start () {
-
-        startFade();
+        
         //rewrite gameobject array into list object with animation status params
         foreach (GameObject o in _InitObjects)
         {
