@@ -1,110 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 
 
 
 
-public class FadeManager : Fadable {
+public class FadeManager : MonoBehaviour{
 
-    public bool STOP = false;
-
-    public class AnimateObject
-    {
-        public AnimateObject(GameObject o) {
-            obj = o;
-            status = 1;
-            direction = -1;
-            done = false;
-        }
-        public GameObject obj;
-        public float status; //actual animation _Level
-        public int direction; //-1 hiding 1 showing
-        public bool done; //1 if animation is done 
-    }
-
-    public GameObject[] _InitObjects; //list of objects passed by inspector
-    public int animationDuration = 1000; //animation duration time in ms
-    private Assets.TimerSync timer = new Assets.TimerSync();
-
-    //only for testing. Be careful no index checking
-    public int _ShowIndex = -1; //index to be shown in next frame
-    public int _HideIndex = -1; //index to be hide in next frame
-
-    private List<AnimateObject> objects = new List<AnimateObject>();
+    public int swap;
+    public float delay = -1;
+    public Fadable o1;
+    public Fadable o2;
     
-    // Use this for initialization
-    void Start () {
-        
-        //rewrite gameobject array into list object with animation status params
-        foreach (GameObject o in _InitObjects)
-        {
-            Renderer renderer = o.GetComponent<Renderer>();
-            renderer.material.SetFloat("_FadeFromTime", 0.0f);
-            renderer.material.SetFloat("_Level", 1.0f); //hide object
 
-            AnimateObject newObj = new AnimateObject(o);
-            objects.Add(newObj);
-        }
+    /**
+     * Funcion replace on actualObj with newObj
+     * delay if -1 the delay is equals to actualObject fade time, if is not negative then
+     *       is delay
+     */
+    static public void evolve(Fadable actualObj, Fadable newObj, float delay = -1) {
+        if (actualObj == null || newObj == null) return;
+        if (delay < 0) delay = actualObj.animationTime;
+        //Debug.Log("evolving started: "+ actualObj.animationTime);
+
+        actualObj.hide(delay);
+        newObj.show(delay);
     }
-
-    // Update is called once per frame
-    void Update() {
-        //calculate time from last frame
-        double delta = timer.deltaTime();
-
-        //only for testing 
-        if (_ShowIndex != -1)
-        {
-            show(_ShowIndex);
-            _ShowIndex = -1;
-        }
-
-        if(_HideIndex != -1)
-        {
-            hide(_HideIndex);
-            _HideIndex = -1;
-        }
-
-        foreach(AnimateObject a in objects)
-        {
-            //play animation
-            if(a.done == false)
-            {
-
-                a.status += (float)delta / animationDuration * a.direction;
-
-                Renderer renderer = a.obj.GetComponent<Renderer>();
-                if (!STOP)
-                    renderer.material.SetFloat("_Level", a.status); //set level in shader
-
-                //animation done
-                if (a.status < -0.20f) a.done = true; 
-                if (a.status > 1.20f) a.done = true;
-            }
-        }
-
-        timer.update();
-    }
-
-    //1 if showing or shown, -1 if hiding or hidden
-    public int status(int index)
+  
+    void Start()
     {
-        return objects[index].direction;
+        o1.show();
+        o2.hide();
     }
 
-
-    //in order to show object run this method
-    public void show(int index)
+    void Update()
     {
-        objects[index].done = false;
-        objects[index].direction = 1;
+
+        if (swap == 0) return;
+        swap = 0;
+
+        Debug.Log(o1.visible + ", " + o2.visible);
+
+        if (o1.visible)
+        {
+            FadeManager.evolve(o1, o2, delay);
+        }
+        else
+        {
+            FadeManager.evolve(o2, o1, delay);
+        }
+
     }
 
-    //in order to hide object run this method
-    public void hide(int index)
-    {
-        objects[index].done = false;
-        objects[index].direction = -1;
-    }
 }

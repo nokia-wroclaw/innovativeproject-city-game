@@ -27,6 +27,5 @@ class FadableComponent : Fadable
         Renderer renderer = GetComponent<Renderer>();
 
         Vector4 time = Shader.GetGlobalVector("_Time");
-        Debug.Log(time);
     }
 }

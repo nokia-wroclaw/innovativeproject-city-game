@@ -71,7 +71,10 @@ Material:
     - _ColorMask: 18.26
     - _Cutoff: 0.31
     - _DetailNormalMapScale: 1
+    - _Direction: 1
     - _DstBlend: 0
+    - _Duration: 10
+    - _DurationTime: 10
     - _Edges: 0.2
     - _EndTime: 10
     - _FadeFromTime: 0
@@ -92,7 +95,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StartTime: 5
+    - _StartTime: 30
     - _Stencil: 1.07
     - _StencilComp: 8.63
     - _StencilOp: 2
