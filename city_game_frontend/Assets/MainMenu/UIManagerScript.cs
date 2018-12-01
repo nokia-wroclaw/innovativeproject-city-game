@@ -17,7 +17,7 @@ public class UIManagerScript : MonoBehaviour {
 
     public void StartTheGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("ChunksScene");
     }
 
     
