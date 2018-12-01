@@ -5,12 +5,11 @@ import xml.etree.ElementTree
 import json
 
 import logging
-
+from city_game_backend.CONSTANTS import CHUNK_SIZE
 logger = logging.getLogger(__name__)
 
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
-CHUNK_SIZE = 0.01  # About 111x111 meters
 STANDARD_QUERY = '''
 way
   (
@@ -93,9 +92,17 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
                 }
             )
 
-        roads.append(road_nodes)
+        roads.append(
+            {
+                'nodes': road_nodes
+            }
+        )
 
-    new_chunk.roads = json.dumps(roads)
+    new_chunk.roads = json.dumps({
+        'roads': roads,
+        'latitude_lower_bound': lower_latitude,
+        'longitude_lower_bound': lower_longitude
+    })
     new_chunk.save()
 
 

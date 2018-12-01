@@ -4,12 +4,15 @@ from channels.generic.websocket import WebsocketConsumer
 
 import json
 import logging
+import city_game_backend.CONSTANTS as CONSTANTS
+from .message_utils import error_message
+
 from .location_event_handler import handle_location_event
 from .auth_event_handler import handle_auth_event
 from .disconnect_event_handler import handle_disconnect_event
-from .message_type import MessageType
-from .message_utils import error_message
 from .chunk_request_handler import handle_chunk_request
+from .dynamic_chunk_data_request_handler import handle_dynamic_chunk_data_request
+from .structure_takeover_request_handler import handle_structure_takeover_request
 
 logger = logging.getLogger(__name__)
 
@@ -50,17 +53,16 @@ class ClientCommunicationConsumer(WebsocketConsumer):
 
             # The actual message data
             message = json.loads(message['data'])
-            message_type = MessageType(int(message['type']))
+            message_type = int(message['type'])
         except KeyError:
             self.send(error_message('No message type/transaction id'))
             return
-        except json.JSONDecodeError:
+        except json.JSONDecodeError or ValueError:
             self.send('Invalid json')
             self.close()
             return
 
         response_message = self.handle_message(message, message_type)
-        response_message = json.dumps(response_message)
 
         response = {
             'id': transaction_id,
@@ -68,21 +70,25 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         }
         self.send(json.dumps(response))
 
-    def handle_message(self, message: dict, message_type: MessageType) -> str:
+    def handle_message(self, message: dict, message_type: int) -> str:
         # If user is not authenticated, we only let him to send an auth message
-        print('Handling', message_type.value)
+        print('Handling', message_type)
         if self.user is None:
-            if message_type == MessageType.AUTH_EVENT:
+            if message_type == CONSTANTS.MESSAGE_TYPE_AUTH_EVENT:
                 return handle_auth_event(message, self)
             else:  # TODO: IMPLEMENT SOME SORT OF LOGIN TIMEOUT INSTEAD OF WAITING FOR A MESSAGE
                 self.send('User not authorised')
                 self.close()
 
         # If the user is authenticated, other actions are available to him
-        if message_type == MessageType.LOCATION_EVENT:
+        if message_type == CONSTANTS.MESSAGE_TYPE_LOCATION_EVENT:
             return handle_location_event(message, self)
-        elif message_type == MessageType.CHUNK_REQUEST:
+        elif message_type == CONSTANTS.MESSAGE_TYPE_CHUNK_REQUEST:
             return handle_chunk_request(message, self)
+        elif message_type == CONSTANTS.MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST:
+            return handle_dynamic_chunk_data_request(message, self)
+        elif message_type == CONSTANTS.MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST:
+            return handle_structure_takeover_request(message, self)
         # ... another message type handlers down here ...
         else:
             self.send('Wrong message type')

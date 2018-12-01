@@ -8,35 +8,66 @@ namespace Assets
 
     class GPSManager : MonoBehaviour
     {
+        public GameManager gameManager;
 
         //that let us use GPS services wherever we want
         public static GPSManager Instance { set; get; }
 
         public float latitude, longitude;
 
+#if UNITY_EDITOR
+        public float fakeLatitude;
+        public float fakeLongitude;
+        public bool fakeLocation = false;
+#endif
+
         private void Start()
         {
-            //for landscape view
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
             Instance = this;
             //to have unbreakable connection between app and GPS services
             DontDestroyOnLoad(gameObject);
             StartCoroutine(InitializationOfLocationService());
+            InvokeRepeating("updateCoordinates", 2.0f, 2.0f);
         }
 
         private void updateCoordinates()
         {
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
+
+#if UNITY_EDITOR
+            if (fakeLocation)
+            {
+                longitude = fakeLongitude;
+                latitude = fakeLatitude;
+            }
+#endif
+
+            if (latitude != 0.0F && longitude != 0.0F) { 
+                gameManager.OnLocationChanged(longitude, latitude);
+                
+            } else
+            {
+                Debug.Log("No gps connection!");
+            }
+
+            //Debug.Log("GPS: " + latitude + ", " + longitude);
         }
 
         private void Update()
         {
-            updateCoordinates();
+
         }
 
         private IEnumerator InitializationOfLocationService()
         {
+
+            // Wait until the editor and unity remote are connected before starting a location service
+            
+                
+            yield return new WaitForSeconds(5);
+            
+
             if (!Input.location.isEnabledByUser)
             {
                 Debug.Log("Location services have been disabled");
@@ -57,7 +88,7 @@ namespace Assets
             }
             if (Input.location.status == LocationServiceStatus.Failed)
             {
-                Debug.Log("Unable to determin device location");
+                Debug.Log("Unable to determine device location");
                 yield break;
             }
             updateCoordinates();

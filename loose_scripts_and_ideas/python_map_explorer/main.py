@@ -14,14 +14,24 @@ CHUNK_SIZE = 0.01
 MARGIN = 0.002
 
 AUTH_EVENT = 0
-LOCATION_EVENT = 'location_event'
-WINDOW_SIZE = 1000
+LOCATION_EVENT = 1
+MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3
+MESSAGE_TYPE_OVERTAKE_REQUEST = 4
+
+
+def create_message(data):
+    transaction = 1
+
+    return json.dumps({
+        'id': transaction,
+        'data': json.dumps(data)
+    })
+
 
 LOGIN_DATA = {
     'type': AUTH_EVENT,
-    'login': 'baczek',
+    'login': 'gracz',
     'pass': 'baczekbezraczek',
-    'id': 12
 }
 
 
@@ -70,8 +80,14 @@ def on_close(ws):
 
 def on_open(ws):
     print('### connection established ###')
-    ws.send(json.dumps(LOGIN_DATA))
+    ws.send(create_message(LOGIN_DATA))
 
+
+def send_overtake_struct_request():
+    ws.send(create_message({
+        'type': MESSAGE_TYPE_OVERTAKE_REQUEST,
+        'id': int(overtake_id.get())
+    }))
 
 
 def send_map_request():
@@ -84,7 +100,7 @@ def send_map_request():
         'lat': lat
     }
 
-    ws.send(json.dumps(data))
+    ws.send(create_message(data))
 
 
 ws = websocket.WebSocketApp(
@@ -103,19 +119,21 @@ master.configure(background='#263238')
 
 lat_entry = Entry(master)
 lat_entry.pack()
-lat_entry.insert(0, "51.11")
+lat_entry.insert(0, "51.23")
 
 lon_entry = Entry(master)
 lon_entry.pack()
-lon_entry.insert(0, "17.06")
+lon_entry.insert(0, "17.10")
 
 
-confirm = Button(master, text='load', command=send_map_request)
-confirm.pack()
+location = Button(master, text='Send location', command=send_map_request)
+location.pack()
 
-w = Canvas(master, width=WINDOW_SIZE*1.3, height=WINDOW_SIZE)
-w.configure(background='#263238')
+overtake = Button(master, text='Overtake struct', command=send_overtake_struct_request)
+overtake.pack()
 
-w.pack()
+overtake_id = Entry(master)
+overtake_id.pack()
+overtake_id.insert(0, "1")
 
 mainloop()
