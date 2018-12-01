@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cameraController : MonoBehaviour {
+public class cameraFollower : MonoBehaviour {
 
     GameObject anchor; // camera's parent object, used as the axis of rotation
-    public GameObject objectToFollow;
+    public GameObject player;
+    GameObject objectToFollow;
     public float bias;
     float oneMinusBias;
 
@@ -17,6 +18,7 @@ public class cameraController : MonoBehaviour {
     void Start () {
         anchor = gameObject.transform.parent.gameObject;
         oneMinusBias = 1F - bias;
+        objectToFollow = player;
 	}
 	
 	// Update is called once per frame
@@ -60,5 +62,15 @@ public class cameraController : MonoBehaviour {
                 0
             );
         }
+    }
+
+    public void changeObjectToFollow(GameObject g)
+    {
+        objectToFollow = g;
+    }
+
+    void changeObjectToFollowToPlayer(GameObject g)
+    {
+        objectToFollow = player;
     }
 }
