@@ -20,8 +20,9 @@ public class SelectObject : MonoBehaviour
         // Move this object to the position clicked by the mouse.
         if (Input.GetMouseButtonDown(0))
         {
-            Touch touch = Input.GetTouch(0);
-            Ray ray = Camera.main.ScreenPointToRay(touch.position);// (Input.mousePosition);
+
+            //Touch touch = Input.GetTouch(0);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);  //(touch.position);// 
             RaycastHit hit;
 
             if (coll.Raycast(ray, out hit, 100.0f))
