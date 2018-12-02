@@ -243,7 +243,7 @@ public class MapManager : MonoBehaviour {
 
         } catch (System.Exception e)
         {
-            Debug.LogError(e);
+            //Debug.LogError(e);
             return null;
         }
     }
