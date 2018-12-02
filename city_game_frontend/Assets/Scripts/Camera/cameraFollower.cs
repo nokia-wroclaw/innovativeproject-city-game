@@ -30,14 +30,32 @@ public class cameraFollower : MonoBehaviour {
             Touch touchZero = Input.GetTouch(0);
             float speed_x = touchZero.deltaPosition.x;
             float speed_y = touchZero.deltaPosition.y;
+            //float speed_z = touchZero.deltaPosition.z;
 
-            anchor.transform.Rotate(
-                new Vector3(
-                    0,
-                    touchZero.deltaPosition.x * rotationSpeed,
-                    0//touchZero.deltaPosition.y
-                    )
-                );
+            Debug.Log(speed_x + " " + speed_y);// + " " + speed_z);
+
+            if(Mathf.Abs(touchZero.deltaPosition.x) > Mathf.Abs(touchZero.deltaPosition.y))
+            {
+                anchor.transform.Rotate(
+                                new Vector3(
+                                    0,
+                                    touchZero.deltaPosition.x * rotationSpeed,
+                                    0
+                                    )
+                                );
+            }
+
+            else
+            {
+                transform.Rotate(
+                                new Vector3(
+                                    -touchZero.deltaPosition.y * rotationSpeed,
+                                    0,
+                                    0
+                                    )
+                                );
+            }
+            
         }
         else if (Input.touchCount == 2)
         {
