@@ -234,7 +234,7 @@ public class MapManager : MonoBehaviour {
 
 
     // Used by to get the object's data when the user clicks on it
-    public DynamicStructData GetDataOfObject(GameObject target)
+    public static DynamicStructData GetDataOfObject(GameObject target)
     {
         try {
 
