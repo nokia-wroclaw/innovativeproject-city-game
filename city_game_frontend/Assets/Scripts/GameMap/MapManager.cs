@@ -239,11 +239,12 @@ public class MapManager : MonoBehaviour {
         try {
 
             DynamicStruct targetData = target.GetComponent<DynamicStruct>();
+            Debug.Log(targetData.data.tier);
             return targetData.data;
 
         } catch (System.Exception e)
         {
-            Debug.LogError(e);
+            //Debug.LogError(e);
             return null;
         }
     }

@@ -21,6 +21,7 @@ public class DynamicStructData
     public bool taken_over;
     public string owner;
 
+    public int tier;
     public int resource_type;
     public float resources_left;
 }
