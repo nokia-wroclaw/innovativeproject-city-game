@@ -25,7 +25,7 @@ public class cameraFollower : MonoBehaviour {
 	void Update () {
         anchor.transform.position = anchor.transform.position * bias + objectToFollow.transform.position * oneMinusBias;
 
-        if (Input.touchCount == 1)
+        /*if (Input.touchCount == 1)
         {
             Touch touchZero = Input.GetTouch(0);
             float speed_x = touchZero.deltaPosition.x;
@@ -61,7 +61,7 @@ public class cameraFollower : MonoBehaviour {
                 anchor.transform.localScale.y * deltaMagnitudeDiff * horizontalZoomSpeed * Time.deltaTime,
                 0
             );
-        }
+        }*/
     }
 
     public void changeObjectToFollow(GameObject g)
