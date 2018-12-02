@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SimpleBuildingPanel : MonoBehaviour {
 
     public GameObject buildingPanel;
-    public static bool isOpen = true;
+    public static bool isOpen = false;
     public static Sprite img = null;
     public static string buildingName = null;
 
