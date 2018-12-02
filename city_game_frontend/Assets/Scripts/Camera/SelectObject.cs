@@ -19,7 +19,7 @@ public class SelectObject : MonoBehaviour
     void Update()
     {
         // Move this object to the position clicked by the mouse.
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonUp(0))
         {
 
             //Touch touch = Input.GetTouch(0);
