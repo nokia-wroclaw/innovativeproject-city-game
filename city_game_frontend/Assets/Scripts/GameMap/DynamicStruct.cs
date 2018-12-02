@@ -27,6 +27,8 @@ public class DynamicStructData
 
 public class DynamicStruct : MonoBehaviour {
 
+    public DynamicStructData data;
+
 	// Use this for initialization
 	void Start () {
 		
