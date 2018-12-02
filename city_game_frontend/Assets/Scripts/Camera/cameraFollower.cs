@@ -25,7 +25,7 @@ public class cameraFollower : MonoBehaviour {
 	void Update () {
         anchor.transform.position = anchor.transform.position * bias + objectToFollow.transform.position * oneMinusBias;
 
-        /*if (Input.touchCount == 1)
+        if (Input.touchCount == 1)
         {
             Touch touchZero = Input.GetTouch(0);
             float speed_x = touchZero.deltaPosition.x;
@@ -56,12 +56,22 @@ public class cameraFollower : MonoBehaviour {
             // Find the difference in the distances between each frame.
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-            anchor.transform.localScale += new Vector3(
+            var newDistance = anchor.transform.localScale + new Vector3(
                 anchor.transform.localScale.x * deltaMagnitudeDiff * verticalZoomSpeed * Time.deltaTime,
                 anchor.transform.localScale.y * deltaMagnitudeDiff * horizontalZoomSpeed * Time.deltaTime,
                 0
             );
-        }*/
+
+            if (isInPinchRange(newDistance))
+                anchor.transform.localScale = newDistance;
+
+            //Debug.Log(anchor.transform.localScale);
+        }
+    }
+
+    public bool isInPinchRange(Vector3 dist)
+    {
+        return (dist.x >= 0.2 && dist.x <= 2.0);
     }
 
     public void changeObjectToFollow(GameObject g)
