@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: FadeInOut
-  m_Shader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
+  m_Shader: {fileID: 4800000, guid: d1f4e81de044d5e46bc3e6dd01b8e481, type: 3}
   m_ShaderKeywords: UNITY_UI_ALPHACLIP
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -35,7 +35,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DissolveTex:
-        m_Texture: {fileID: 2800000, guid: 347c28c051aa93b4583ae729bbe105cf, type: 3}
+        m_Texture: {fileID: 2800000, guid: f5bae8005d0e610488d0463a8b11626d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -72,6 +72,8 @@ Material:
     - _Cutoff: 0.31
     - _DetailNormalMapScale: 1
     - _Direction: 1
+    - _DissolveBand: 0.25
+    - _DissolveScale: 0.61
     - _DstBlend: 0
     - _Duration: 10
     - _DurationTime: 10
@@ -81,6 +83,9 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
+    - _GlowColFac: 0.75
+    - _GlowIntensity: 0.12
+    - _GlowScale: 1
     - _GreenLevel: 0
     - _Level: 1.56
     - _Metallic: 0.25
@@ -106,8 +111,12 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _DissolveEnd: {r: 0, g: 0, b: 0, a: 1}
+    - _DissolveStart: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 0.068218224, g: 0.082537845, b: 0.1981132, a: 1}
     - _EdgeColour1: {r: 1, g: 0, b: 0, a: 0}
     - _EdgeColour2: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Glow: {r: 1, g: 1, b: 1, a: 1}
+    - _GlowEnd: {r: 1, g: 1, b: 1, a: 1}
     - _Specular: {r: 0, g: 0, b: 0, a: 0}

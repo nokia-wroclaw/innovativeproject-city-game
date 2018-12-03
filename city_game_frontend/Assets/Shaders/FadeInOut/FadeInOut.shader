@@ -53,7 +53,7 @@
 					_Level = 1 - (_Time[1] - _StartTime) / _Duration;
 				}
 
-				o.Albedo = tex2D(_MainTex, IN.uv_MainTex);
+				o.Albedo = tex2D(_MainTex, IN.uv_MainTex) * _Color;
 				fixed4 cutout = tex2D(_DissolveTex, IN.uv_MainTex).g;
 
 
