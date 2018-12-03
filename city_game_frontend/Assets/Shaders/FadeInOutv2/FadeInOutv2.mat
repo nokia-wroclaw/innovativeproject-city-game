@@ -63,7 +63,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DissolveBand: 0.25
-    - _DissolveScale: 0.79
+    - _DissolveScale: 0.56
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
@@ -83,7 +83,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 0, b: 0, a: 1}
     - _DissolveEnd: {r: 0, g: 0, b: 0, a: 1}
-    - _DissolveStart: {r: 1, g: 1, b: 1, a: 1}
+    - _DissolveStart: {r: 0, g: 1, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Glow: {r: 1, g: 0, b: 0, a: 1}
     - _GlowEnd: {r: 0.18798423, g: 1, b: 0, a: 1}

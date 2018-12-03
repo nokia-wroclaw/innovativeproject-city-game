@@ -23,7 +23,7 @@
 		LOD 100
 
 		CGPROGRAM
-		#pragma surface surf Standard vertex:vert alpha:fade
+		#pragma surface surf Standard vertex:vert alpha
 		#pragma target 3.0
 
 

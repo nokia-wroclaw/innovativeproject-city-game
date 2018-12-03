@@ -13,7 +13,6 @@ public class Fadable : MonoBehaviour
 
     public Fadable()
     {
-
     }
     
 
