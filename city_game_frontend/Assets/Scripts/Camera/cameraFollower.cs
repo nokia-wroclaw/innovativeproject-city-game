@@ -12,7 +12,8 @@ public class cameraFollower : MonoBehaviour {
 
     public float horizontalZoomSpeed;
     public float verticalZoomSpeed;
-    public float rotationSpeed;
+    public float horizontalRotationSpeed;
+    public float verticalRotationSpeed;
 
     // Use this for initialization
     void Start () {
@@ -38,14 +39,16 @@ public class cameraFollower : MonoBehaviour {
             float speed_y = touchZero.deltaPosition.y;
             //float speed_z = touchZero.deltaPosition.z;
 
-            Debug.Log(speed_x + " " + speed_y);// + " " + speed_z);
+            //Debug.Log(speed_x + " " + speed_y);// + " " + speed_z);
 
+
+            // TODO: MAXIMUM AND MINIMUM CAMERA ANGLES
             if(Mathf.Abs(touchZero.deltaPosition.x) > Mathf.Abs(touchZero.deltaPosition.y))
             {
                 anchor.transform.Rotate(
                                 new Vector3(
                                     0,
-                                    touchZero.deltaPosition.x * rotationSpeed,
+                                    touchZero.deltaPosition.x * horizontalRotationSpeed,
                                     0
                                     )
                                 );
@@ -55,7 +58,7 @@ public class cameraFollower : MonoBehaviour {
             {
                 transform.Rotate(
                                 new Vector3(
-                                    -touchZero.deltaPosition.y * rotationSpeed,
+                                    touchZero.deltaPosition.y * verticalRotationSpeed,
                                     0,
                                     0
                                     )
