@@ -29,7 +29,7 @@ public class SelectObject : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                 //transform.position = ray.GetPoint(100.0f);
-                Debug.Log("Clicked");
+                //Debug.Log("Clicked");
 
 
                 
@@ -45,11 +45,13 @@ public class SelectObject : MonoBehaviour
                 if(dataOfObjectClicked != null)
                 {
                     // TODO: NOTIFY THE UI ABOUT THE STRUCTURE HERE
+                    SimpleBuildingPanel.Instance.setOpen(dataOfObjectClicked);
                 }
 
                 if(gameObjectClicked == playerCharacter)
                 {
                     // TODO: NOTIFY THE UI TO HIDE - THE PLAYER HAS BEEN FOCUSED
+                    SimpleBuildingPanel.Instance.setClosed();
                 }
             }
         }

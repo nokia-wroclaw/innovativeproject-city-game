@@ -23,6 +23,12 @@ public class cameraFollower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(objectToFollow == null)
+        {
+            objectToFollow = player;
+        }
+
         anchor.transform.position = anchor.transform.position * bias + objectToFollow.transform.position * oneMinusBias;
 
         if (Input.touchCount == 1)
