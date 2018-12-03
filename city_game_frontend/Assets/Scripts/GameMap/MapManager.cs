@@ -119,12 +119,18 @@ public class MapManager : MonoBehaviour {
             Debug.Log("Creating a free object!");
         }
 
+        // Save the object's data as one of the objects components
+        DynamicStruct structureObjectScript = structureObject.AddComponent(typeof(DynamicStruct)) as DynamicStruct;
+        structureObjectScript.data = structData;
+
+
         structureObject.transform.position = new Vector3(
             LatitudeToGameCoordinate(structData.lat),
             3,
             LongitudeToGameCoordinate(structData.lon)
         );
 
+        //TODO: FIX THE SCALING
         structureObject.transform.localScale = new Vector3(5, 5, 5);
 
         dynamicStructs.Add(structData.id, structureObject);
@@ -224,5 +230,22 @@ public class MapManager : MonoBehaviour {
     float roundDownToChunkCords(float x)
     {
         return Mathf.Floor(x * 100) / 100;
+    }
+
+
+    // Used by to get the object's data when the user clicks on it
+    public static DynamicStructData GetDataOfObject(GameObject target)
+    {
+        try {
+
+            DynamicStruct targetData = target.GetComponent<DynamicStruct>();
+            Debug.Log(targetData.data.tier);
+            return targetData.data;
+
+        } catch (System.Exception e)
+        {
+            //Debug.LogError(e);
+            return null;
+        }
     }
 }

@@ -51,7 +51,8 @@ def struct_2_dict(struct):
 
         'taken_over': struct.taken_over,
         'owner': struct.owner.nickname if struct.taken_over else '',  # Is this spaghetti ?
-
+        
+        'tier': struct.tier,
         'resource_type': struct.resource_type,
         'resources_left': struct.resources_left
     }
