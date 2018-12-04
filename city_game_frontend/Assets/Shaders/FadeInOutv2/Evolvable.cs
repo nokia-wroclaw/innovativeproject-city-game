@@ -13,6 +13,12 @@ class Evolvable : MonoBehaviour
 
     public int _Evolve = 0;
 
+    public static void evolve(Fadable basic, Fadable extend)
+    {
+        basic.hide();
+        extend.show();
+    }
+
     void Start()
     {
         
