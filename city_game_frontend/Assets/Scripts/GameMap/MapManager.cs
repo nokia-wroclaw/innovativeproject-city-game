@@ -7,6 +7,10 @@ public class MapManager : MonoBehaviour {
 
     public Material roadMaterial;
 
+    public GameObject orePrefab;
+    public GameObject minePrefab;
+
+
     public static MapManager Instance { set; get; }
 
     ServerSocket server = ServerSocket.Instance;
@@ -92,7 +96,9 @@ public class MapManager : MonoBehaviour {
     {
         if(dynamicStructs.ContainsKey(structData.id)) {
 
-            Destroy(dynamicStructs[structData.id]);
+            dynamicStructs[structData.id].GetComponent<Fadable>().hide();
+            dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
+            //Destroy(dynamicStructs[structData.id]);
             dynamicStructs.Remove(structData.id);
 
         }
@@ -106,32 +112,38 @@ public class MapManager : MonoBehaviour {
             0,
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
             */
+            
 
         GameObject structureObject = null;
 
         if (structData.taken_over)
         {
-            structureObject = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            structureObject = Instantiate(minePrefab, new Vector3(0,0,0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             Debug.Log("Creating a taken over object!");
+
         } else
         {
-            structureObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             Debug.Log("Creating a free object!");
         }
+
 
         // Save the object's data as one of the objects components
         DynamicStruct structureObjectScript = structureObject.AddComponent(typeof(DynamicStruct)) as DynamicStruct;
         structureObjectScript.data = structData;
 
+        structureObject.transform.Rotate(new Vector3(-95.905F, -47.504F, -43.15997F));
+        structureObject.GetComponent<Fadable>().show();
+
 
         structureObject.transform.position = new Vector3(
             LatitudeToGameCoordinate(structData.lat),
-            3,
+            0.09580898F,
             LongitudeToGameCoordinate(structData.lon)
         );
 
         //TODO: FIX THE SCALING
-        structureObject.transform.localScale = new Vector3(5, 5, 5);
+        structureObject.transform.localScale = new Vector3(50, 50, 50);
 
         dynamicStructs.Add(structData.id, structureObject);
     }

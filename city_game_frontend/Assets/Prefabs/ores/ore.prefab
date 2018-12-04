@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33403272752521946}
   - component: {fileID: 23111612466075676}
   - component: {fileID: 114518505160023230}
+  - component: {fileID: 65543820030093382}
   m_Layer: 0
   m_Name: ore
   m_TagString: Untagged
@@ -84,6 +85,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1056931424609630}
   m_Mesh: {fileID: 4300000, guid: 4705b4b149663b54888ee77cd8414438, type: 3}
+--- !u!65 &65543820030093382
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1056931424609630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.063060805, y: 0.08459866, z: 0.0732557}
+  m_Center: {x: -0.0065689543, y: -0.0042613354, z: 0.03283238}
 --- !u!114 &114518505160023230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,4 +108,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6904a0395c7e2fa4ba8a66ce3fd1ce2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 1.5

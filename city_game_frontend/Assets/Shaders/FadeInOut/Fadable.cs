@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class Fadable : MonoBehaviour
 {
-    public float animationTime = 1.5f; // in seconds
+    const float animationTime = 5f; // in seconds
 
     Shader fadeInOutShader = null;
     Shader defaultShader = null;
@@ -77,6 +77,16 @@ public class Fadable : MonoBehaviour
 
         //switch shader to 
         Invoke("swichShaderFadeInOut", animationTime);
+    }
+
+    public void destroyAfterTime(float time = animationTime) // time in seconds
+    {
+        Invoke("destroyMe", time);
+    }
+
+    private void destroyMe()
+    {
+        Destroy(this.gameObject);
     }
 
 }

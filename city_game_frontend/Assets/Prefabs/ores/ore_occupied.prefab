@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33028466938940162}
   - component: {fileID: 23347633724629580}
   - component: {fileID: 114983877118686220}
+  - component: {fileID: 65902171235918908}
   m_Layer: 0
   m_Name: ore_occupied
   m_TagString: Untagged
@@ -84,6 +85,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1404194539123906}
   m_Mesh: {fileID: 4300000, guid: e19b1392b0c682f44a921232a6cdcd55, type: 3}
+--- !u!65 &65902171235918908
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1404194539123906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.22295189, y: 0.22351101, z: 0.17200907}
+  m_Center: {x: 0.003923259, y: -0.009072051, z: 0.07500196}
 --- !u!114 &114983877118686220
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,4 +108,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6904a0395c7e2fa4ba8a66ce3fd1ce2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 1.5

@@ -14,10 +14,22 @@ public class LoginData
     // TODO
     public LoginData()
     {
+        
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            this.login = "wint3rmute";
+            this.pass = "baczekbezraczek";
+
+            return;
+        }
+
+        
+        try {
+
         string path = "Assets/Scripts/RequestData/loginData.txt";
         StreamReader reader = new StreamReader(path);
 
-        try { 
+
         string login = reader.ReadLine();
         string pass = reader.ReadLine();
 
