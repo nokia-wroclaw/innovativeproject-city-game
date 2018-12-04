@@ -88,7 +88,7 @@ public class SimpleBuildingPanel : MonoBehaviour {
     {
         if(structure.taken_over)
         {
-            return structure.owner + "'s mine, level " + structure.tier.ToString();
+            return structure.owner + "'s Mine, Level " + structure.tier.ToString();
 
         } else
         {
