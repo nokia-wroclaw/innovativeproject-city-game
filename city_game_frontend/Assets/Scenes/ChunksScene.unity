@@ -789,6 +789,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadMaterial: {fileID: 2100000, guid: 8fec9b8ce158a954b9be39ce8ac2c8ec, type: 2}
+  orePrefab: {fileID: 1056931424609630, guid: 7e8b436c11e8aa34094846cc386a8686, type: 2}
+  minePrefab: {fileID: 1404194539123906, guid: 75fdf93d3966c344aa3e3b7b9a2aefb6, type: 2}
 --- !u!4 &403958492
 Transform:
   m_ObjectHideFlags: 0
@@ -834,7 +836,7 @@ MonoBehaviour:
   longitude: 0
   fakeLatitude: 51.1
   fakeLongitude: 17.1
-  fakeLocation: 1
+  fakeLocation: 0
 --- !u!4 &432948545
 Transform:
   m_ObjectHideFlags: 0
@@ -1040,7 +1042,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 106, y: -0.000091552734}
+  m_AnchoredPosition: {x: 106, y: 0.000015258789}
   m_SizeDelta: {x: 208, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &587717878
@@ -1197,7 +1199,7 @@ Transform:
   m_GameObject: {fileID: 588392416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 152.58688, y: -0.01, z: -63.165714}
-  m_LocalScale: {x: 100, y: 1, z: 100}
+  m_LocalScale: {x: 1000, y: 1, z: 1000}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -2328,7 +2330,7 @@ Transform:
   m_Children:
   - {fileID: 1713521999}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &943441856
 GameObject:
@@ -3781,10 +3783,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bdc73104b7940b49918fdad80a61905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swap: 0
-  delay: -1
-  o1: {fileID: 0}
-  o2: {fileID: 0}
 --- !u!4 &1254907992
 Transform:
   m_ObjectHideFlags: 0
@@ -3835,7 +3833,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_Materials.Array.data[0]
