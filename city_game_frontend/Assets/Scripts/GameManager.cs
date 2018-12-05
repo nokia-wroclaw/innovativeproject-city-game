@@ -55,6 +55,13 @@ public class GameManager : MonoBehaviour {
     void handleSpecialEvent(Request eventToHandle)
     {
         Debug.Log("Handling special event!");
+        var responseData = eventToHandle.getResponseData();
+
+        if(responseData.specialMessageID == Const.SPECIAL_MESSAGE_MAP_UPDATE)
+        {
+            Debug.Log("Received a server-driven map update!");
+            MapManager.Instance.structsDataCallbackFunction(gameObject, "", responseData.message);
+        }
     }
 
     
@@ -70,14 +77,14 @@ public class GameManager : MonoBehaviour {
             MapManager.LatitudeToGameCoordinate(lat),
             locationIndicator.transform.position.y,
             MapManager.LongitudeToGameCoordinate(lon)
-
             );
 
+        server.send(gameObject, JsonUtility.ToJson(new LocationUpdateRequestData(lon, lat)), locationReportCallback);
         
         if (roundDownToChunkCords(lon) == current_chunk_lon && roundDownToChunkCords(lat) == current_chunk_lat)
         {
-            Debug.Log("Location has changed, but you are still on the same chunk!");
-            Debug.Log("Won't draw now..");
+            //Debug.Log("Location has changed, but you are still on the same chunk!");
+            //Debug.Log("Won't draw now..");
 
         }
         else 
@@ -87,7 +94,7 @@ public class GameManager : MonoBehaviour {
             current_chunk_lat = roundDownToChunkCords(lat);
             current_chunk_lon = roundDownToChunkCords(lon);
 
-            Debug.Log(server == null);
+
             mapManager.sendChunkRequest(lon, lat);
 
 
@@ -121,4 +128,10 @@ public class GameManager : MonoBehaviour {
     {
         return Mathf.Floor(x * 100) / 100;
     }
+
+    Request.callbackFunc locationReportCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+        //TODO: HANDLE
+    });
+    
 }

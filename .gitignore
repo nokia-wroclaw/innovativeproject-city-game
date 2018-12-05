@@ -1,3 +1,4 @@
 venv
 postgres-data
 postgres-data-production
+.vs

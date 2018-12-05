@@ -7,18 +7,19 @@ public class MapManager : MonoBehaviour {
 
     public Material roadMaterial;
 
+    public GameObject orePrefab;
+    public GameObject minePrefab;
+
+
     public static MapManager Instance { set; get; }
 
     ServerSocket server = ServerSocket.Instance;
-
-    public GameObject element;
-    //public Material roadMaterial;
-
+    
     const int MAP_SCALE_FACTOR = 20000;
 
 
     //TODO: SET THEM DYNAMICALLY
-    const float LATITUDE_OFFSET = 51.1F;
+    const float LATITUDE_OFFSET = 51.1F;        
     const float LONGITUDE_OFFSET = 17.09F;
 
     /*
@@ -53,12 +54,14 @@ public class MapManager : MonoBehaviour {
         if(isChunkLoadedOnCoords(longitude, latitude))
         {
             Debug.Log("Chunk already there, not loading!");
-        } else { 
+        } else {
+
             server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
             server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
+
         }
 
-        
+
     }
 
     // retrieve chunk data class depending on given position
@@ -77,8 +80,9 @@ public class MapManager : MonoBehaviour {
     /*
      * Retrieve dynamic chunks that are located on a given chunk
      */
-    Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    public Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
+        Debug.Log(data);
         DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
 
         foreach( var structureData in structsData.structures)
@@ -92,16 +96,54 @@ public class MapManager : MonoBehaviour {
     {
         if(dynamicStructs.ContainsKey(structData.id)) {
 
-            Destroy(dynamicStructs[structData.id]);
+            dynamicStructs[structData.id].GetComponent<Fadable>().hide();
+            dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
+            //Destroy(dynamicStructs[structData.id]);
             dynamicStructs.Remove(structData.id);
 
         }
-        
 
+        // We have no actual game models so I won't spawn any random models
+        // I'll use primitives
+
+        /*
         GameObject structureObject = Instantiate(element, new Vector3(
             LatitudeToGameCoordinate(structData.lat),
             0,
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
+            */
+            
+
+        GameObject structureObject = null;
+
+        if (structData.taken_over)
+        {
+            structureObject = Instantiate(minePrefab, new Vector3(0,0,0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Debug.Log("Creating a taken over object!");
+
+        } else
+        {
+            structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Debug.Log("Creating a free object!");
+        }
+
+
+        // Save the object's data as one of the objects components
+        DynamicStruct structureObjectScript = structureObject.AddComponent(typeof(DynamicStruct)) as DynamicStruct;
+        structureObjectScript.data = structData;
+
+        structureObject.transform.Rotate(new Vector3(-95.905F, -47.504F, -43.15997F));
+        structureObject.GetComponent<Fadable>().show();
+
+
+        structureObject.transform.position = new Vector3(
+            LatitudeToGameCoordinate(structData.lat),
+            0.09580898F,
+            LongitudeToGameCoordinate(structData.lon)
+        );
+
+        //TODO: FIX THE SCALING
+        structureObject.transform.localScale = new Vector3(50, 50, 50);
 
         dynamicStructs.Add(structData.id, structureObject);
     }
@@ -200,5 +242,22 @@ public class MapManager : MonoBehaviour {
     float roundDownToChunkCords(float x)
     {
         return Mathf.Floor(x * 100) / 100;
+    }
+
+
+    // Used by to get the object's data when the user clicks on it
+    public static DynamicStructData GetDataOfObject(GameObject target)
+    {
+        try {
+
+            DynamicStruct targetData = target.GetComponent<DynamicStruct>();
+            Debug.Log(targetData.data.tier);
+            return targetData.data;
+
+        } catch (System.Exception e)
+        {
+            //Debug.LogError(e);
+            return null;
+        }
     }
 }
