@@ -6,7 +6,7 @@ using Assets.Sockets;
 using UnityEditor;
 
 
-class FadableComponent : Fadable
+class FadableComponentTest : Fadable
 {
 
     public int fade = 0; //if 1 fade in if -1 fade out

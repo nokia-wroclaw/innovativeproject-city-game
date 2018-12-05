@@ -8,6 +8,9 @@ using UnityEditor;
 public class Fadable : MonoBehaviour
 {
     public float animationTime = 1.5f; // in seconds
+    public int intensity = 10;
+    public int range = 10;
+
 
     Shader fadeInOutShader = null;
     Shader defaultShader = null;
@@ -22,7 +25,7 @@ public class Fadable : MonoBehaviour
     public void init()
     {
         fadeInOutShader = Shader.Find("Custom/FadeInOut");
-        defaultShader = Shader.Find("Standard");
+        defaultShader = Shader.Find("Custom/FadeInOutNoTrans");
     }
 
     //Use it to remove drawing order issue
@@ -32,6 +35,12 @@ public class Fadable : MonoBehaviour
 
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.shader = defaultShader;
+
+        Light light = GetComponent<Light>();
+        light.intensity = intensity;
+        light.range = range;
+        light.enabled = true;
+
     }
 
     public void swichShaderFadeInOut()
@@ -40,6 +49,11 @@ public class Fadable : MonoBehaviour
 
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.shader = fadeInOutShader;
+
+        Light light = GetComponent<Light>();
+        light.intensity = 0;
+        light.range = 0;
+        light.enabled = false;
     }
 
     public void show(float delay = 0)
@@ -47,6 +61,9 @@ public class Fadable : MonoBehaviour
         init();
 
         Renderer renderer = GetComponent<Renderer>();
+
+
+
         renderer.material.shader = fadeInOutShader;
         //get time vector
         Vector4 time = Shader.GetGlobalVector("_Time");
@@ -58,7 +75,7 @@ public class Fadable : MonoBehaviour
         visible = true;
 
         //switch shader to default
-        Invoke("swichShaderDefault", animationTime);
+        Invoke("swichShaderDefault", animationTime *(float)0.9);
     }
 
     public void hide(float delay = 0)
@@ -74,6 +91,8 @@ public class Fadable : MonoBehaviour
         renderer.material.SetFloat("_Duration", animationTime);
         renderer.material.SetFloat("_Direction", 0);
         visible = false;
+
+
 
         //switch shader to 
         Invoke("swichShaderFadeInOut", animationTime);
