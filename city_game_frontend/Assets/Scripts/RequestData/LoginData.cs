@@ -17,8 +17,8 @@ public class LoginData
         
         if (Application.platform == RuntimePlatform.Android)
         {
-            this.login = "wint3rmute";
-            this.pass = "baczekbezraczek";
+            this.login = "pawel";
+            this.pass = "jaktamsprzeglo";
 
             return;
         }
