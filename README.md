@@ -16,11 +16,24 @@
   * Just show basic player stats
   * [Make a context menu with focused-object-specific actions]
   
-### Second Demo - some of theese:  
+### Second Demo:  
 
-  5. Player stats system
+
+  1. 3 types of resources & at least 3 tiers of ores and buildings
+  2. Player stats system:
+   * 3 classes (names to be changed):
+    * Engineer - building/updating stuff
+    * Magician - support for teams/buffs
+    * Warrior - taking over existing buildings
+  3. Guild system - fight together:
+   * Guild UI consisting of:
+    * Panel inviting/removing people from the guild
+    * Panel for accepting invites
+    * Panel with active guild members
+   NOTE: personally, I see this as a 3-category slide-out panel.. just an idea
+  4. Multiplayer-structure-building system:
+   * "Team takeover" button next to the "Take over" building button
+   * 
+
+  4. Guild territory system
   6. PvE fights system
-  7. Party system - fight together
-  8. Guilds system - just invites and members lists
-  9. Guild territory system
-  10. Multi-player-structure-building system
