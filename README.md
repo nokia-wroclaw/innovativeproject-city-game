@@ -33,7 +33,7 @@
    NOTE: personally, I see this as a 3-category slide-out panel.. just an idea
   4. Multiplayer-structure-building system:
    * "Team takeover" button next to the "Take over" building button
-   * 
+   ![Team takeover](https://github.com/nokia-wroclaw/innovativeproject-city-game/raw/master/loose_scripts_and_ideas/mock1.png "NOTE: how I imagine a team takeover")
 
   4. Guild territory system
   6. PvE fights system
