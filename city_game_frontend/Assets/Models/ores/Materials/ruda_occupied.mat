@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ruda_occupied
-  m_Shader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
+  m_Shader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
   m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -98,6 +98,7 @@ Material:
     - _DissolveEnd: {r: 0, g: 0, b: 0, a: 1}
     - _DissolveStart: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Emission: {r: 0.23584908, g: 0.047307994, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _Glow: {r: 1, g: 1, b: 1, a: 1}
     - _GlowEnd: {r: 1, g: 1, b: 1, a: 1}

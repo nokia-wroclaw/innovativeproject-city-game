@@ -7,7 +7,7 @@ using UnityEditor;
 
 public class Fadable : MonoBehaviour
 {
-    public int intensity = 10;
+    public int intensity = 1;
     public int range = 10;
     
     const float animationTime = 5f; // in seconds
@@ -36,11 +36,13 @@ public class Fadable : MonoBehaviour
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.shader = defaultShader;
 
-        Light light = GetComponent<Light>();
+        Light light = GetComponentInChildren<Light>();
         light.intensity = intensity;
         light.range = range;
         light.enabled = true;
 
+        ParticleSystem emiter = GetComponentInChildren<ParticleSystem>();
+        emiter.enableEmission = true;
     }
 
     public void swichShaderFadeInOut()
@@ -50,10 +52,14 @@ public class Fadable : MonoBehaviour
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.shader = fadeInOutShader;
 
-        Light light = GetComponent<Light>();
+        Light light = GetComponentInChildren<Light>();
         light.intensity = 0;
         light.range = 0;
         light.enabled = false;
+
+
+        ParticleSystem emiter = GetComponentInChildren<ParticleSystem>();
+        emiter.enableEmission = false;
     }
 
     public void show(float delay = 0)
