@@ -42,8 +42,8 @@
 			o.Emission = _Emission * c;
 
 			// Metallic and smoothness come from slider variables
-			//o.Metallic = _Metallic;
-			//o.Smoothness = _Glossiness;
+			o.Metallic = _Metallic;
+			o.Smoothness = _Glossiness;
 			
 		
 			o.Alpha = 1;
