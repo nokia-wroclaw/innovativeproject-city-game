@@ -78,7 +78,7 @@ Material:
     - _GlowColFac: 0.75
     - _GlowIntensity: 0.05
     - _GlowScale: 1
-    - _Level: 0.1
+    - _Level: 1.97
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -98,7 +98,10 @@ Material:
     - _DissolveEnd: {r: 0, g: 0, b: 0, a: 1}
     - _DissolveStart: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 1, g: 0, b: 0, a: 1}
-    - _Emission: {r: 0.23584908, g: 0.047307994, b: 0, a: 1}
+    - _Emission: {r: 0.38679248, g: 0, b: 0.28668153, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmmisionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmmisionColorH: {r: 0.9339623, g: 0.4273318, b: 0.91702944, a: 1}
+    - _EmmisionColorL: {r: 0.6037736, g: 0, b: 0.44680384, a: 1}
     - _Glow: {r: 1, g: 1, b: 1, a: 1}
     - _GlowEnd: {r: 1, g: 1, b: 1, a: 1}

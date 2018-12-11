@@ -9,7 +9,13 @@
 		_StartTime("Start time[animation]", Float) = 0
 		_Duration("Duration[a]", Float) = 10
 		_Direction("Direction[a]", Float) = 0
-
+			//this params define pixels which emit emission
+			//if pixel's color is located between H and L then
+			//it will emit emission. Params need to be 
+			//determined experimentally
+		_EmmisionColorH("EmmisonBaseH", Color) = (1,1,1,1)
+		_EmmisionColorL("EmmisonBaseL", Color) = (1,1,1,1)
+			//color of the emision
 		_Emission("Emission", Color) = (1,1,1,1)
 		
 	}
@@ -34,6 +40,8 @@
 			};
 
 			float4 _Color;
+			float4 _EmmisionColorH;
+			float4 _EmmisionColorL;
 			float4 _EdgeColor;
 			float4 _Emission;
 			float _Level;
@@ -60,7 +68,9 @@
 
 				fixed4 map = tex2D(_MainTex, IN.uv_MainTex);
 				o.Albedo = map * _Color;
-				if (map.r + map.b + map.g - _Emission.r - _Emission.g - _Emission.b > 1.15) {
+				if (_EmmisionColorH.r >= map.r && _EmmisionColorL.r <= map.r &&
+					_EmmisionColorH.b >= map.b && _EmmisionColorL.b <= map.b &&
+					_EmmisionColorH.g >= map.g && _EmmisionColorL.g <= map.g) {
 					o.Emission = _Emission;
 				}
 				

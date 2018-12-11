@@ -42,7 +42,9 @@ public class Fadable : MonoBehaviour
         light.enabled = true;
 
         ParticleSystem emiter = GetComponentInChildren<ParticleSystem>();
-        emiter.enableEmission = true;
+
+        if(emiter != null)
+            emiter.enableEmission = true;
     }
 
     public void swichShaderFadeInOut()
@@ -59,7 +61,8 @@ public class Fadable : MonoBehaviour
 
 
         ParticleSystem emiter = GetComponentInChildren<ParticleSystem>();
-        emiter.enableEmission = false;
+        if(emiter != null)
+            emiter.enableEmission = false;
     }
 
     public void show(float delay = 0)
