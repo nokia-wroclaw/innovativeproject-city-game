@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 65368943033094598}
   - component: {fileID: 114391362102488932}
   m_Layer: 0
-  m_Name: ore_occupied (3)
+  m_Name: mine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

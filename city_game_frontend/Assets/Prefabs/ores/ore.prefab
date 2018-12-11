@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114138637361735288}
   - component: {fileID: 114849309901500254}
   m_Layer: 0
-  m_Name: ore_effects
+  m_Name: ore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
