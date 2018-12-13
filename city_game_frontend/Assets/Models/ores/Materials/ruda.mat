@@ -90,10 +90,10 @@ Material:
     - _DissolveEnd: {r: 0, g: 0, b: 0, a: 1}
     - _DissolveStart: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 1, g: 0, b: 0, a: 1}
-    - _Emission: {r: 0.3679245, g: 0, b: 0.1934776, a: 1}
-    - _EmissionColor: {r: 0.23921569, g: 0, b: 0.09803922, a: 1}
+    - _Emission: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmmisionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EmmisionColorH: {r: 1, g: 0.9481132, b: 0.98524785, a: 1}
-    - _EmmisionColorL: {r: 0.6981132, g: 0, b: 0.42434317, a: 1}
+    - _EmmisionColorH: {r: 0, g: 0, b: 0, a: 1}
+    - _EmmisionColorL: {r: 0, g: 0, b: 0, a: 1}
     - _Glow: {r: 1, g: 1, b: 1, a: 1}
     - _GlowEnd: {r: 1, g: 1, b: 1, a: 1}
