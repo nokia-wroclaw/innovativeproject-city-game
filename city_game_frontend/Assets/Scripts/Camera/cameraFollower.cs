@@ -10,8 +10,7 @@ public class cameraFollower : MonoBehaviour {
     public float bias;
     float oneMinusBias;
 
-    public float horizontalZoomSpeed;
-    public float verticalZoomSpeed;
+    public float zoomSpeed;
     public float horizontalRotationSpeed;
     public float verticalRotationSpeed;
 
@@ -45,7 +44,7 @@ public class cameraFollower : MonoBehaviour {
             // TODO: MAXIMUM AND MINIMUM CAMERA ANGLES
             if(Mathf.Abs(touchZero.deltaPosition.x) > Mathf.Abs(touchZero.deltaPosition.y))
             {
-                anchor.transform.Rotate(
+                rotationThatWorks( anchor,
                                 new Vector3(
                                     0,
                                     touchZero.deltaPosition.x * horizontalRotationSpeed,
@@ -56,7 +55,7 @@ public class cameraFollower : MonoBehaviour {
 
             else
             {
-                transform.Rotate(
+                rotationThatWorks(anchor,
                                 new Vector3(
                                     touchZero.deltaPosition.y * verticalRotationSpeed,
                                     0,
@@ -84,9 +83,9 @@ public class cameraFollower : MonoBehaviour {
             float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
             var newDistance = anchor.transform.localScale + new Vector3(
-                anchor.transform.localScale.x * deltaMagnitudeDiff * verticalZoomSpeed * Time.deltaTime,
-                anchor.transform.localScale.y * deltaMagnitudeDiff * horizontalZoomSpeed * Time.deltaTime,
-                0
+                0,//anchor.transform.localScale.x * deltaMagnitudeDiff * verticalZoomSpeed * Time.deltaTime,
+                0,//anchor.transform.localScale.y * deltaMagnitudeDiff * horizontalZoomSpeed * Time.deltaTime,
+                 anchor.transform.localScale.z * deltaMagnitudeDiff * Time.deltaTime * zoomSpeed
             );
 
             if (isInPinchRange(newDistance))
@@ -94,6 +93,117 @@ public class cameraFollower : MonoBehaviour {
 
             //Debug.Log(anchor.transform.localScale);
         }
+
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            rotationThatWorks(anchor, new Vector3(
+                            verticalRotationSpeed,
+                            0,
+                            0
+                            )
+                        );
+            /*
+            anchor.transform.Rotate(
+                             new Vector3(
+                                 verticalRotationSpeed,
+                                 0,
+                                 0
+                                 )
+                                 //,Space.World
+                             );
+                             */
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            rotationThatWorks(anchor, new Vector3(
+                                 -verticalRotationSpeed,
+                                 0,
+                                 0
+                                 )
+                             );
+            /*
+            anchor.transform.Rotate(
+                             new Vector3(
+                                 -verticalRotationSpeed,
+                                 0,
+                                 0
+                                 )
+                                 //,Space.World
+                             );
+                             */
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            rotationThatWorks(anchor, new Vector3(
+                                 0,
+                                 -horizontalRotationSpeed * 3,
+                                 0
+                                 ));
+            /*
+            anchor.transform.Rotate(
+                             new Vector3(
+                                 0,
+                                 -horizontalRotationSpeed * 3,
+                                 0
+                                 )
+                                 //,Space.World
+                             );
+                             */
+        }
+
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            rotationThatWorks(anchor, new Vector3(
+                                0,
+                                +horizontalRotationSpeed * 3,
+                                0
+                                ));
+            /*
+            anchor.transform.Rotate(
+                             new Vector3(
+                                 0,
+                                 +horizontalRotationSpeed * 3,
+                                 0
+                                 )
+                                 //,Space.World
+                             );
+
+    */
+        }
+
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            var newDistance = anchor.transform.localScale + new Vector3(
+               0,0,
+               -anchor.transform.localScale.z * Time.deltaTime * zoomSpeed
+           );
+
+            if (isInPinchRange(newDistance))
+                anchor.transform.localScale = newDistance;
+
+        }
+        else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            var newDistance = anchor.transform.localScale + new Vector3(
+              0,0,
+              anchor.transform.localScale.z * Time.deltaTime * zoomSpeed
+           );
+
+            if (isInPinchRange(newDistance))
+                anchor.transform.localScale = newDistance;
+
+        }
+
+
+    }
+
+    /*
+     * Because Unity's rotation system was way too sophisticated for our small needs
+     */
+    private void rotationThatWorks(GameObject objectToRotate, Vector3 rotation)
+    {
+        objectToRotate.transform.eulerAngles = objectToRotate.transform.eulerAngles + rotation;
     }
 
     public bool isInPinchRange(Vector3 dist)

@@ -25,6 +25,12 @@
     * Engineer - building/updating stuff
     * Magician - support for teams/buffs
     * Warrior - taking over existing buildings
+   * Mockup of the skill tree
+   * Mockup of current player stats:
+    * lvl
+    * ore takeover bonus
+    * mine takeover bonus
+    * some buffs as stats? dunno, gimme your ideas
   3. Guild system - fight together:
    * Guild UI consisting of:
     * Panel inviting/removing people from the guild
@@ -33,7 +39,9 @@
    NOTE: personally, I see this as a 3-category slide-out panel.. just an idea
   4. Multiplayer-structure-building system:
    * "Team takeover" button next to the "Take over" building button
-   * 
+   NOTE: how I imagine a team takeover
+   ![Team takeover](https://github.com/nokia-wroclaw/innovativeproject-city-game/raw/master/loose_scripts_and_ideas/mock1.png)
 
-  4. Guild territory system
-  6. PvE fights system
+  5. Guild territory system
+  5. Polish the UX - fluid animation and camera movement, small details, you know the deal
+  6. PvE fights system (90% sure we won't manage to do that on time)
