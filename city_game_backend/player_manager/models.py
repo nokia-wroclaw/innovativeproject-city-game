@@ -17,6 +17,9 @@ class Player(models.Model):
         blank=False
     )
 
+    # If the player joins a guild
+    guild = models.ForeignKey('guild_manager.Guild', on_delete=models.SET_NULL, null=True, blank=True)
+
     def __str__(self):
         return f'Player {self.nickname}'
 
