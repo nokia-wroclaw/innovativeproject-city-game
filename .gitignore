@@ -2,3 +2,4 @@ venv
 postgres-data
 postgres-data-production
 .vs
+city_game_backend/.idea/encodings.xml
