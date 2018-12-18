@@ -198,7 +198,6 @@ public class cameraFollower : MonoBehaviour {
         // Rotation boundaries
         if (anchor.transform.eulerAngles.x < MIN_X_ROTATION)
         {
-            Debug.Log("Too low");
             anchor.transform.eulerAngles = new Vector3(
                MIN_X_ROTATION,
                anchor.transform.eulerAngles.y,
@@ -209,7 +208,6 @@ public class cameraFollower : MonoBehaviour {
 
         if (anchor.transform.eulerAngles.x > MAX_X_ROTATION)
         {
-            Debug.Log("Too high");
             anchor.transform.eulerAngles = new Vector3(
                 MAX_X_ROTATION,
                 anchor.transform.eulerAngles.y,
