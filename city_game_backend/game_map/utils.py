@@ -33,7 +33,7 @@ def notify_dynamic_map_structure_change(structure):
     })
 
     for receiver in notification_receivers:
-        ActiveConnectionsStorage.get(receiver.player.user.id).send(message_to_send)
+        ActiveConnectionsStorage.get(receiver.player.id).send(message_to_send)
 
 
 def struct_2_dict(struct):
