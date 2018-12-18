@@ -14,7 +14,7 @@ public class cameraFollower : MonoBehaviour {
     public float horizontalRotationSpeed;
     public float verticalRotationSpeed;
 
-    const float MIN_X_ROTATION = -9;
+    const float MIN_X_ROTATION = 1;
     const float MAX_X_ROTATION = 60;
 
     // Use this for initialization
@@ -60,29 +60,6 @@ public class cameraFollower : MonoBehaviour {
                 0
                 )
             );
-
-            if (anchor.transform.eulerAngles.x < MIN_X_ROTATION)
-            {
-                Debug.Log("Too low");
-                anchor.transform.eulerAngles = new Vector3(
-                   MIN_X_ROTATION,
-                   anchor.transform.eulerAngles.y,
-                   0
-
-
-                    );
-            }
-
-
-            if (anchor.transform.eulerAngles.x > MAX_X_ROTATION)
-            {
-                Debug.Log("Too high");
-                anchor.transform.eulerAngles = new Vector3(
-                    MAX_X_ROTATION,
-                    anchor.transform.eulerAngles.y,
-                    0
-                );
-            }
 
         
         }
@@ -215,6 +192,31 @@ public class cameraFollower : MonoBehaviour {
                 anchor.transform.localScale = newDistance;
 
         }
+
+
+        
+        // Rotation boundaries
+        if (anchor.transform.eulerAngles.x < MIN_X_ROTATION)
+        {
+            Debug.Log("Too low");
+            anchor.transform.eulerAngles = new Vector3(
+               MIN_X_ROTATION,
+               anchor.transform.eulerAngles.y,
+               0
+            );
+        }
+
+
+        if (anchor.transform.eulerAngles.x > MAX_X_ROTATION)
+        {
+            Debug.Log("Too high");
+            anchor.transform.eulerAngles = new Vector3(
+                MAX_X_ROTATION,
+                anchor.transform.eulerAngles.y,
+                0
+            );
+        }
+        
 
 
     }
