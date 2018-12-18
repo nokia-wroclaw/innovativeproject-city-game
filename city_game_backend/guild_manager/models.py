@@ -19,14 +19,18 @@ class Guild(models.Model):
     def add_player(self, player):
 
         if player.guild is not None:
-            player.guild.remove_player(player)
+            Guild.remove_player_from_guild(player)
 
         player.guild = self
         player.save()
 
-    def remove_player(self, player):
+    @staticmethod
+    def remove_player_from_guild(player):
+        guild = player.guild
+
         player.guild = None
         player.save()
 
-        if self.members_count == 0:
-            self.delete()
+        if guild is not None:
+            if guild.members_count == 0:
+                guild.delete()
