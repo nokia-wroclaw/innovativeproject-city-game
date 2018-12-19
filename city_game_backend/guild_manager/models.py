@@ -9,3 +9,28 @@ class Guild(models.Model):
     Plasmatia = models.FloatField(default=0.0)
     Auferia = models.FloatField(default=0.0)
 
+    def __str__(self):
+        return self.guild_name
+
+    @property
+    def members_count(self):
+        return len(self.player_set.all())
+
+    def add_player(self, player):
+
+        if player.guild is not None:
+            Guild.remove_player_from_guild(player)
+
+        player.guild = self
+        player.save()
+
+    @staticmethod
+    def remove_player_from_guild(player):
+        guild = player.guild
+
+        player.guild = None
+        player.save()
+
+        if guild is not None:
+            if guild.members_count == 0:
+                guild.delete()

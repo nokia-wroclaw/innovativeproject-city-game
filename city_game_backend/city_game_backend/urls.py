@@ -15,6 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from .startup_script import on_startup
+
+# Since the urls.py file is only loaded once - when the server starts,
+# it is used to run a starupt script
+on_startup()
 
 urlpatterns = [
     path('admin/', admin.site.urls),

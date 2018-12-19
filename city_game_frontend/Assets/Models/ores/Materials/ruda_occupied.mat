@@ -7,9 +7,9 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: ruda_occupied
-  m_Shader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
-  m_ShaderKeywords: _EMISSION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-  m_LightmapFlags: 1
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: _GLOSSYREFLECTIONS_OFF _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A _SPECULARHIGHLIGHTS_OFF
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -78,7 +78,7 @@ Material:
     - _Edges: 0.1
     - _GlossMapScale: 1
     - _Glossiness: 0.02
-    - _GlossyReflections: 1
+    - _GlossyReflections: 0
     - _GlowColFac: 0.75
     - _GlowIntensity: 0.05
     - _GlowScale: 1
@@ -92,7 +92,7 @@ Material:
     - _ShakeTime: 1
     - _ShakeWindspeed: 1
     - _SmoothnessTextureChannel: 1
-    - _SpecularHighlights: 1
+    - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _StartTime: 14.28
     - _UVSec: 0
