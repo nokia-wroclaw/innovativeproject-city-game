@@ -27,68 +27,39 @@ def create_message(data):
         'data': json.dumps(data)
     })
 
-
-LOGIN_DATA = {
-    'type': AUTH_EVENT,
-    'login': 'gracz',
-    'pass': 'baczekbezraczek',
-}
+def append_to_logs(message):
+    logs.insert(INSERT, '>>>>\n')
+    logs.insert(INSERT, message + '\n')
+    logs.insert(INSERT, '<<<<\n\n')
+    logs.see("end")
 
 
 def on_message(ws, message):
-    print(message)
-
-    w.delete('all')
-
-    lon = float(lon_entry.get())
-    lat = float(lat_entry.get())
-
-    message = json.loads(message)
-
-    for chunk in message['chunks_data']:
-        print('chunk!!')
-        for node in chunk['road_nodes']:
-
-            lat_start = node['lat_start'] - lat + CHUNK_SIZE + MARGIN
-            lat_end = node['lat_end'] - lat + CHUNK_SIZE + MARGIN
-
-            lon_start = node['lon_start'] - lon + CHUNK_SIZE * 2 + MARGIN * 3
-            lon_end = node['lon_end'] - lon + CHUNK_SIZE * 2 + MARGIN * 3
-
-            lat_start = WINDOW_SIZE - lat_start * SCALE
-            lat_end = WINDOW_SIZE - lat_end * SCALE
-            lon_start = lon_start * SCALE
-            lon_end = lon_end * SCALE
-
-            w.create_line(
-                lon_start, lat_start,
-                lon_end, lat_end,
-                fill='white'
-            )
-            time.sleep(0.001)
-
+    parsed = json.loads(message)
+    append_to_logs(json.dumps(parsed, indent=2))
 
 
 
 def on_error(ws, error):
-    print(error)
+    append_to_logs(error)
 
 
 def on_close(ws):
-    print("### closed ###")
+    append_to_logs("### closed ###")
 
 
 def on_open(ws):
-    print('### connection established ###')
-    ws.send(create_message(LOGIN_DATA))
+    append_to_logs('### connection established ###')
 
 
 def send_overtake_struct_request():
-    ws.send(create_message({
-        'type': MESSAGE_TYPE_OVERTAKE_REQUEST,
-        'id': int(overtake_id.get())
-    }))
-
+    try:
+        ws.send(create_message({
+            'type': MESSAGE_TYPE_OVERTAKE_REQUEST,
+            'id': int(overtake_id.get())
+        }))
+    except websocket._exceptions.WebSocketConnectionClosedException:
+        append_to_logs('### CONNECTION IS CLOSED ###')
 
 def send_map_request():
     lon = float(lon_entry.get())
@@ -101,6 +72,24 @@ def send_map_request():
     }
 
     ws.send(create_message(data))
+
+
+def try_login():
+    login_data = {
+        'type': AUTH_EVENT,
+        'login': login_entry.get(),
+        'pass': password_entry.get(),
+    }
+
+    ws.send(create_message(login_data))
+
+
+def coloured_label(root, text):
+    return Label(root, text=text, fg='white', bg='#263238')
+
+
+def separator(root, column):
+    coloured_label(root, '            ').grid(column=column, row=1)
 
 
 ws = websocket.WebSocketApp(
@@ -117,23 +106,44 @@ thread.start_new_thread(ws.run_forever, ())
 master = Tk()
 master.configure(background='#263238')
 
+
+coloured_label(master, 'Login').grid(row=1, column=1)
+login_entry = Entry(master)
+login_entry.grid(row=2, column=1)
+login_entry.insert(0, "gracz")
+
+separator(master, 2)
+
+password_entry = Entry(master)
+password_entry.grid(row=3, column=1)
+password_entry.insert(0, "baczekbezraczek")
+
+location = Button(master, text='Login', command=try_login)
+location.grid(row=4, column=1)
+
+coloured_label(master, 'Location').grid(row=1, column=3)
 lat_entry = Entry(master)
-lat_entry.pack()
+lat_entry.grid(row=2, column=3)
 lat_entry.insert(0, "51.23")
 
 lon_entry = Entry(master)
-lon_entry.pack()
+lon_entry.grid(row=3, column=3)
 lon_entry.insert(0, "17.10")
 
-
 location = Button(master, text='Send location', command=send_map_request)
-location.pack()
+location.grid(row=4, column=3)
+
+separator(master, 4)
+
+coloured_label(master, 'Overtaking').grid(row=1, column=5)
+overtake_id = Entry(master)
+overtake_id.grid(row=2, column=5)
+overtake_id.insert(0, "1")
 
 overtake = Button(master, text='Overtake struct', command=send_overtake_struct_request)
-overtake.pack()
+overtake.grid(row=3, column=5)
 
-overtake_id = Entry(master)
-overtake_id.pack()
-overtake_id.insert(0, "1")
+logs = Text(master, width=150)
+logs.grid(column=6, row=6)
 
 mainloop()
