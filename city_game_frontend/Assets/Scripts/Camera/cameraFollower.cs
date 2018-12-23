@@ -14,6 +14,9 @@ public class cameraFollower : MonoBehaviour {
     public float horizontalRotationSpeed;
     public float verticalRotationSpeed;
 
+    const float MIN_X_ROTATION = 1;
+    const float MAX_X_ROTATION = 60;
+
     // Use this for initialization
     void Start () {
         anchor = gameObject.transform.parent.gameObject;
@@ -40,30 +43,25 @@ public class cameraFollower : MonoBehaviour {
 
             //Debug.Log(speed_x + " " + speed_y);// + " " + speed_z);
 
+            /*
+         rotationThatWorks( anchor,
+            new Vector3(
+                0,
+                touchZero.deltaPosition.x * horizontalRotationSpeed,
+                0
+                )
+        );
+        */
 
-            // TODO: MAXIMUM AND MINIMUM CAMERA ANGLES
-            if(Mathf.Abs(touchZero.deltaPosition.x) > Mathf.Abs(touchZero.deltaPosition.y))
-            {
-                rotationThatWorks( anchor,
-                                new Vector3(
-                                    0,
-                                    touchZero.deltaPosition.x * horizontalRotationSpeed,
-                                    0
-                                    )
-                                );
-            }
+        rotationThatWorks(anchor,
+            new Vector3(
+                -touchZero.deltaPosition.y * verticalRotationSpeed,
+                touchZero.deltaPosition.x * horizontalRotationSpeed,
+                0
+                )
+            );
 
-            else
-            {
-                rotationThatWorks(anchor,
-                                new Vector3(
-                                    touchZero.deltaPosition.y * verticalRotationSpeed,
-                                    0,
-                                    0
-                                    )
-                                );
-            }
-            
+        
         }
         else if (Input.touchCount == 2)
         {
@@ -194,6 +192,29 @@ public class cameraFollower : MonoBehaviour {
                 anchor.transform.localScale = newDistance;
 
         }
+
+
+        
+        // Rotation boundaries
+        if (anchor.transform.eulerAngles.x < MIN_X_ROTATION)
+        {
+            anchor.transform.eulerAngles = new Vector3(
+               MIN_X_ROTATION,
+               anchor.transform.eulerAngles.y,
+               0
+            );
+        }
+
+
+        if (anchor.transform.eulerAngles.x > MAX_X_ROTATION)
+        {
+            anchor.transform.eulerAngles = new Vector3(
+                MAX_X_ROTATION,
+                anchor.transform.eulerAngles.y,
+                0
+            );
+        }
+        
 
 
     }

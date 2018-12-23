@@ -177,8 +177,8 @@ public class MapManager : MonoBehaviour {
             var lines = roadObject.GetComponent<LineRenderer>();
             lines.transform.Rotate(new Vector3(90, 0, 0));
             lines.alignment = LineAlignment.Local;
-            lines.startWidth= 1F;
-            lines.endWidth = 1F;
+            lines.startWidth= 2F;
+            lines.endWidth = 2F;
 
             // A simple 2 color gradient with a fixed alpha of 1.0f.
             float alpha = 1.0f;
