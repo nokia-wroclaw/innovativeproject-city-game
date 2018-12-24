@@ -1,5 +1,6 @@
 from player_manager.models import ActivePlayer
 import logging
+import psycopg2
 
 logger = logging.getLogger(__name__)
 
@@ -8,7 +9,13 @@ logger = logging.getLogger(__name__)
 def on_startup():
     logger.info("Running the startup script..")
 
-    ActivePlayer.objects.all().delete()
+    try:
+        ActivePlayer.objects.all().delete()
+        logger.info("Startup script finished successfully")
+    except psycopg2.ProgrammingError:
+        logger.warning("""A problem has occurred during the startup script,
+        don't worry if you're running it for the first time""")
 
-    logger.info("Startup script finished successfully")
+
+
 
