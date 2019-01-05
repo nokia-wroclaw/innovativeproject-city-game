@@ -37,7 +37,11 @@ public class LoginData
             this.pass = pass;
         }
         catch (System.Exception e) {
-            Debug.LogError("WILL NOT LOG IN UNLESS YOU MAKE A DEFAULT LOGIN DATA FILE");
+
+            // Using Pawel's account as a 'base' one
+            this.login = "pawel";
+            this.pass = "jaktamsprzeglo";
+
         }
     }
 }
