@@ -19,6 +19,7 @@ MESSAGE_TYPE_CREATE_GUILD = 5
 # Server-driven (also referred to as special) message types
 SPECIAL_MESSAGE_MAP_UPDATE = 0
 SPECIAL_MESSAGE_NOTIFICATION = 1
+SPECIAL_MESSAGE_GUILD_MEMBER_POSITION_UPDATE = 2
 
 # Resource types
 
