@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 
     'game_map',
     'player_manager',
+    'guild_manager',
 ]
 
 MIDDLEWARE = [

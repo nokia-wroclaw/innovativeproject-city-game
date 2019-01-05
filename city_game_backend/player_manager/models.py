@@ -17,8 +17,18 @@ class Player(models.Model):
         blank=False
     )
 
+    # If the player joins a guild
+    guild = models.ForeignKey('guild_manager.Guild', on_delete=models.SET_NULL, null=True, blank=True)
+
     def __str__(self):
         return f'Player {self.nickname}'
+
+    @staticmethod
+    def get_by_id(player_id: int):
+
+        return Player.objects.filter(
+            id=player_id
+        ).first()
 
 
 class ActivePlayer(models.Model):
@@ -42,3 +52,17 @@ class ActivePlayer(models.Model):
 
     def __str__(self):
         return f'{self.player.nickname} at {self.longitude}, {self.latitude}'
+
+    @staticmethod
+    def get_from_player_id(player_id: int):
+
+        return ActivePlayer.objects.filter(
+            player_id=player_id
+        ).first()
+
+    @staticmethod
+    def get_from_active_player_id(player_id: int):
+
+        return ActivePlayer.objects.filter(
+            player_id=player_id
+        ).first()

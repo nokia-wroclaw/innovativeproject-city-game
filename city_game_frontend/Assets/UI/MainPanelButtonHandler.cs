@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class MainPanelButtonHandler : MonoBehaviour {
 
-    public Animator mainPanel;
+    public Animator mainPanel; 
 
-    private bool isOpen = false;
-
-    public bool GetIsOpen()
-    {
-        return isOpen;
-    }
+    public bool isOpen = false;
 
     public void OpenMainPanel()
     {

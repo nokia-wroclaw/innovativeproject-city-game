@@ -25,8 +25,8 @@ class ClientCommunicationConsumer(WebsocketConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user = None  # Link to the user account
-        self.player = None  # Link to the player data of this account
-        self.activePlayerData = None  # Storage for player's location
+        self.player_id = None  # Link to the player data of this account
+        self.active_player_id = None  # Storage for player's location
 
     def connect(self):
         logger.info('New websocket connection')
@@ -73,7 +73,7 @@ class ClientCommunicationConsumer(WebsocketConsumer):
     def handle_message(self, message: dict, message_type: int) -> str:
         # If user is not authenticated, we only let him to send an auth message
         print('Handling', message_type)
-        if self.user is None:
+        if self.player_id is None:
             if message_type == CONSTANTS.MESSAGE_TYPE_AUTH_EVENT:
                 return handle_auth_event(message, self)
             else:  # TODO: IMPLEMENT SOME SORT OF LOGIN TIMEOUT INSTEAD OF WAITING FOR A MESSAGE

@@ -12,16 +12,16 @@ class ActiveConnectionsStorage:
         ActiveConnectionsStorage.connections = {}
 
     @staticmethod
-    def get(client_id: int):
-        if client_id in ActiveConnectionsStorage.connections:
-            return ActiveConnectionsStorage.connections[client_id]
+    def get(player_id: int):
+        if player_id in ActiveConnectionsStorage.connections:
+            return ActiveConnectionsStorage.connections[player_id]
         else:
             return None
 
     @staticmethod
-    def add(client_id: int, connection):
-        if client_id not in ActiveConnectionsStorage.connections:
-            ActiveConnectionsStorage.connections[client_id] = connection
+    def add(player_id: int, connection):
+        if player_id not in ActiveConnectionsStorage.connections:
+            ActiveConnectionsStorage.connections[player_id] = connection
 
     @staticmethod
     def remove(client_id: int):

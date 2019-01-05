@@ -69,12 +69,12 @@ def handle_auth_event(message: dict, websocket):
     new_active_player.save()
 
     # Saving the websocket connection
-    websocket.user = user
-    websocket.player = player
-    websocket.active_player_data = new_active_player
+    # websocket.user_id = user.id # Not needed and will only cause confusion
+    websocket.player_id = player.id
+    websocket.active_player_id = new_active_player.id
 
     # Adding the websocket into the collection of connections
-    ActiveConnectionsStorage.add(user.id, websocket)
+    ActiveConnectionsStorage.add(player.id, websocket)
 
     # Sending the success message to the client
 

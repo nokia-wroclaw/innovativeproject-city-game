@@ -38,6 +38,11 @@ class Structure(models.Model):
     # Gameplay-specific data
     taken_over = models.BooleanField(default=False)
     owner = models.ForeignKey('player_manager.Player', on_delete=models.CASCADE, default=None, null=True, blank=True)
+
+    # Guild-specific data
+    taken_over_by_guild = models.BooleanField(default=False)
+    owner_guild = models.ForeignKey('guild_manager.Guild', on_delete=models.CASCADE, default=None, null=True, blank=True)
+
     tier = models.IntegerField(default=1)
 
     # Resources types
