@@ -18,6 +18,7 @@ def handle_guild_creation_request(message, websocket) -> str:
     new_guild.guild_name = guild_name
     new_guild.add_player(player)
 
+    player.save()
     new_guild.save()
 
     return SUCCESS_MESSAGE
