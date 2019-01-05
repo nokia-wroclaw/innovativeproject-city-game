@@ -3,7 +3,7 @@ import math
 import functools
 
 
-SUCCESS_MESSAGE = {'status': 'success'}
+SUCCESS_MESSAGE: str = json.dumps({'status': 'success'})
 
 
 def error_message(message):
