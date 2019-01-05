@@ -13,6 +13,7 @@ from .disconnect_event_handler import handle_disconnect_event
 from .chunk_request_handler import handle_chunk_request
 from .dynamic_chunk_data_request_handler import handle_dynamic_chunk_data_request
 from .structure_takeover_request_handler import handle_structure_takeover_request
+from .guild_creation_request_handler import handle_guild_creation_request
 
 logger = logging.getLogger(__name__)
 
@@ -89,6 +90,9 @@ class ClientCommunicationConsumer(WebsocketConsumer):
             return handle_dynamic_chunk_data_request(message, self)
         elif message_type == CONSTANTS.MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST:
             return handle_structure_takeover_request(message, self)
+        elif message_type == CONSTANTS.MESSAGE_TYPE_CREATE_GUILD:
+            return handle_guild_creation_request(message, self)
+        
         # ... another message type handlers down here ...
         else:
-            self.send('Wrong message type')
+            self.send(error_message('Wrong message type!'))
