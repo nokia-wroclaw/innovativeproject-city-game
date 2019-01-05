@@ -46,11 +46,19 @@ namespace Assets.Sockets
          */
         public void performCallback()
         {
-            this.callback(
-                this.requestData.getSender(),
-                this.responseData.error,
-                this.responseData.message
-            );
+            try { 
+                this.callback(
+                    this.requestData.getSender(),
+                    this.responseData.error,
+                    this.responseData.message
+                );
+            } catch(Exception e)
+            {
+                Debug.LogError("ERROR IN HANDLING");
+                Debug.LogError(this.responseData.message);
+                Debug.LogError(e.Data);
+                Debug.LogError(e.StackTrace);
+            }
         }
 
         public Request()
@@ -163,6 +171,7 @@ namespace Assets.Sockets
                 //parse data to get transaction id
                 var receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
 
+                Debug.LogWarning(receivedMessage.id);
                 /* 
                  * Special messages - the ones that are not client requests, but a info pushed from the server without asking for it
                  * such as notifications and map structures changes have ids smaller than 100. They are treated differently

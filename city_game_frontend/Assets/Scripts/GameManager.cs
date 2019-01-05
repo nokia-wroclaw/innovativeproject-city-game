@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
             if (eventToHandle.getResponseData().isSpecialMessage)
             {
                 handleSpecialEvent(eventToHandle);
+                return;
             }
 
             eventToHandle.performCallback();
@@ -62,6 +63,11 @@ public class GameManager : MonoBehaviour {
             Debug.Log("Received a server-driven map update!");
             MapManager.Instance.structsDataCallbackFunction(gameObject, "", responseData.message);
         }
+
+        if(responseData.specialMessageID == Const.SPECIAL_MESSAGE_GUILD_MEMBER_POSITION_UPDATE)
+        {
+            MapManager.Instance.handleGuildMemberLocationUpdate(responseData.message);
+        }
     }
 
     
@@ -73,7 +79,7 @@ public class GameManager : MonoBehaviour {
     public void OnLocationChanged(float lon, float lat)
     {
 
-        locationIndicator.transform.position = new Vector3(
+        locationIndicator.GetComponent<SmoothMovement>().targetPosition = new Vector3(
             MapManager.LatitudeToGameCoordinate(lat),
             locationIndicator.transform.position.y,
             MapManager.LongitudeToGameCoordinate(lon)
