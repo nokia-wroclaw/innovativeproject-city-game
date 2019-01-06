@@ -50,6 +50,10 @@ class ActivePlayer(models.Model):
         null=True
     )
 
+    rotation = models.FloatField(
+        null=True
+    )
+
     def __str__(self):
         return f'{self.player.nickname} at {self.longitude}, {self.latitude}'
 

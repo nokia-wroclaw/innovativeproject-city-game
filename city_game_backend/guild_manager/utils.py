@@ -23,9 +23,11 @@ def notify_players_about_guild_member_position_change(activePlayer: ActivePlayer
             'id': activePlayer.player.pk,
             'lon': activePlayer.longitude,
             'lat': activePlayer.latitude,
+            'rotation': activePlayer.rotation,
             'nick': activePlayer.player.nickname
         })
-    })
+    })pussy
+    
 
     # Filtering the currently active players in search of guild members
     active_guild_member: ActivePlayer
