@@ -18,11 +18,11 @@ public class LoginData
         if (Application.platform == RuntimePlatform.Android)
         {
             if (PlayerPrefs.HasKey("Login")){
-                this.login = PlayerPrefs.GetString("Login");
+                this.login = UIManagerScript.constLoginKey;
             }
             if (PlayerPrefs.HasKey("Password"))
             {
-                this.pass = PlayerPrefs.GetString("Password");
+                this.pass = UIManagerScript.constPasswordKey;
             }
 
             return;

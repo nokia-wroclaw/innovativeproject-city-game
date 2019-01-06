@@ -8,7 +8,7 @@ public class UIManagerScript : MonoBehaviour {
 
     public Text loginText;
     public Text passwordText;
-    public string constLoginKey, constPasswordKey;
+    public static string constLoginKey, constPasswordKey;
     public GameObject loginPanel;
     //public Button loginButton;
 
