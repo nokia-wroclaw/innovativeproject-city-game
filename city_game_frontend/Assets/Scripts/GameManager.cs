@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 
     // TEMPORARY LOCATION INDICATOR
     public GameObject locationIndicator;
+    SmoothMovement locationIndicatorMovementScript;
 
     // TODO: Find a way to make this non-static
     public static Queue<Request> callbacksToProcess = new Queue<Request>();
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour {
     {
         server = ServerSocket.Instance;
         mapManager = MapManager.Instance;
+        locationIndicatorMovementScript = locationIndicator.GetComponent<SmoothMovement>();
     }
 	
 	// Update is called once per frame
@@ -76,14 +78,23 @@ public class GameManager : MonoBehaviour {
         
     }
 
-    public void OnLocationChanged(float lon, float lat)
+    public void OnLocationChanged(float lon, float lat, float rotation)
     {
-
-        locationIndicator.GetComponent<SmoothMovement>().targetPosition = new Vector3(
+        
+        locationIndicatorMovementScript.targetPosition = new Vector3(
             MapManager.LatitudeToGameCoordinate(lat),
             locationIndicator.transform.position.y,
             MapManager.LongitudeToGameCoordinate(lon)
             );
+
+
+        Vector3 currentIndicatorRotation = locationIndicator.transform.rotation.eulerAngles;
+
+        locationIndicatorMovementScript.targetRotation = new Vector3(
+            currentIndicatorRotation.x,
+            rotation,
+            currentIndicatorRotation.z
+        );
 
         server.send(gameObject, JsonUtility.ToJson(new LocationUpdateRequestData(lon, lat)), locationReportCallback);
         

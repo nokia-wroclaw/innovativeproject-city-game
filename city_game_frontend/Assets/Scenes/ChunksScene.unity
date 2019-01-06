@@ -1030,8 +1030,10 @@ MonoBehaviour:
   gameManager: {fileID: 14023411}
   latitude: 0
   longitude: 0
+  rotation: 0
   fakeLatitude: 51.1
   fakeLongitude: 17.1
+  fakeRotation: 0
   fakeLocation: 1
 --- !u!4 &432948545
 Transform:
@@ -1393,7 +1395,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 106, y: 0.000030517578}
+  m_AnchoredPosition: {x: 106, y: 0.000015258789}
   m_SizeDelta: {x: 208, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &587717878
@@ -4496,19 +4498,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: -0.6975404
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.115204625
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.115164414
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 0.69778395
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_RootOrder
@@ -4537,6 +4539,14 @@ Prefab:
     - target: {fileID: 2300000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
       propertyPath: m_Materials.Array.data[5]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -89.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 18.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7d71141ce2b79e342be7b709cb478fc3, type: 3}
@@ -5287,6 +5297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPosition: {x: 0, y: 0, z: 0}
+  targetRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &1584610264
 GameObject:
   m_ObjectHideFlags: 0
