@@ -23,14 +23,19 @@ public class UIManagerScript : MonoBehaviour {
             PlayerPrefs.SetString("Login", constLoginKey);
             PlayerPrefs.SetString("Password", constPasswordKey);
         }
+
+        StartTheGame();
     }
 
+    public void EnterLoginPanel()
+    {
+        loginPanel.SetActive(true);
+    }
     public void ExitLoginPanel()
     {
         loginPanel.SetActive(false);
-        //if(PlayerPrefs.HasKey("Login"))
+        if(PlayerPrefs.HasKey("Login"))
             Debug.Log(PlayerPrefs.GetString("Login"));
-        //Debug.Log(PlayerPrefs.GetString("Password"));
     }
 
 
@@ -53,8 +58,8 @@ public class UIManagerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        loginPanel.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	void Update () {

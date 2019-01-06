@@ -17,8 +17,13 @@ public class LoginData
         
         if (Application.platform == RuntimePlatform.Android)
         {
-            this.login = "pawel";
-            this.pass = "jaktamsprzeglo";
+            if (PlayerPrefs.HasKey("Login")){
+                this.login = PlayerPrefs.GetString("Login");
+            }
+            if (PlayerPrefs.HasKey("Password"))
+            {
+                this.pass = PlayerPrefs.GetString("Password");
+            }
 
             return;
         }
