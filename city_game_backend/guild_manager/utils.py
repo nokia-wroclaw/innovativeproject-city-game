@@ -26,7 +26,7 @@ def notify_players_about_guild_member_position_change(activePlayer: ActivePlayer
             'rotation': activePlayer.rotation,
             'nick': activePlayer.player.nickname
         })
-    })pussy
+    })
     
 
     # Filtering the currently active players in search of guild members
