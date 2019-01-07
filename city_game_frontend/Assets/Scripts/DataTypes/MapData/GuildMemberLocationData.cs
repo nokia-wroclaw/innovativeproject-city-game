@@ -14,6 +14,7 @@ namespace Assets
         public int id;
         public float lon;
         public float lat;
+        public float rotation;
         public string nick;
     }
 }

@@ -28,25 +28,9 @@ public class LoginData
             return;
         }
 
-        
-        try {
-
-        string path = "Assets/Scripts/RequestData/loginData.txt";
-        StreamReader reader = new StreamReader(path);
-
-
-        string login = reader.ReadLine();
-        string pass = reader.ReadLine();
-
-            this.login = login;
-            this.pass = pass;
-        }
-        catch (System.Exception e) {
-
             // Using Pawel's account as a 'base' one
             this.login = "pawel";
             this.pass = "jaktamsprzeglo";
 
-        }
     }
 }
