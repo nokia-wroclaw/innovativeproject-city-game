@@ -80,23 +80,15 @@ public class GameManager : MonoBehaviour {
 
     public void OnLocationChanged(float lon, float lat, float rotation)
     {
-        
-        locationIndicatorMovementScript.targetPosition = new Vector3(
-            MapManager.LatitudeToGameCoordinate(lat),
-            locationIndicator.transform.position.y,
-            MapManager.LongitudeToGameCoordinate(lon)
-            );
 
+        locationIndicatorMovementScript.setTargetPosition(MapManager.LatitudeToGameCoordinate(lat), MapManager.LongitudeToGameCoordinate(lon));
+        
 
         Vector3 currentIndicatorRotation = locationIndicator.transform.rotation.eulerAngles;
 
-        locationIndicatorMovementScript.targetRotation = new Vector3(
-            currentIndicatorRotation.x,
-            rotation,
-            currentIndicatorRotation.z
-        );
+        locationIndicatorMovementScript.setTargetRotation(rotation);
 
-        server.send(gameObject, JsonUtility.ToJson(new LocationUpdateRequestData(lon, lat)), locationReportCallback);
+        server.send(gameObject, JsonUtility.ToJson(new LocationUpdateRequestData(lon, lat, rotation)), locationReportCallback);
         
         if (roundDownToChunkCords(lon) == current_chunk_lon && roundDownToChunkCords(lat) == current_chunk_lat)
         {

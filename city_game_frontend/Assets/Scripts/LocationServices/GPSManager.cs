@@ -78,6 +78,7 @@ namespace Assets
             }
 
             Input.location.Start();
+            Input.compass.enabled = true;
             int maxWaitTime = 10;
             while (Input.location.status == LocationServiceStatus.Initializing && maxWaitTime > 10)
             {

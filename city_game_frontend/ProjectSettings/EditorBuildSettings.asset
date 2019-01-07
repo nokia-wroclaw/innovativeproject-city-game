@@ -6,15 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/ChunksScene.unity
-    guid: 2bfe309b54f847e469c2faa1d1662437
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: afdf6eaba81a7d041b9d2d08f42d4544
+  - enabled: 1
+    path: Assets/Scenes/ChunksScene.unity
+    guid: 2bfe309b54f847e469c2faa1d1662437
   - enabled: 0
     path: Assets/Scenes/ShaderScene.unity
     guid: 3e869be9e6961c54c9a2cd8e8381f903
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0

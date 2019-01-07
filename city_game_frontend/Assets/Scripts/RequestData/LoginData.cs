@@ -17,31 +17,20 @@ public class LoginData
         
         if (Application.platform == RuntimePlatform.Android)
         {
-            this.login = "pawel";
-            this.pass = "jaktamsprzeglo";
+            if (PlayerPrefs.HasKey("Login")){
+                this.login = UIManagerScript.constLoginKey;
+            }
+            if (PlayerPrefs.HasKey("Password"))
+            {
+                this.pass = UIManagerScript.constPasswordKey;
+            }
 
             return;
         }
-
-        
-        try {
-
-        string path = "Assets/Scripts/RequestData/loginData.txt";
-        StreamReader reader = new StreamReader(path);
-
-
-        string login = reader.ReadLine();
-        string pass = reader.ReadLine();
-
-            this.login = login;
-            this.pass = pass;
-        }
-        catch (System.Exception e) {
 
             // Using Pawel's account as a 'base' one
             this.login = "pawel";
             this.pass = "jaktamsprzeglo";
 
-        }
     }
 }

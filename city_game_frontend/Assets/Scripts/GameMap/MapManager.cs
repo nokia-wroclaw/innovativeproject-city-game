@@ -235,7 +235,7 @@ public class MapManager : MonoBehaviour
 
     public static float LatitudeToGameCoordinate(float lat)
     {
-        return (lat - LATITUDE_OFFSET) * MAP_SCALE_FACTOR;
+        return -(lat - LATITUDE_OFFSET) * MAP_SCALE_FACTOR;
     }
 
     public static float LongitudeToGameCoordinate(float lon)
@@ -289,10 +289,13 @@ public class MapManager : MonoBehaviour
         {
             GameObject playerToUpdate = guildPlayersDisplayedOnMap[newData.id];
 
-            playerToUpdate.GetComponent<SmoothMovement>().targetPosition = new Vector3(
+            playerToUpdate.GetComponent<SmoothMovement>().setTargetPosition(
                 LatitudeToGameCoordinate(newData.lat),
-                playerToUpdate.transform.position.y,
                 LongitudeToGameCoordinate(newData.lon)
+            );
+
+            playerToUpdate.GetComponent<SmoothMovement>().setTargetRotation(
+                newData.rotation
             );
         }
         else
