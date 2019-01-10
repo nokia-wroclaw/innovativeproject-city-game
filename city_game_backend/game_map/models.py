@@ -33,6 +33,8 @@ class Structure(models.Model):
     # Location data
     latitude = models.FloatField()
     longitude = models.FloatField()
+    rotation = models.FloatField(default=0)  # Directly related to the Unity's Y rotation
+
     chunk = models.ForeignKey(Chunk, on_delete=models.CASCADE)
 
     # Gameplay-specific data
