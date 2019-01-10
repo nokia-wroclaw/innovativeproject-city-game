@@ -48,9 +48,9 @@ class Structure(models.Model):
     # Resources types
     # # We'll think about names later
     GAME_RESOURCES = (
-        (CONSTANTS.RESOURCE_TYPE_1, 'Resource 1'),
-        (CONSTANTS.RESOURCE_TYPE_2, 'Resource 2'),
-        (CONSTANTS.RESOURCE_TYPE_3, 'Resource 3'),
+        (CONSTANTS.RESOURCE_TYPE_1, CONSTANTS.RESOURCE_CEMENTIA),
+        (CONSTANTS.RESOURCE_TYPE_2, CONSTANTS.RESOURCE_PLASMATIA),
+        (CONSTANTS.RESOURCE_TYPE_3, CONSTANTS.RESOURCE_AUFERIA),
     )
 
     resource_type = models.IntegerField(choices=GAME_RESOURCES)
