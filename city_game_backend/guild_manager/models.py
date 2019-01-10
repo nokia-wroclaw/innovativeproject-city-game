@@ -22,7 +22,6 @@ class Guild(models.Model):
             Guild.remove_player_from_guild(player)
 
         player.guild = self
-        #player.guild.save()
         player.save()
 
     @staticmethod
