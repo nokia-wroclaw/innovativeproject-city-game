@@ -9,6 +9,12 @@ public class SelectObject : MonoBehaviour
     Collider coll;
     GameObject anchor;
     public GameObject playerCharacter;
+    public static SelectObject Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
