@@ -42,6 +42,19 @@ public class PlayerActions : MonoBehaviour {
         Debug.Log("Guild created: " + data);
     });
 
+    public void enterBuildingMode()
+    {
+        cameraFollower.Instance.enabled = false;
+        SelectObject.Instance.enabled = false;
+        placeBuilding.Instance.enabled = true;
+    }
+
+    public void leaveBuildingMode() {
+        cameraFollower.Instance.enabled = true;
+        SelectObject.Instance.enabled = true;
+        placeBuilding.Instance.enabled = false;
+    }
+
     // Use this for initialization
     void Start () {
 
