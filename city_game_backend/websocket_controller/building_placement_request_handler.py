@@ -25,6 +25,7 @@ def handle_building_placement_request(message: dict, websocket) -> str:
     new_structure.resource_type = CONSTANTS.RESOURCE_TYPE_4  # AoE buff resource type
     new_structure.owner = Player.get_by_id(websocket.player_id)
 
+
     new_structure.save()
     notify_dynamic_map_structure_change(new_structure)
 
