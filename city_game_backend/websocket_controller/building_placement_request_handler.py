@@ -4,6 +4,7 @@ from city_game_backend import CONSTANTS
 from player_manager.models import Player
 from game_map.utils import notify_dynamic_map_structure_change
 
+
 @require_message_content(
     ('lat', float),
     ('lon', float),
