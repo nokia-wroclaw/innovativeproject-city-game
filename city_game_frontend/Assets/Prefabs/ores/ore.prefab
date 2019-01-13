@@ -208,8 +208,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intensity: 10
   range: 1
+  fadeInOutShader: {fileID: 0}
+  defaultShader: {fileID: 0}
   fade: 1
   shader: 0
+  <visible>k__BackingField: 0
 --- !u!114 &114849309901500254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,6 +226,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intensity: 10
   range: 10
+  fadeInOutShader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
+  defaultShader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
+  _fade: 0
+  shader: 0
 --- !u!198 &198194178888935208
 ParticleSystem:
   m_ObjectHideFlags: 1
