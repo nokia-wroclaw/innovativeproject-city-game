@@ -49,6 +49,7 @@ def struct_2_dict(struct):
 
         'lat': struct.latitude,
         'lon': struct.longitude,
+        'rotation': struct.rotation,
 
         'taken_over': struct.taken_over,
         'owner': struct.owner.nickname if struct.taken_over else '',  # Is this spaghetti ?
