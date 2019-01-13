@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4202977648853818}
   - component: {fileID: 33432465703002102}
   - component: {fileID: 23668242075964018}
+  - component: {fileID: 114181864318404186}
+  - component: {fileID: 65922684520479888}
   m_Layer: 0
   m_Name: basic_tree
   m_TagString: Untagged
@@ -83,3 +85,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1135096713295376}
   m_Mesh: {fileID: 4300000, guid: c2ccbf35b822df047be5fc8253627828, type: 3}
+--- !u!65 &65922684520479888
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135096713295376}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.109225996, y: 0.1037625, z: 0.126904}
+  m_Center: {x: 0.0055621415, y: 0.0045792605, z: 0.05131159}
+--- !u!114 &114181864318404186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1135096713295376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6904a0395c7e2fa4ba8a66ce3fd1ce2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 10
+  range: 10
+  fadeInOutShader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
+  defaultShader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
+  _fade: 0
+  shader: 1

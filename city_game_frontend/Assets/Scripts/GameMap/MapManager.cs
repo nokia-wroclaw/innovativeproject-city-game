@@ -11,18 +11,19 @@ public class MapManager : MonoBehaviour
     public GameObject orePrefab;
     public GameObject minePrefab;
     public GameObject otherPlayerModel;
+    public GameObject playerPlacedStructPrefab;
 
 
     public static MapManager Instance { set; get; }
 
     ServerSocket server = ServerSocket.Instance;
 
-    const int MAP_SCALE_FACTOR = 20000;
+    public static int MAP_SCALE_FACTOR = 20000;
 
 
     //TODO: SET THEM DYNAMICALLY
-    const float LATITUDE_OFFSET = 51.1F;
-    const float LONGITUDE_OFFSET = 17.09F;
+    public static float LATITUDE_OFFSET = 51.1F;
+    public static float LONGITUDE_OFFSET = 17.09F;
 
     /*
      * We store all the chunk object references inside this dictionary
@@ -92,10 +93,11 @@ public class MapManager : MonoBehaviour
     });
 
     /*
-     * Retrieve dynamic chunks that are located on a given chunk
+     * Retrieve dynamic structs that are located on a given chunk
      */
     public Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
+        Debug.LogWarning("DYNAMIC STRUCTS UPDATE");
         Debug.Log(data);
         DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
 
@@ -131,7 +133,12 @@ public class MapManager : MonoBehaviour
 
         GameObject structureObject = null;
 
-        if (structData.taken_over)
+        if(structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
+        {
+            structureObject = Instantiate(playerPlacedStructPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        }
+        else if (structData.taken_over)
         {
             structureObject = Instantiate(minePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             Debug.Log("Creating a taken over object!");
@@ -148,18 +155,23 @@ public class MapManager : MonoBehaviour
         DynamicStruct structureObjectScript = structureObject.AddComponent(typeof(DynamicStruct)) as DynamicStruct;
         structureObjectScript.data = structData;
 
-        structureObject.transform.Rotate(new Vector3(-95.905F, -47.504F, -43.15997F));
+        
+        structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
+
+        Debug.LogError(structData.rotation);
+        Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
+
         structureObject.GetComponent<Fadable>().show();
 
 
         structureObject.transform.position = new Vector3(
-            LatitudeToGameCoordinate(structData.lat),
+            Utils.LatitudeToGameCoordinate(structData.lat),
             0.09580898F,
-            LongitudeToGameCoordinate(structData.lon)
+            Utils.LongitudeToGameCoordinate(structData.lon)
         );
 
         //TODO: FIX THE SCALING
-        structureObject.transform.localScale = new Vector3(50, 50, 50);
+        structureObject.transform.localScale = new Vector3(100, 100, 100);
 
         dynamicStructs.Add(structData.id, structureObject);
     }
@@ -224,24 +236,16 @@ public class MapManager : MonoBehaviour
             for (int i = 0; i < road.nodes.Count; i++)
             {
                 lines.SetPosition(i, new Vector3(
-                    LatitudeToGameCoordinate(road.nodes[i].lat),
+                    Utils.LatitudeToGameCoordinate(road.nodes[i].lat),
                     0,
-                    LongitudeToGameCoordinate(road.nodes[i].lon)
+                    Utils.LongitudeToGameCoordinate(road.nodes[i].lon)
                     ));
             }
         }
 
     }
 
-    public static float LatitudeToGameCoordinate(float lat)
-    {
-        return -(lat - LATITUDE_OFFSET) * MAP_SCALE_FACTOR;
-    }
 
-    public static float LongitudeToGameCoordinate(float lon)
-    {
-        return (lon - LONGITUDE_OFFSET) * MAP_SCALE_FACTOR;
-    }
 
     bool isChunkLoadedOnCoords(float lon, float lat)
     {
@@ -290,8 +294,8 @@ public class MapManager : MonoBehaviour
             GameObject playerToUpdate = guildPlayersDisplayedOnMap[newData.id];
 
             playerToUpdate.GetComponent<SmoothMovement>().setTargetPosition(
-                LatitudeToGameCoordinate(newData.lat),
-                LongitudeToGameCoordinate(newData.lon)
+                Utils.LatitudeToGameCoordinate(newData.lat),
+                Utils.LongitudeToGameCoordinate(newData.lon)
             );
 
             playerToUpdate.GetComponent<SmoothMovement>().setTargetRotation(
@@ -301,9 +305,9 @@ public class MapManager : MonoBehaviour
         else
         {
             GameObject newDisplayedGuildMember = Instantiate(otherPlayerModel, new Vector3(
-                  LatitudeToGameCoordinate(newData.lat),
+                  Utils.LatitudeToGameCoordinate(newData.lat),
                 4.659256F,
-                LongitudeToGameCoordinate(newData.lon)
+                Utils.LongitudeToGameCoordinate(newData.lon)
             ), Quaternion.Euler(-89.98F, 0, 0)
                 );
 

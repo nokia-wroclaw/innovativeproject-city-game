@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Sockets;
 
 public class placeBuilding : MonoBehaviour {
 
@@ -17,6 +18,13 @@ public class placeBuilding : MonoBehaviour {
     private void Awake()
     {
         placeBuilding.Instance = this;
+
+        Debug.Log(10 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(10)));
+        Debug.Log(20 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(20)));
+        Debug.Log(30 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(30)));
+        Debug.Log(40 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(40)));
+        Debug.Log(50 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(50)));
+        Debug.Log(60 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(60)));
     }
 
     private void OnEnable()
@@ -29,19 +37,28 @@ public class placeBuilding : MonoBehaviour {
     public void confirmBuildingPlacement()
     {
         placableThing.GetComponent<Renderer>().material.shader = normalShader;
-        // TODO: SEND BUILDING DATA
 
+        PlaceBuildingRequestData newBuildingData = new PlaceBuildingRequestData(
+            Utils.GameCoordinateXToLatitude(placableThing.transform.position.x),
+            Utils.GameCoordinateZToLongitude(placableThing.transform.position.z),
+            placableThing.transform.rotation.eulerAngles.y,
+            1 // TODO: MAKE TIER MATTER
+        );
+
+        ServerSocket.Instance.send(this.gameObject, JsonUtility.ToJson(newBuildingData), structurePlacementCallback);
 
         //TODO: SHOULD THIS BE HERE?
         PlayerActions.Instance.leaveBuildingMode();
+        Destroy(placableThing);
     }
 
-    // Use this for initialization
-    void Start () {
-        //transparentShader = Shader.Find("FX/Flare");
-        //normalShader = Shader.Find("Standard");
-    }
-	
+    Request.callbackFunc structurePlacementCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+        Debug.Log("STRUCTURE PLACEMENT CALLBACK");
+        Debug.Log(error);
+        Debug.Log(data);
+    });
+    
 	// Update is called once per frame
 	void Update () {
 
@@ -53,8 +70,6 @@ public class placeBuilding : MonoBehaviour {
             Touch touchZero = Input.GetTouch(0);
             float speed_x = touchZero.deltaPosition.x;
             float speed_y = touchZero.deltaPosition.y;
-
-            Debug.Log(speed_x);
 
 
             Utils.rotationThatWorks(placableThing,
@@ -94,8 +109,11 @@ public class placeBuilding : MonoBehaviour {
                     placableThing.transform.position.y,
                     hit.point.z
                 );
-                Debug.Log("Moving the prototype");
 
+
+
+                Debug.Log(Utils.GameCoordinateXToLatitude(placableThing.transform.position.x));
+                Debug.Log(Utils.GameCoordinateZToLongitude(placableThing.transform.position.z));
 
             }
         }

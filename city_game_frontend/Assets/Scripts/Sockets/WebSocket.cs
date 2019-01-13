@@ -171,7 +171,6 @@ namespace Assets.Sockets
                 //parse data to get transaction id
                 var receivedMessage = JsonUtility.FromJson<RawReceivedMessage>(e.Data);
 
-                Debug.LogWarning(receivedMessage.id);
                 /* 
                  * Special messages - the ones that are not client requests, but a info pushed from the server without asking for it
                  * such as notifications and map structures changes have ids smaller than 100. They are treated differently

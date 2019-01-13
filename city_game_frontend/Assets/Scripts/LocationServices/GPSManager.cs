@@ -28,7 +28,7 @@ namespace Assets
             //to have unbreakable connection between app and GPS services
             DontDestroyOnLoad(gameObject);
             StartCoroutine(InitializationOfLocationService());
-            InvokeRepeating("updateCoordinates", 2.0f, 2.0f);
+            InvokeRepeating("updateCoordinates", 5.0f, 5.0f);
         }
 
         private void updateCoordinates()

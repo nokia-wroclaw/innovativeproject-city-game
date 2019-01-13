@@ -86,6 +86,8 @@ public class SimpleBuildingPanel : MonoBehaviour {
 
     string getBuildingName(DynamicStructData structure)
     {
+        return "Paweł napraw shadery <3";
+
         if(structure.taken_over)
         {
             return structure.owner + "'s Mine, Level " + structure.tier.ToString();

@@ -71,10 +71,12 @@ public class Fadable : MonoBehaviour
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.shader = defaultShader;
 
-        Light light = GetComponentInChildren<Light>();
-        light.intensity = intensity;
-        light.range = range;
-        light.enabled = true;
+        // Not all objects have lights
+        // We might need to rethink this again
+        //Light light = GetComponentInChildren<Light>();
+        //light.intensity = intensity;
+        //light.range = range;
+        //light.enabled = true;
 
         ParticleSystem emiter = GetComponentInChildren<ParticleSystem>();
 

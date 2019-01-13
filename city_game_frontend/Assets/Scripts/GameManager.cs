@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour {
     public void OnLocationChanged(float lon, float lat, float rotation)
     {
 
-        locationIndicatorMovementScript.setTargetPosition(MapManager.LatitudeToGameCoordinate(lat), MapManager.LongitudeToGameCoordinate(lon));
+        locationIndicatorMovementScript.setTargetPosition(Utils.LatitudeToGameCoordinate(lat), Utils.LongitudeToGameCoordinate(lon));
         
 
         Vector3 currentIndicatorRotation = locationIndicator.transform.rotation.eulerAngles;

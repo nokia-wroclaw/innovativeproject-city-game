@@ -17,6 +17,7 @@ public class DynamicStructData
     public int id;
     public float lat;
     public float lon;
+    public float rotation;
 
     public bool taken_over;
     public string owner;
