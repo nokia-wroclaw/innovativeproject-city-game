@@ -27,7 +27,6 @@ def notify_players_about_guild_member_position_change(activePlayer: ActivePlayer
             'nick': activePlayer.player.nickname
         })
     })
-    
 
     # Filtering the currently active players in search of guild members
     active_guild_member: ActivePlayer
