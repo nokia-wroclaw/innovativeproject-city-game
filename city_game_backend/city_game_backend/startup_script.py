@@ -12,9 +12,9 @@ def on_startup():
     try:
         ActivePlayer.objects.all().delete()
         logger.info("Startup script finished successfully")
-    except psycopg2.ProgrammingError:
+    except:
         logger.warning("""A problem has occurred during the startup script,
-        don't worry if you're running it for the first time""")
+don't worry if you're running it for the first time""")
 
 
 

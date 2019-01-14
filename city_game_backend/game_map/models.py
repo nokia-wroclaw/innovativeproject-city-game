@@ -33,6 +33,8 @@ class Structure(models.Model):
     # Location data
     latitude = models.FloatField()
     longitude = models.FloatField()
+    rotation = models.FloatField(default=0)  # Directly related to the Unity's Y rotation
+
     chunk = models.ForeignKey(Chunk, on_delete=models.CASCADE)
 
     # Gameplay-specific data
@@ -48,9 +50,10 @@ class Structure(models.Model):
     # Resources types
     # # We'll think about names later
     GAME_RESOURCES = (
-        (CONSTANTS.RESOURCE_TYPE_1, 'Resource 1'),
-        (CONSTANTS.RESOURCE_TYPE_2, 'Resource 2'),
-        (CONSTANTS.RESOURCE_TYPE_3, 'Resource 3'),
+        (CONSTANTS.RESOURCE_TYPE_1, CONSTANTS.RESOURCE_CEMENTIA),
+        (CONSTANTS.RESOURCE_TYPE_2, CONSTANTS.RESOURCE_PLASMATIA),
+        (CONSTANTS.RESOURCE_TYPE_3, CONSTANTS.RESOURCE_AUFERIA),
+        (CONSTANTS.RESOURCE_TYPE_4, CONSTANTS.RESOURCE_BUFF)
     )
 
     resource_type = models.IntegerField(choices=GAME_RESOURCES)

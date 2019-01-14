@@ -17,6 +17,13 @@ public class cameraFollower : MonoBehaviour {
     const float MIN_X_ROTATION = 1;
     const float MAX_X_ROTATION = 60;
 
+    public static cameraFollower Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     // Use this for initialization
     void Start () {
         anchor = gameObject.transform.parent.gameObject;
@@ -53,7 +60,7 @@ public class cameraFollower : MonoBehaviour {
         );
         */
 
-        rotationThatWorks(anchor,
+        Utils.rotationThatWorks(anchor,
             new Vector3(
                 -touchZero.deltaPosition.y * verticalRotationSpeed,
                 touchZero.deltaPosition.x * horizontalRotationSpeed,
@@ -95,7 +102,7 @@ public class cameraFollower : MonoBehaviour {
 
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            rotationThatWorks(anchor, new Vector3(
+            Utils.rotationThatWorks(anchor, new Vector3(
                             verticalRotationSpeed,
                             0,
                             0
@@ -114,7 +121,7 @@ public class cameraFollower : MonoBehaviour {
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            rotationThatWorks(anchor, new Vector3(
+            Utils.rotationThatWorks(anchor, new Vector3(
                                  -verticalRotationSpeed,
                                  0,
                                  0
@@ -133,7 +140,7 @@ public class cameraFollower : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            rotationThatWorks(anchor, new Vector3(
+            Utils.rotationThatWorks(anchor, new Vector3(
                                  0,
                                  -horizontalRotationSpeed * 3,
                                  0
@@ -152,7 +159,7 @@ public class cameraFollower : MonoBehaviour {
 
         else if (Input.GetKey(KeyCode.LeftArrow))
         {
-            rotationThatWorks(anchor, new Vector3(
+            Utils.rotationThatWorks(anchor, new Vector3(
                                 0,
                                 +horizontalRotationSpeed * 3,
                                 0
@@ -217,14 +224,6 @@ public class cameraFollower : MonoBehaviour {
         
 
 
-    }
-
-    /*
-     * Because Unity's rotation system was way too sophisticated for our small needs
-     */
-    private void rotationThatWorks(GameObject objectToRotate, Vector3 rotation)
-    {
-        objectToRotate.transform.eulerAngles = objectToRotate.transform.eulerAngles + rotation;
     }
 
     public bool isInPinchRange(Vector3 dist)

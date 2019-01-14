@@ -13,11 +13,12 @@ namespace Assets
         //that let us use GPS services wherever we want
         public static GPSManager Instance { set; get; }
 
-        public float latitude, longitude;
+        public float latitude, longitude, rotation;
 
 #if UNITY_EDITOR
         public float fakeLatitude;
         public float fakeLongitude;
+        public float fakeRotation;
         public bool fakeLocation = false;
 #endif
 
@@ -27,24 +28,26 @@ namespace Assets
             //to have unbreakable connection between app and GPS services
             DontDestroyOnLoad(gameObject);
             StartCoroutine(InitializationOfLocationService());
-            InvokeRepeating("updateCoordinates", 2.0f, 2.0f);
+            InvokeRepeating("updateCoordinates", 5.0f, 5.0f);
         }
 
         private void updateCoordinates()
         {
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
+            rotation = -Input.compass.trueHeading;
 
 #if UNITY_EDITOR
             if (fakeLocation)
             {
                 longitude = fakeLongitude;
                 latitude = fakeLatitude;
+                rotation = fakeRotation;
             }
 #endif
 
             if (latitude != 0.0F && longitude != 0.0F) { 
-                gameManager.OnLocationChanged(longitude, latitude);
+                gameManager.OnLocationChanged(longitude, latitude, rotation);
                 
             } else
             {
@@ -75,6 +78,7 @@ namespace Assets
             }
 
             Input.location.Start();
+            Input.compass.enabled = true;
             int maxWaitTime = 10;
             while (Input.location.status == LocationServiceStatus.Initializing && maxWaitTime > 10)
             {

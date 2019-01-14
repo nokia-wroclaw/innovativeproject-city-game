@@ -28,9 +28,11 @@ class Guild(models.Model):
     def remove_player_from_guild(player):
         guild = player.guild
 
+        if guild is not None:
+            print('GUILD NOT NONE')
+            if guild.members_count-1 == 0:
+                guild.delete()
+                print('DELETING GUILD')
+
         player.guild = None
         player.save()
-
-        if guild is not None:
-            if guild.members_count == 0:
-                guild.delete()

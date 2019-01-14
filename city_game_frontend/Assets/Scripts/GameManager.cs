@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 
     // TEMPORARY LOCATION INDICATOR
     public GameObject locationIndicator;
+    SmoothMovement locationIndicatorMovementScript;
 
     // TODO: Find a way to make this non-static
     public static Queue<Request> callbacksToProcess = new Queue<Request>();
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviour {
     {
         server = ServerSocket.Instance;
         mapManager = MapManager.Instance;
+        locationIndicatorMovementScript = locationIndicator.GetComponent<SmoothMovement>();
     }
 	
 	// Update is called once per frame
@@ -46,6 +48,7 @@ public class GameManager : MonoBehaviour {
             if (eventToHandle.getResponseData().isSpecialMessage)
             {
                 handleSpecialEvent(eventToHandle);
+                return;
             }
 
             eventToHandle.performCallback();
@@ -62,6 +65,11 @@ public class GameManager : MonoBehaviour {
             Debug.Log("Received a server-driven map update!");
             MapManager.Instance.structsDataCallbackFunction(gameObject, "", responseData.message);
         }
+
+        if(responseData.specialMessageID == Const.SPECIAL_MESSAGE_GUILD_MEMBER_POSITION_UPDATE)
+        {
+            MapManager.Instance.handleGuildMemberLocationUpdate(responseData.message);
+        }
     }
 
     
@@ -70,16 +78,17 @@ public class GameManager : MonoBehaviour {
         
     }
 
-    public void OnLocationChanged(float lon, float lat)
+    public void OnLocationChanged(float lon, float lat, float rotation)
     {
 
-        locationIndicator.transform.position = new Vector3(
-            MapManager.LatitudeToGameCoordinate(lat),
-            locationIndicator.transform.position.y,
-            MapManager.LongitudeToGameCoordinate(lon)
-            );
+        locationIndicatorMovementScript.setTargetPosition(Utils.LatitudeToGameCoordinate(lat), Utils.LongitudeToGameCoordinate(lon));
+        
 
-        server.send(gameObject, JsonUtility.ToJson(new LocationUpdateRequestData(lon, lat)), locationReportCallback);
+        Vector3 currentIndicatorRotation = locationIndicator.transform.rotation.eulerAngles;
+
+        locationIndicatorMovementScript.setTargetRotation(rotation);
+
+        server.send(gameObject, JsonUtility.ToJson(new LocationUpdateRequestData(lon, lat, rotation)), locationReportCallback);
         
         if (roundDownToChunkCords(lon) == current_chunk_lon && roundDownToChunkCords(lat) == current_chunk_lat)
         {

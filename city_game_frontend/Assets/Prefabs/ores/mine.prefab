@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 33456960594291388}
   - component: {fileID: 23652993436427522}
   - component: {fileID: 114108420838279786}
-  - component: {fileID: 114391362102488932}
   - component: {fileID: 65368943033094598}
   m_Layer: 0
   m_Name: mine
@@ -206,23 +205,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6904a0395c7e2fa4ba8a66ce3fd1ce2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensity: 1
+  intensity: 10
   range: 10
---- !u!114 &114391362102488932
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1064660362618358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f6b19592aa42524bb411ac903daeea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  intensity: 1
-  range: 10
-  fade: 0
-  shader: 0
+  fadeInOutShader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
+  defaultShader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
+  _fade: 0
+  shader: 1
 --- !u!198 &198936468740995166
 ParticleSystem:
   m_ObjectHideFlags: 1

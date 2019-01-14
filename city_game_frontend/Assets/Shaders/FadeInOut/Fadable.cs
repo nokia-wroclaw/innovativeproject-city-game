@@ -7,13 +7,17 @@ using UnityEditor;
 
 public class Fadable : MonoBehaviour
 {
-    public int intensity = 1;
+    public int intensity = 10;
     public int range = 10;
     
     const float animationTime = 5f; // in seconds
 
-    Shader fadeInOutShader = null;
-    Shader defaultShader = null;
+    public Shader fadeInOutShader;// = null;
+    public Shader defaultShader;// = null;
+
+    public int _fade = 0; //if 1 _fade in if -1 _fade out
+    public int shader = 0;
+
 
     public bool visible {  get; private set; }
 
@@ -21,11 +25,42 @@ public class Fadable : MonoBehaviour
     {
     }
 
+    void Start()
+    {
+    }
+
+    void Update()
+    {
+
+        if (_fade == 1)
+        {
+            Debug.Log("_fade");
+
+            show();
+            _fade = 0;
+        }
+        else if (_fade == -1)
+        {
+            hide();
+            _fade = 0;
+        }
+
+        if (shader != 0)
+        {
+            swichShaderDefault();
+            shader = 0;
+        }
+
+        //Renderer renderer = GetComponent<Renderer>();
+
+        //Vector4 time = Shader.GetGlobalVector("_Time");
+    }
+
     //because Shader.Find can not be run from constructor
     public void init()
     {
-        fadeInOutShader = Shader.Find("Custom/FadeInOut");
-        defaultShader = Shader.Find("Custom/FadeInOutNoTrans");
+        //_fadeInOutShader = Shader.Find("Custom/_fadeInOut");
+        //defaultShader = Shader.Find("Custom/_fadeInOutNoTrans");
     }
 
     //Use it to remove drawing order issue
@@ -36,10 +71,12 @@ public class Fadable : MonoBehaviour
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.shader = defaultShader;
 
-        Light light = GetComponentInChildren<Light>();
-        light.intensity = intensity;
-        light.range = range;
-        light.enabled = true;
+        // Not all objects have lights
+        // We might need to rethink this again
+        //Light light = GetComponentInChildren<Light>();
+        //light.intensity = intensity;
+        //light.range = range;
+        //light.enabled = true;
 
         ParticleSystem emiter = GetComponentInChildren<ParticleSystem>();
 
@@ -47,7 +84,7 @@ public class Fadable : MonoBehaviour
             emiter.enableEmission = true;
     }
 
-    public void swichShaderFadeInOut()
+    public void swichShader_fadeInOut()
     {
         init();
 
@@ -65,6 +102,9 @@ public class Fadable : MonoBehaviour
             emiter.enableEmission = false;
     }
 
+
+
+    [ContextMenu("Show")]
     public void show(float delay = 0)
     {
         init();
@@ -87,6 +127,7 @@ public class Fadable : MonoBehaviour
         Invoke("swichShaderDefault", animationTime *(float)0.9);
     }
 
+    [ContextMenu("Hide")]
     public void hide(float delay = 0)
     {
         init();
@@ -104,7 +145,7 @@ public class Fadable : MonoBehaviour
 
 
         //switch shader to 
-        Invoke("swichShaderFadeInOut", animationTime);
+        Invoke("swichShader_fadeInOut", animationTime);
     }
 
     public void destroyAfterTime(float time = animationTime) // time in seconds

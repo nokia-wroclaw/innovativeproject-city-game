@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Sockets;
 
-public class MapManager : MonoBehaviour {
+public class MapManager : MonoBehaviour
+{
 
     public Material roadMaterial;
 
     public GameObject orePrefab;
     public GameObject minePrefab;
+    public GameObject otherPlayerModel;
+    public GameObject playerPlacedStructPrefab;
 
 
     public static MapManager Instance { set; get; }
 
     ServerSocket server = ServerSocket.Instance;
-    
-    const int MAP_SCALE_FACTOR = 20000;
+
+    public static int MAP_SCALE_FACTOR = 20000;
 
 
     //TODO: SET THEM DYNAMICALLY
-    const float LATITUDE_OFFSET = 51.1F;        
-    const float LONGITUDE_OFFSET = 17.09F;
+    public static float LATITUDE_OFFSET = 51.1F;
+    public static float LONGITUDE_OFFSET = 17.09F;
 
     /*
      * We store all the chunk object references inside this dictionary
@@ -29,10 +32,18 @@ public class MapManager : MonoBehaviour {
 
 
     /*
-     * Dynamic struct that will change during ruyntime are stored separately
+     * Dynamic struct that will change during runtime are stored separately
      * the dictionary key is the ID of the struct
      */
     Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
+
+
+    /*
+     * Dictionary with the players displayed on the map.
+     * That means - the players which are in the same team as the client
+     */
+    Dictionary<int, GameObject> guildPlayersDisplayedOnMap = new Dictionary<int, GameObject>();
+
 
     private void Awake()
     {
@@ -40,21 +51,25 @@ public class MapManager : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         server = ServerSocket.Instance;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 
     public void sendChunkRequest(float longitude, float latitude)
     {
-        if(isChunkLoadedOnCoords(longitude, latitude))
+        if (isChunkLoadedOnCoords(longitude, latitude))
         {
             Debug.Log("Chunk already there, not loading!");
-        } else {
+        }
+        else
+        {
 
             server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
             server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
@@ -78,14 +93,15 @@ public class MapManager : MonoBehaviour {
     });
 
     /*
-     * Retrieve dynamic chunks that are located on a given chunk
+     * Retrieve dynamic structs that are located on a given chunk
      */
     public Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
+        Debug.LogWarning("DYNAMIC STRUCTS UPDATE");
         Debug.Log(data);
         DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
 
-        foreach( var structureData in structsData.structures)
+        foreach (var structureData in structsData.structures)
         {
 
             MapManager.Instance.addOrUpdateStruct(structureData);
@@ -94,7 +110,8 @@ public class MapManager : MonoBehaviour {
 
     void addOrUpdateStruct(DynamicStructData structData)
     {
-        if(dynamicStructs.ContainsKey(structData.id)) {
+        if (dynamicStructs.ContainsKey(structData.id))
+        {
 
             dynamicStructs[structData.id].GetComponent<Fadable>().hide();
             dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
@@ -112,16 +129,22 @@ public class MapManager : MonoBehaviour {
             0,
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
             */
-            
+
 
         GameObject structureObject = null;
 
-        if (structData.taken_over)
+        if(structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
         {
-            structureObject = Instantiate(minePrefab, new Vector3(0,0,0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
+            structureObject = Instantiate(playerPlacedStructPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        }
+        else if (structData.taken_over)
+        {
+            structureObject = Instantiate(minePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             Debug.Log("Creating a taken over object!");
 
-        } else
+        }
+        else
         {
             structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             Debug.Log("Creating a free object!");
@@ -132,18 +155,23 @@ public class MapManager : MonoBehaviour {
         DynamicStruct structureObjectScript = structureObject.AddComponent(typeof(DynamicStruct)) as DynamicStruct;
         structureObjectScript.data = structData;
 
-        structureObject.transform.Rotate(new Vector3(-95.905F, -47.504F, -43.15997F));
+        
+        structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
+
+        Debug.LogError(structData.rotation);
+        Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
+
         structureObject.GetComponent<Fadable>().show();
 
 
         structureObject.transform.position = new Vector3(
-            LatitudeToGameCoordinate(structData.lat),
+            Utils.LatitudeToGameCoordinate(structData.lat),
             0.09580898F,
-            LongitudeToGameCoordinate(structData.lon)
+            Utils.LongitudeToGameCoordinate(structData.lon)
         );
 
         //TODO: FIX THE SCALING
-        structureObject.transform.localScale = new Vector3(50, 50, 50);
+        structureObject.transform.localScale = new Vector3(100, 100, 100);
 
         dynamicStructs.Add(structData.id, structureObject);
     }
@@ -156,7 +184,7 @@ public class MapManager : MonoBehaviour {
             Debug.Log("Recreating chunk at " + key);
             Destroy(chunks[key]);
             chunks.Remove(key);
-            
+
         }
 
 
@@ -177,7 +205,7 @@ public class MapManager : MonoBehaviour {
             var lines = roadObject.GetComponent<LineRenderer>();
             lines.transform.Rotate(new Vector3(90, 0, 0));
             lines.alignment = LineAlignment.Local;
-            lines.startWidth= 2F;
+            lines.startWidth = 2F;
             lines.endWidth = 2F;
 
             // A simple 2 color gradient with a fixed alpha of 1.0f.
@@ -199,7 +227,7 @@ public class MapManager : MonoBehaviour {
             lines.material = roadMaterial;
             lines.textureMode = LineTextureMode.RepeatPerSegment;
             lines.material.mainTextureScale = new Vector2(1.0f, 1.0f);
-            
+
 
             lines.useWorldSpace = true;
 
@@ -208,24 +236,16 @@ public class MapManager : MonoBehaviour {
             for (int i = 0; i < road.nodes.Count; i++)
             {
                 lines.SetPosition(i, new Vector3(
-                    LatitudeToGameCoordinate(road.nodes[i].lat),
+                    Utils.LatitudeToGameCoordinate(road.nodes[i].lat),
                     0,
-                    LongitudeToGameCoordinate(road.nodes[i].lon)
+                    Utils.LongitudeToGameCoordinate(road.nodes[i].lon)
                     ));
             }
         }
 
     }
 
-    public static float LatitudeToGameCoordinate(float lat)
-    {
-        return (lat - LATITUDE_OFFSET) * MAP_SCALE_FACTOR;
-    }
 
-    public static float LongitudeToGameCoordinate(float lon)
-    {
-        return (lon - LONGITUDE_OFFSET) * MAP_SCALE_FACTOR;
-    }
 
     bool isChunkLoadedOnCoords(float lon, float lat)
     {
@@ -248,16 +268,50 @@ public class MapManager : MonoBehaviour {
     // Used by to get the object's data when the user clicks on it
     public static DynamicStructData GetDataOfObject(GameObject target)
     {
-        try {
+        try
+        {
 
             DynamicStruct targetData = target.GetComponent<DynamicStruct>();
             Debug.Log(targetData.data.tier);
             return targetData.data;
 
-        } catch (System.Exception e)
+        }
+        catch (System.Exception e)
         {
             //Debug.LogError(e);
             return null;
+        }
+    }
+
+    public void handleGuildMemberLocationUpdate(string data)
+    {
+        Assets.GuildMemberLocationData newData = JsonUtility.FromJson<Assets.GuildMemberLocationData>(data);
+
+        Debug.Log("update on " + newData.nick);
+
+        if (guildPlayersDisplayedOnMap.ContainsKey(newData.id))
+        {
+            GameObject playerToUpdate = guildPlayersDisplayedOnMap[newData.id];
+
+            playerToUpdate.GetComponent<SmoothMovement>().setTargetPosition(
+                Utils.LatitudeToGameCoordinate(newData.lat),
+                Utils.LongitudeToGameCoordinate(newData.lon)
+            );
+
+            playerToUpdate.GetComponent<SmoothMovement>().setTargetRotation(
+                newData.rotation
+            );
+        }
+        else
+        {
+            GameObject newDisplayedGuildMember = Instantiate(otherPlayerModel, new Vector3(
+                  Utils.LatitudeToGameCoordinate(newData.lat),
+                4.659256F,
+                Utils.LongitudeToGameCoordinate(newData.lon)
+            ), Quaternion.Euler(-89.98F, 0, 0)
+                );
+
+            guildPlayersDisplayedOnMap[newData.id] = newDisplayedGuildMember;
         }
     }
 }

@@ -106,7 +106,8 @@ def save_one_chunk(xml_data: str, lower_latitude: float, lower_longitude: float)
     new_chunk.save()
 
 
-# chunk_generator.batch_chunks_loading(51.07, 17.00, 20) is a cool place to start, generates the whole Wrocław
+# from game_map import chunk_generator; chunk_generator.batch_chunks_loading(51.07, 17.00, 20)
+# ^ a cool place to start, generates the entire Wrocław city
 def batch_chunks_loading(lower_longitude_start, lower_latitude_start, square_size):
     """
     Generates map chunks starting from the given latitude and longitude,

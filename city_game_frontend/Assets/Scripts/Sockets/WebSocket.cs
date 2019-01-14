@@ -46,11 +46,19 @@ namespace Assets.Sockets
          */
         public void performCallback()
         {
-            this.callback(
-                this.requestData.getSender(),
-                this.responseData.error,
-                this.responseData.message
-            );
+            try { 
+                this.callback(
+                    this.requestData.getSender(),
+                    this.responseData.error,
+                    this.responseData.message
+                );
+            } catch(Exception e)
+            {
+                Debug.LogError("ERROR IN HANDLING");
+                Debug.LogError(this.responseData.message);
+                Debug.LogError(e.Data);
+                Debug.LogError(e.StackTrace);
+            }
         }
 
         public Request()

@@ -1,7 +1,8 @@
-from .message_utils import require_message_content
+from .message_utils import require_message_content, SUCCESS_MESSAGE
 from city_game_backend import CONSTANTS
 from player_manager.models import Player
 from guild_manager.models import Guild
+
 
 @require_message_content(
     ('guild_name', str)
@@ -15,6 +16,8 @@ def handle_guild_creation_request(message, websocket) -> str:
     new_guild = Guild()
     
     new_guild.guild_name = guild_name
+    new_guild.save()
+
     new_guild.add_player(player)
 
-    new_guild.save()
+    return SUCCESS_MESSAGE

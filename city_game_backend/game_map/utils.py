@@ -6,6 +6,7 @@ from city_game_backend.CONSTANTS import CHUNK_SIZE
 from websocket_controller.active_connections_storage import ActiveConnectionsStorage
 from city_game_backend import CONSTANTS
 
+
 def round_down(n):
     return math.floor(n * 100) / 100
 
@@ -41,13 +42,14 @@ def struct_2_dict(struct):
     I am currently not satisfied with how the django serializers work,
     so I wrote this little converter
 
-    :return: the structure formatted as dict, prepared to send into Unity
+    :return: the structure formatted as dict, prepared to be send into Unity
     """
     return {
         'id': struct.pk,
 
         'lat': struct.latitude,
         'lon': struct.longitude,
+        'rotation': struct.rotation,
 
         'taken_over': struct.taken_over,
         'owner': struct.owner.nickname if struct.taken_over else '',  # Is this spaghetti ?
