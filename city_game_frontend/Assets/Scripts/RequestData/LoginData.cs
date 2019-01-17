@@ -8,29 +8,24 @@ using System.IO;
 public class LoginData
 {
     public int type = Const.MESSAGE_TYPE_AUTH_EVENT;
-    public string login; //= "wint3rmute";
-    public string pass;//= "baczekbezraczek";
+    public string login;
+    public string pass;
 
     // TODO
     public LoginData()
     {
-        
-        if (Application.platform == RuntimePlatform.Android)
+      
+        if (PlayerPrefs.HasKey(UIManagerScript.CONST_LOGIN_KEY) && PlayerPrefs.HasKey(UIManagerScript.CONST_PASSWORD_KEY))
         {
-            if (PlayerPrefs.HasKey("Login")){
-                this.login = UIManagerScript.constLoginKey;
-            }
-            if (PlayerPrefs.HasKey("Password"))
-            {
-                this.pass = UIManagerScript.constPasswordKey;
-            }
+            this.login = PlayerPrefs.GetString(UIManagerScript.CONST_LOGIN_KEY);
+            this.pass = PlayerPrefs.GetString(UIManagerScript.CONST_PASSWORD_KEY);
 
             return;
         }
 
-            // Using Pawel's account as a 'base' one
-            this.login = "pawel";
-            this.pass = "jaktamsprzeglo";
+        // Using Pawel's account as a 'default' one
+        this.login = "pawel";
+        this.pass = "jaktamsprzeglo";
 
     }
 }

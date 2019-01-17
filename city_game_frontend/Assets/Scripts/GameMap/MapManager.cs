@@ -158,7 +158,6 @@ public class MapManager : MonoBehaviour
         
         structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
 
-        Debug.LogError(structData.rotation);
         Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
 
         structureObject.GetComponent<Fadable>().show();
