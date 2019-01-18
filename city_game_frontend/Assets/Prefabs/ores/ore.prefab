@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4445598305746268}
   - component: {fileID: 33762964138031802}
   - component: {fileID: 23836830839196400}
-  - component: {fileID: 114138637361735288}
   - component: {fileID: 114849309901500254}
   - component: {fileID: 65574349834650518}
   m_Layer: 0
@@ -195,24 +194,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &114138637361735288
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1144768559950442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f6b19592aa42524bb411ac903daeea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  intensity: 10
-  range: 1
-  fadeInOutShader: {fileID: 0}
-  defaultShader: {fileID: 0}
-  fade: 1
-  shader: 0
-  <visible>k__BackingField: 0
 --- !u!114 &114849309901500254
 MonoBehaviour:
   m_ObjectHideFlags: 1

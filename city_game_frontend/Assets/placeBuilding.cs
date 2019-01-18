@@ -19,12 +19,6 @@ public class placeBuilding : MonoBehaviour {
     {
         placeBuilding.Instance = this;
 
-        Debug.Log(10 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(10)));
-        Debug.Log(20 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(20)));
-        Debug.Log(30 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(30)));
-        Debug.Log(40 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(40)));
-        Debug.Log(50 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(50)));
-        Debug.Log(60 - Utils.GameCoordinateZToLongitude(Utils.LongitudeToGameCoordinate(60)));
     }
 
     private void OnEnable()

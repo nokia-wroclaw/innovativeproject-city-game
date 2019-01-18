@@ -97,8 +97,8 @@ public class MapManager : MonoBehaviour
      */
     public Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
-        Debug.LogWarning("DYNAMIC STRUCTS UPDATE");
-        Debug.Log(data);
+        //Debug.LogWarning("DYNAMIC STRUCTS UPDATE");
+        //Debug.Log(data);
         DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
 
         foreach (var structureData in structsData.structures)
@@ -141,13 +141,13 @@ public class MapManager : MonoBehaviour
         else if (structData.taken_over)
         {
             structureObject = Instantiate(minePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Debug.Log("Creating a taken over object!");
+            //Debug.Log("Creating a taken over object!");
 
         }
         else
         {
             structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Debug.Log("Creating a free object!");
+            //Debug.Log("Creating a free object!");
         }
 
 

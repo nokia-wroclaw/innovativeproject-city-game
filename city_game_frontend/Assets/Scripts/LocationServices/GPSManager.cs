@@ -13,7 +13,7 @@ namespace Assets
         //that let us use GPS services wherever we want
         public static GPSManager Instance { set; get; }
 
-        public float latitude, longitude, rotation;
+        public float latitude = 0, longitude = 0, rotation = 0;
 
 #if UNITY_EDITOR
         public float fakeLatitude;
@@ -33,6 +33,13 @@ namespace Assets
 
         private void updateCoordinates()
         {
+            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            {
+                gameManager.OnLocationChanged(longitude, latitude, rotation);
+                return;
+            }
+
+
             latitude = Input.location.lastData.latitude;
             longitude = Input.location.lastData.longitude;
             rotation = -Input.compass.trueHeading;
@@ -54,6 +61,7 @@ namespace Assets
                 Debug.Log("No gps connection!");
             }
 
+
             //Debug.Log("GPS: " + latitude + ", " + longitude);
         }
 
@@ -69,7 +77,25 @@ namespace Assets
             
                 
             yield return new WaitForSeconds(5);
-            
+
+
+            if (Application.platform == RuntimePlatform.WindowsPlayer)
+            {
+                string[] args = System.Environment.GetCommandLineArgs();
+
+                try
+                {
+                    longitude = float.Parse(args[1]);
+                    latitude = float.Parse(args[2]);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("ERROR IN ARGUMENTS PARSING");
+                    Debug.LogError(e.Data.ToString());
+                }
+
+                yield break;
+            }
 
             if (!Input.location.isEnabledByUser)
             {
