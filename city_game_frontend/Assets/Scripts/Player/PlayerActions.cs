@@ -55,6 +55,22 @@ public class PlayerActions : MonoBehaviour {
         placeBuilding.Instance.enabled = false;
     }
 
+
+    public void getPlayerData()
+    {
+        ServerSocket.Instance.send(this.gameObject, JsonUtility.ToJson(new PlayerDataRequestData()), playerDataRequestCallback);
+    }
+
+    public Request.callbackFunc playerDataRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+        PlayerData playerData = JsonUtility.FromJson<PlayerData>(data);
+
+        Debug.Log(playerData.guild);
+        Debug.Log(playerData.auferia);
+        Debug.Log(playerData.cementia);
+        Debug.Log(playerData.plasmatia);
+    });
+
     // Use this for initialization
     void Start () {
 

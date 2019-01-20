@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace Assets
+[Serializable]
+class PlayerData
 {
-    /**
-     * Class contains basic data about player. 
-     * 
-     * 
-     */
-    class PlayerData
-    {
-        private Vector3 positin; //!< player position ralative to map
-        private Vector2 geoPositin; //!< player position ralative to real world
-                                    //!< probably it should be GeoPostion class
-    }
+    public string name;
+
+    public int level;
+    public int exp;
+    public float cementia;
+    public float plasmatia;
+    public float auferia;
+
+    public string guild;
 }
