@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelsContainerHandler : MonoBehaviour {
 
@@ -57,6 +58,11 @@ public class PanelsContainerHandler : MonoBehaviour {
     {
         showContainer();
         closeAllPanelsExcept(playerPanel);
+    }
+
+    public void goToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 	// Use this for initialization
