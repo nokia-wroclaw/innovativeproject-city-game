@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour {
 
     public static PlayerActions Instance;
+    public PlayerData currentPlayerData;
 
     private void Awake()
     {
@@ -63,12 +64,9 @@ public class PlayerActions : MonoBehaviour {
 
     public Request.callbackFunc playerDataRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
-        PlayerData playerData = JsonUtility.FromJson<PlayerData>(data);
+        PlayerData retrievedPlayerData = JsonUtility.FromJson<PlayerData>(data);
 
-        Debug.Log(playerData.guild);
-        Debug.Log(playerData.auferia);
-        Debug.Log(playerData.cementia);
-        Debug.Log(playerData.plasmatia);
+        sender.GetComponent<PlayerActions>().currentPlayerData = retrievedPlayerData;
     });
 
     // Use this for initialization

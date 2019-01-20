@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 
 [Serializable]
-class PlayerData
+public class PlayerData
 {
     public string name;
 
