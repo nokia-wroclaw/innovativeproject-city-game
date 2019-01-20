@@ -12,6 +12,7 @@ public static class Const
 	public static int MESSAGE_TYPE_CHUNK_REQUEST = 2;
 	public static int MESSAGE_TYPE_CREATE_GUILD = 5;
 	public static int MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3;
+	public static int MESSAGE_TYPE_GUILD_DATA_REQUEST = 8;
 	public static int MESSAGE_TYPE_LOCATION_EVENT = 1;
 	public static int MESSAGE_TYPE_PLAYER_DATA_REQUEST = 7;
 	public static int MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST = 6;
