@@ -15,6 +15,7 @@ from .dynamic_chunk_data_request_handler import handle_dynamic_chunk_data_reques
 from .structure_takeover_request_handler import handle_structure_takeover_request
 from .guild_creation_request_handler import handle_guild_creation_request
 from .building_placement_request_handler import handle_building_placement_request
+from .player_data_request_handler import handle_player_data_request
 
 logger = logging.getLogger(__name__)
 
@@ -95,6 +96,8 @@ class ClientCommunicationConsumer(WebsocketConsumer):
             return handle_guild_creation_request(message, self)
         elif message_type == CONSTANTS.MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST:
             return handle_building_placement_request(message, self)
+        elif message_type == CONSTANTS.MESSAGE_TYPE_PLAYER_DATA_REQUEST:
+            return handle_player_data_request(message, self)
 
         # ... another message type handlers down here ...
         else:
