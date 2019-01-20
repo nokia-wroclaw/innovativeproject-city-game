@@ -15,8 +15,8 @@ def handle_guild_data_request(message, websocket) -> str:
 
     guild_data = {
         'name': guild.guild_name,
-        'players_count': guild.members_count,
-        'players': [player.nickname for player in guild.player_set]
+        'members_count': guild.members_count,
+        'members': [player.nickname for player in guild.player_set]
     }
 
     return json.dumps(guild_data)
