@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class SelectObject : MonoBehaviour
 {
-    Collider coll;
     GameObject anchor;
     public GameObject playerCharacter;
     public static SelectObject Instance;
@@ -18,7 +17,6 @@ public class SelectObject : MonoBehaviour
 
     void Start()
     {
-        coll = GetComponent<Collider>();
         anchor = GameObject.Find("/CameraAnchor/MainCamera");
     }
 

@@ -275,9 +275,8 @@ public class MapManager : MonoBehaviour
             return targetData.data;
 
         }
-        catch (System.Exception e)
+        catch (System.Exception)
         {
-            //Debug.LogError(e);
             return null;
         }
     }
