@@ -8,6 +8,7 @@ def handle_player_data_request(message: dict, websocket) -> str:
     player_to_return = Player.get_by_id(websocket.player_id)
 
     return_data = {
+        'name': player_to_return.nickname,
         'level': player_to_return.level,
         'exp': player_to_return.exp,
         CONSTANTS.RESOURCE_CEMENTIA: player_to_return.Cementia,
