@@ -12,17 +12,17 @@ public class NotificationsPanelHandler : MonoBehaviour {
     {
         notificationPanel.SetActive(true);
         text.text = notificationText;
-        Invoke("notificationOn", 3);
+        Invoke("notificationOff", 3);
     }
 
     public void showNotification(string notificationText,int seconds)
     {
         notificationPanel.SetActive(true);
         text.text = notificationText;
-        Invoke("notificationOn", seconds);
+        Invoke("notificationOff", seconds);
     }
 
-    public void notificationOn()
+    public void notificationOff()
     {
         notificationPanel.SetActive(false);
     }
