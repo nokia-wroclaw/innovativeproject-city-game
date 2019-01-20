@@ -29,7 +29,7 @@ MonoBehaviour:
     m_Settings:
       excludeSkybox: 0
   antialiasing:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       method: 0
       fxaaSettings:
@@ -72,12 +72,12 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       focusDistance: 2.25
-      aperture: 3
+      aperture: 0.8
       focalLength: 43
       useCameraFov: 1
       kernelSize: 1
   motionBlur:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       shutterAngle: 270
       sampleCount: 10
@@ -97,13 +97,13 @@ MonoBehaviour:
       logMin: -8
       logMax: 4
   bloom:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       bloom:
-        intensity: 0.97
-        threshold: 1.1
-        softKnee: 0.5
-        radius: 4
+        intensity: 14.58
+        threshold: 1.8
+        softKnee: 0.549
+        radius: 3.82
         antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
@@ -121,11 +121,11 @@ MonoBehaviour:
         neutralWhiteClip: 10
       basic:
         postExposure: 0
-        temperature: 46
-        tint: 0
+        temperature: 8
+        tint: 11
         hueShift: 0
-        saturation: 0.95
-        contrast: 1.5
+        saturation: 0.68
+        contrast: 1.46
       channelMixer:
         red: {x: 1, y: 0, z: 0}
         green: {x: 0, y: 1, z: 0}
@@ -149,8 +149,26 @@ MonoBehaviour:
             - serializedVersion: 3
               time: 0
               value: 0
-              inSlope: 1
-              outSlope: 1
+              inSlope: 0.5399402
+              outSlope: 0.5399402
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.22089553
+              value: 0.13291138
+              inSlope: 0.78436947
+              outSlope: 0.78436947
+              tangentMode: 0
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
+              time: 0.6
+              value: 0.5443038
+              inSlope: 1.1397151
+              outSlope: 1.1397151
               tangentMode: 0
               weightedMode: 0
               inWeight: 0
@@ -305,10 +323,10 @@ MonoBehaviour:
       lut: {fileID: 0}
       contribution: 1
   chromaticAberration:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 0.164
+      intensity: 0.389
   grain:
     m_Enabled: 0
     m_Settings:
@@ -317,7 +335,7 @@ MonoBehaviour:
       size: 1
       luminanceContribution: 0.8
   vignette:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       mode: 0
       color: {r: 0, g: 0, b: 0, a: 1}
