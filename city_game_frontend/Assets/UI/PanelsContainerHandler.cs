@@ -2,11 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PanelsContainerHandler : MonoBehaviour {
 
     public GameObject container;
     public GameObject playerPanel,guildPanel,skillTreePanel,actionsPanel,somethingPanel;
+
+    public Text playerName, playerLvl, playerGuild, playerExp, playerRes1, playerRes2, playerRes3;
+
+    public static PanelsContainerHandler Instance;
+
+    public void Awake()
+    {
+        Instance = this;
+    }
 
     public void closeAllPanelsExcept(GameObject g)
     {
