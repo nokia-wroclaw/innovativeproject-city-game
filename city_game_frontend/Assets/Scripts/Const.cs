@@ -13,6 +13,7 @@ public static class Const
 	public static int MESSAGE_TYPE_CREATE_GUILD = 5;
 	public static int MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3;
 	public static int MESSAGE_TYPE_LOCATION_EVENT = 1;
+	public static int MESSAGE_TYPE_PLAYER_DATA_REQUEST = 7;
 	public static int MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST = 6;
 	public static int MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST = 4;
 	public static string RESOURCE_AUFERIA = "Auferia";
@@ -24,8 +25,7 @@ public static class Const
 	public static int RESOURCE_TYPE_3 = 3;
 	public static int RESOURCE_TYPE_4 = 4;
 	public static string SERVER_URL = "filipplotnicki.com:8000/ws/";
-    //public static string SERVER_URL = "192.168.0.126:8000/ws/";
-    public static int SPECIAL_MESSAGE_GUILD_MEMBER_POSITION_UPDATE = 2;
+	public static int SPECIAL_MESSAGE_GUILD_MEMBER_POSITION_UPDATE = 2;
 	public static int SPECIAL_MESSAGE_MAP_UPDATE = 0;
 	public static int SPECIAL_MESSAGE_NOTIFICATION = 1;
 
