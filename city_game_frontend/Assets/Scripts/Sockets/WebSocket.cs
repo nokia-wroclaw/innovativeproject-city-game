@@ -58,6 +58,7 @@ namespace Assets.Sockets
                 Debug.LogError(this.responseData.message);
                 Debug.LogError(e.Data);
                 Debug.LogError(e.StackTrace);
+                Debug.LogError("END OF ERROR DATA");
             }
         }
 

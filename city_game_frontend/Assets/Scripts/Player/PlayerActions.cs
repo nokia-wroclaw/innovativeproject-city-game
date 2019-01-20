@@ -62,7 +62,7 @@ public class PlayerActions : MonoBehaviour {
         ServerSocket.Instance.send(this.gameObject, JsonUtility.ToJson(new PlayerDataRequestData()), playerDataRequestCallback);
     }
 
-    public Request.callbackFunc playerDataRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    private Request.callbackFunc playerDataRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
         PlayerData retrievedPlayerData = JsonUtility.FromJson<PlayerData>(data);
 
