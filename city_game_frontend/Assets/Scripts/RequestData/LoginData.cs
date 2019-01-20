@@ -17,6 +17,7 @@ public class LoginData
       
         if (PlayerPrefs.HasKey(UIManagerScript.CONST_LOGIN_KEY) && PlayerPrefs.HasKey(UIManagerScript.CONST_PASSWORD_KEY))
         {
+            
             this.login = PlayerPrefs.GetString(UIManagerScript.CONST_LOGIN_KEY);
             this.pass = PlayerPrefs.GetString(UIManagerScript.CONST_PASSWORD_KEY);
 
@@ -24,8 +25,8 @@ public class LoginData
         }
 
         // Using Pawel's account as a 'default' one
-        this.login = "pawel";
-        this.pass = "jaktamsprzeglo";
+        this.login = "gracz";
+        this.pass = "baczekbezraczek";
 
     }
 }
