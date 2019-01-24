@@ -113,8 +113,8 @@ public class MapManager : MonoBehaviour
         if (dynamicStructs.ContainsKey(structData.id))
         {
 
-            dynamicStructs[structData.id].GetComponent<Fadable>().hide();
-            dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
+            //dynamicStructs[structData.id].GetComponent<Fadable>().hide();
+            //dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
             //Destroy(dynamicStructs[structData.id]);
             dynamicStructs.Remove(structData.id);
 
@@ -146,6 +146,7 @@ public class MapManager : MonoBehaviour
         }
         else
         {
+            Debug.Log("ore object created");
             structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             //Debug.Log("Creating a free object!");
         }
@@ -160,7 +161,7 @@ public class MapManager : MonoBehaviour
 
         Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
 
-        structureObject.GetComponent<Fadable>().show();
+        //structureObject.GetComponent<Fadable>().show();
 
 
         structureObject.transform.position = new Vector3(
@@ -170,7 +171,7 @@ public class MapManager : MonoBehaviour
         );
 
         //TODO: FIX THE SCALING
-        structureObject.transform.localScale = new Vector3(100, 100, 100);
+        //structureObject.transform.localScale = new Vector3(100, 100, 100);
 
         dynamicStructs.Add(structData.id, structureObject);
     }
