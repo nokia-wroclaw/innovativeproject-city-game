@@ -79,11 +79,8 @@ public class PanelsContainerHandler : MonoBehaviour {
     {
         float currentLvl = p.currentPlayerData.level;
         float currentExp = p.currentPlayerData.exp;
-        Debug.Log(currentExp);
         float maxLvlExp = Mathf.Ceil(Mathf.Exp(currentLvl+1));
-        Debug.Log(maxLvlExp);
         expBar.fillAmount = currentExp/maxLvlExp;
-        Debug.Log(currentLvl / maxLvlExp);
     }
 
     public void refreshHP()
