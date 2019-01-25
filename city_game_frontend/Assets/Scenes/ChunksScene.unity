@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43975598, g: 0.48818165, b: 0.5683977, a: 1}
+  m_IndirectSpecularColor: {r: 0.43975636, g: 0.48818225, b: 0.56839883, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3823,6 +3823,7 @@ GameObject:
   - component: {fileID: 657135906}
   - component: {fileID: 657135908}
   - component: {fileID: 657135904}
+  - component: {fileID: 657135905}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -3843,6 +3844,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notificationPanel: {fileID: 727426010}
   text: {fileID: 125473963}
+--- !u!114 &657135905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 657135903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b982370f02cab99488fc7de3e6cbdb0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expBar: {fileID: 689460040}
+  healthBar: {fileID: 440406060}
 --- !u!4 &657135906
 Transform:
   m_ObjectHideFlags: 0
@@ -4084,9 +4098,9 @@ RectTransform:
   m_Father: {fileID: 1242496423}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 75, y: -2}
   m_SizeDelta: {x: 150, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &689460040

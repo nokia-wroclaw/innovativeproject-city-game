@@ -25,7 +25,8 @@ public static class Const
 	public static int RESOURCE_TYPE_2 = 2;
 	public static int RESOURCE_TYPE_3 = 3;
 	public static int RESOURCE_TYPE_4 = 4;
-	public static string SERVER_URL = "filipplotnicki.com:8000/ws/";
+	public static string SERVER_URL = "156.17.149.214:8000/ws/";
+	//public static string SERVER_URL = "filipplotnicki.com:8000/ws/";
 	public static int SPECIAL_MESSAGE_GUILD_MEMBER_POSITION_UPDATE = 2;
 	public static int SPECIAL_MESSAGE_MAP_UPDATE = 0;
 	public static int SPECIAL_MESSAGE_NOTIFICATION = 1;
