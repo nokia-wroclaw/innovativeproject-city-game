@@ -95,7 +95,7 @@ public class PlayerActionsExtensions: Editor
         if (GUILayout.Button("Get Player Data"))
         {
 
-            targetScript.getPlayerData();
+            PlayerDataManager.Instance.refreshPlayerData();
 
         }
 

@@ -84,10 +84,9 @@ public class MapManager : MonoBehaviour
     {
 
         //Debug.Log(data);
-        Debug.Log("EROR MIGHT BE HERE");
         var chunkData = JsonUtility.FromJson<Assets.ChunkData>(data);
 
-        Debug.Log("???????");
+
         //Debug.Log(chunkData.latitude_lower_bound);
 
         sender.GetComponent<MapManager>().drawChunk(chunkData);

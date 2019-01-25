@@ -364,6 +364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   current_chunk_lat: -10000
   current_chunk_lon: -10000
+  isLoggedIn: 0
   locationIndicator: {fileID: 1533016363}
 --- !u!4 &14023412
 Transform:
@@ -3823,7 +3824,6 @@ GameObject:
   - component: {fileID: 657135906}
   - component: {fileID: 657135908}
   - component: {fileID: 657135904}
-  - component: {fileID: 657135905}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -3844,19 +3844,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notificationPanel: {fileID: 727426010}
   text: {fileID: 125473963}
---- !u!114 &657135905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 657135903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b982370f02cab99488fc7de3e6cbdb0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  expBar: {fileID: 689460040}
-  healthBar: {fileID: 440406060}
 --- !u!4 &657135906
 Transform:
   m_ObjectHideFlags: 0
@@ -3895,6 +3882,7 @@ MonoBehaviour:
   playerRes1: {fileID: 601643901}
   playerRes2: {fileID: 1761330555}
   playerRes3: {fileID: 2140050685}
+  expBar: {fileID: 689460040}
 --- !u!1 &667134790
 GameObject:
   m_ObjectHideFlags: 0
@@ -8833,8 +8821,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1385913353}
   - component: {fileID: 1385913352}
+  - component: {fileID: 1385913354}
   m_Layer: 0
-  m_Name: PlayerActions
+  m_Name: PlayerManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8851,14 +8840,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9f5f7dc1812194ebae297ce4b581ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayerData:
-    name: 
-    level: 0
-    exp: 0
-    cementia: 0
-    plasmatia: 0
-    auferia: 0
-    guild: 
 --- !u!4 &1385913353
 Transform:
   m_ObjectHideFlags: 0
@@ -8872,6 +8853,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1385913354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1385913351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 830bc608bba72e64f8cda86b8f4b1868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentPlayerData:
+    name: 
+    level: 0
+    exp: 0
+    Cementia: 0
+    Plasmatia: 0
+    Auferia: 0
+    guild: 
 --- !u!1 &1399128105
 GameObject:
   m_ObjectHideFlags: 0
