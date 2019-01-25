@@ -1,8 +1,11 @@
 import math
 from game_map.models import Chunk
 from .message_utils import error_message, round_down, require_message_content
+from city_game_backend import CONSTANTS
+from .WebsocketRoutes import WebsocketRoutes
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_CHUNK_REQUEST)
 @require_message_content(
     ('lat', float),
     ('lon', float)
@@ -29,6 +32,7 @@ def handle_chunk_request(message, websocket) -> str:
         # Todo: generate a chunk instead of sending empty data
         return "[]"
 
+    print(chunk_to_send.roads)
     return chunk_to_send.roads
 
 

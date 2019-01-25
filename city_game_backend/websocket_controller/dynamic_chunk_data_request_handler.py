@@ -4,8 +4,11 @@ from city_game_backend import CONSTANTS
 from game_map.utils import struct_2_dict
 # from django.core import serializers
 import json
+from .WebsocketRoutes import WebsocketRoutes
+from city_game_backend import CONSTANTS
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST)
 @require_message_content(
     ('lat', float),
     ('lon', float)

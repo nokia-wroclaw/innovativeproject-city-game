@@ -2,6 +2,7 @@ from channels.generic.websocket import WebsocketConsumer
 # TODO: check out JsonWebsocketConsumer or AsyncJsonWebsocketConsumer after we gather more info about django-channels
 # Now just get it to work as intended
 
+from .WebsocketRoutes import WebsocketRoutes
 import json
 import logging
 import city_game_backend.CONSTANTS as CONSTANTS
@@ -82,20 +83,8 @@ class ClientCommunicationConsumer(WebsocketConsumer):
                 self.send('User not authorised')
                 self.close()
 
-        # If the user is authenticated, other actions are available to him
-        if message_type == CONSTANTS.MESSAGE_TYPE_LOCATION_EVENT:
-            return handle_location_event(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_CHUNK_REQUEST:
-            return handle_chunk_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST:
-            return handle_dynamic_chunk_data_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST:
-            return handle_structure_takeover_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_CREATE_GUILD:
-            return handle_guild_creation_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST:
-            return handle_building_placement_request(message, self)
-
-        # ... another message type handlers down here ...
+        handler = WebsocketRoutes.get_route(message_type)
+        if handler is not None:
+            return handler(message, self)
         else:
             self.send(error_message('Wrong message type!'))

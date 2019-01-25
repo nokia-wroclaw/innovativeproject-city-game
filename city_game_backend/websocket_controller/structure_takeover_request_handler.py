@@ -2,8 +2,11 @@ from .message_utils import require_message_content, error_message, SUCCESS_MESSA
 from game_map.models import Structure
 from game_map.utils import notify_dynamic_map_structure_change
 from player_manager.models import Player
+from city_game_backend import CONSTANTS
+from .WebsocketRoutes import WebsocketRoutes
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST)
 @require_message_content(
     ('id', int)
 )

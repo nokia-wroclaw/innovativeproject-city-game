@@ -2,8 +2,11 @@ from .message_utils import require_message_content, SUCCESS_MESSAGE
 from city_game_backend import CONSTANTS
 from player_manager.models import Player
 from guild_manager.models import Guild
+from city_game_backend import CONSTANTS
+from .WebsocketRoutes import WebsocketRoutes
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_CREATE_GUILD)
 @require_message_content(
     ('guild_name', str)
 )

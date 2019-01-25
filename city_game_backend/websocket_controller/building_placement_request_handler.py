@@ -3,8 +3,11 @@ from game_map.models import Structure
 from city_game_backend import CONSTANTS
 from player_manager.models import Player
 from game_map.utils import notify_dynamic_map_structure_change
+from city_game_backend import CONSTANTS
+from .WebsocketRoutes import WebsocketRoutes
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST)
 @require_message_content(
     ('lat', float),
     ('lon', float),
