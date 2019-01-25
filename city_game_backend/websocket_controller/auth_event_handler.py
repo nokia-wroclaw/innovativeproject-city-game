@@ -1,10 +1,10 @@
 from django.contrib.auth import authenticate
 import logging
-from .active_connections_storage import ActiveConnectionsStorage
+from websocket_controller.active_connections_storage import ActiveConnectionsStorage
 from player_manager.models import Player, ActivePlayer
-from .message_utils import SUCCESS_MESSAGE, error_message, require_message_content
+from websocket_controller.message_utils import SUCCESS_MESSAGE, error_message, require_message_content
 from city_game_backend import CONSTANTS
-from .WebsocketRoutes import WebsocketRoutes
+from websocket_controller.WebsocketRoutes import WebsocketRoutes
 
 logger = logging.getLogger(__name__)
 

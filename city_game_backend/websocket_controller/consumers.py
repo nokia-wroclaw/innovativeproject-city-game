@@ -8,16 +8,14 @@ import logging
 import city_game_backend.CONSTANTS as CONSTANTS
 from .message_utils import error_message
 
-from .location_event_handler import handle_location_event
-from .auth_event_handler import handle_auth_event
+from websocket_controller.auth_event_handler import handle_auth_event
 from .disconnect_event_handler import handle_disconnect_event
-from .chunk_request_handler import handle_chunk_request
-from .dynamic_chunk_data_request_handler import handle_dynamic_chunk_data_request
-from .structure_takeover_request_handler import handle_structure_takeover_request
-from .guild_creation_request_handler import handle_guild_creation_request
-from .building_placement_request_handler import handle_building_placement_request
-from .player_data_request_handler import handle_player_data_request
-from .guild_data_request_handler import handle_guild_data_request
+
+# TODO: REMOVE THIS MONSTER LATER
+from . import auth_event_handler, building_placement_request_handler, guild_creation_request_handler, \
+    chunk_request_handler, dynamic_chunk_data_request_handler, guild_data_request_handler, location_event_handler, \
+    multiplayer_structure_takeover_request_handler, structure_takeover_request_handler, player_data_request_handler
+
 
 logger = logging.getLogger(__name__)
 
