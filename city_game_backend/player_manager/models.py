@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import math
 
 # Create your models here.
 
@@ -17,11 +18,24 @@ class Player(models.Model):
         blank=False
     )
 
+    # Player's resources
+    Cementia = models.FloatField(default=0.0)
+    Plasmatia = models.FloatField(default=0.0)
+    Auferia = models.FloatField(default=0.0)
+
+    exp = models.IntegerField(default=0)
+
+    @property
+    def level(self):
+        if self.exp == 0:
+            return 1
+        return math.floor(math.log(self.exp, 10)) + 1
+
     # If the player joins a guild
     guild = models.ForeignKey('guild_manager.Guild', on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
-        return f'Player {self.nickname}'
+        return f'Player {self.nickname}, {self.level} lvl'
 
     @staticmethod
     def get_by_id(player_id: int):

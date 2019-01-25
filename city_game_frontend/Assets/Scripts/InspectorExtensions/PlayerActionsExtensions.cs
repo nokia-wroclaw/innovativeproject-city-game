@@ -85,6 +85,20 @@ public class PlayerActionsExtensions: Editor
         }
 
 
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(20);
+
+        GUILayout.BeginHorizontal();
+
+
+        if (GUILayout.Button("Get Player Data"))
+        {
+
+            targetScript.getPlayerData();
+
+        }
+
     }
 }
 

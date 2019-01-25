@@ -16,6 +16,8 @@ from .dynamic_chunk_data_request_handler import handle_dynamic_chunk_data_reques
 from .structure_takeover_request_handler import handle_structure_takeover_request
 from .guild_creation_request_handler import handle_guild_creation_request
 from .building_placement_request_handler import handle_building_placement_request
+from .player_data_request_handler import handle_player_data_request
+from .guild_data_request_handler import handle_guild_data_request
 
 logger = logging.getLogger(__name__)
 
@@ -86,5 +88,6 @@ class ClientCommunicationConsumer(WebsocketConsumer):
         handler = WebsocketRoutes.get_route(message_type)
         if handler is not None:
             return handler(message, self)
+
         else:
             self.send(error_message('Wrong message type!'))

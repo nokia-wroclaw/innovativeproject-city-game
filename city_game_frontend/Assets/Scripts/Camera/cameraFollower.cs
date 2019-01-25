@@ -44,21 +44,6 @@ public class cameraFollower : MonoBehaviour {
         if (Input.touchCount == 1)
         {
             Touch touchZero = Input.GetTouch(0);
-            float speed_x = touchZero.deltaPosition.x;
-            float speed_y = touchZero.deltaPosition.y;
-            //float speed_z = touchZero.deltaPosition.z;
-
-            //Debug.Log(speed_x + " " + speed_y);// + " " + speed_z);
-
-            /*
-         rotationThatWorks( anchor,
-            new Vector3(
-                0,
-                touchZero.deltaPosition.x * horizontalRotationSpeed,
-                0
-                )
-        );
-        */
 
         Utils.rotationThatWorks(anchor,
             new Vector3(

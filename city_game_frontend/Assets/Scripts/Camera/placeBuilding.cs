@@ -62,8 +62,6 @@ public class placeBuilding : MonoBehaviour {
             
 
             Touch touchZero = Input.GetTouch(0);
-            float speed_x = touchZero.deltaPosition.x;
-            float speed_y = touchZero.deltaPosition.y;
 
 
             Utils.rotationThatWorks(placableThing,
