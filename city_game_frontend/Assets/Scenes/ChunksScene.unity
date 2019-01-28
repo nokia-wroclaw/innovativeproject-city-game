@@ -3883,6 +3883,7 @@ MonoBehaviour:
   playerRes2: {fileID: 1761330555}
   playerRes3: {fileID: 2140050685}
   expBar: {fileID: 689460040}
+  hpBar: {fileID: 440406060}
 --- !u!1 &667134790
 GameObject:
   m_ObjectHideFlags: 0
