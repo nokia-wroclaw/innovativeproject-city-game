@@ -5,7 +5,7 @@ from city_game_backend import CONSTANTS
 from websocket_controller.WebsocketRoutes import WebsocketRoutes
 
 
-@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_RESPOND_TO_GUILD_INVITE)
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_SEND_GUILD_INVITE)
 @require_message_content(
     ('receiver', str)
 )
