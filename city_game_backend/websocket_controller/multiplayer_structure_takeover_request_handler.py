@@ -8,6 +8,7 @@ from websocket_controller.WebsocketRoutes import WebsocketRoutes
 twenty_meters_distance = 0.002  # Approximately 20 meters in the real world (in latitude/longitude units)
 # TODO: CREATE A MODULE THAT CONVERTS LENGTH UNITS
 
+
 @WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_MULTIPLAYER_STRUCT_TAKEOVER_REQUEST)
 @require_message_content(
     ('id', int)

@@ -16,4 +16,6 @@ public class PlayerData
     public float Auferia;
 
     public string guild;
+
+    public List<GuildInvite> invites;
 }

@@ -38,25 +38,7 @@ public class PlayerActionsExtensions: Editor
             targetScript.sendStructureTakeoverRequest(structureToTakeoverID);
         }
 
-        GUILayout.EndHorizontal();
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("Create Guild");
-        guildName = EditorGUILayout.TextField(guildName);
-
-        if (GUILayout.Button("Create Guild"))
-        {
-            if (!Application.isPlaying)
-            {
-                Debug.Log("Game not started!");
-                return;
-            }
-
-            guildName = EditorGUILayout.TextField(guildName);
-            Debug.Log("Creating " + guildName);
-
-            targetScript.sendCreateGuildRequest(guildName);
-        }
-
+       
 
         GUILayout.EndHorizontal();
 
