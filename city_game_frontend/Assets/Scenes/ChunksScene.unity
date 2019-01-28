@@ -3625,7 +3625,11 @@ MonoBehaviour:
   playerRes2: {fileID: 1761330555}
   playerRes3: {fileID: 2140050685}
   expBar: {fileID: 689460040}
+<<<<<<< HEAD
   hpBar: {fileID: 0}
+=======
+  hpBar: {fileID: 440406060}
+>>>>>>> refs/remotes/origin/master
 --- !u!1 &667134790
 GameObject:
   m_ObjectHideFlags: 0

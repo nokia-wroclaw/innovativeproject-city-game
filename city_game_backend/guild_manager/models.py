@@ -56,3 +56,9 @@ class GuildInvite(models.Model):
 
     def deny(self):
         self.delete()
+
+    @staticmethod
+    def get_by_id(invite_id):
+        return GuildInvite.objects.filter(
+            id=invite_id
+        ).first()
