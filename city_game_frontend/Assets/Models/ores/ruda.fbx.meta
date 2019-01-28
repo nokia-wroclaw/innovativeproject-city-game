@@ -1,17 +1,14 @@
 fileFormatVersion: 2
-guid: 28aa389ab2ca9114989fb131f5242c24
+guid: 4705b4b149663b54888ee77cd8414438
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: default
-    100002: //RootNode
-    400000: default
-    400002: //RootNode
-    2100000: defaultMat
-    2300000: default
-    3300000: default
-    4300000: default
-    2186277476908879412: ImportLogs
+    100000: //RootNode
+    400000: //RootNode
+    2100000: No Name
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: ConeUP.002
   externalObjects: {}
   materials:
     importMaterials: 1

@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: wizard
+  m_Name: tree2
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -34,16 +34,12 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _DissolveTex:
-        m_Texture: {fileID: 2800000, guid: 347c28c051aa93b4583ae729bbe105cf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 39f12a3d6c0892f4395fbbd020e8eb33, type: 3}
+        m_Texture: {fileID: 2800000, guid: c029e47cded396c44bff9bae8c51fdd9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -62,25 +58,16 @@ Material:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DissolveBand: 0.25
-    - _DissolveScale: 0.9
     - _DstBlend: 0
-    - _Edges: 0.5
-    - _FadeFromTime: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _GlowColFac: 0.75
-    - _GlowIntensity: 0.05
-    - _GlowScale: 1
-    - _Level: 0.41
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _OutlineWidth: 0.01
-    - _OverlaySpeed: 1
     - _Parallax: 0.02
-    - _SeeThrough: 1
+    - _SeeThrough: 0.8
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -88,15 +75,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DissolveEnd: {r: 0, g: 0, b: 0, a: 1}
-    - _DissolveStart: {r: 1, g: 1, b: 1, a: 1}
-    - _EdgeColour1: {r: 1, g: 0, b: 0, a: 1}
-    - _EdgeColour2: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Glow: {r: 1, g: 0, b: 0, a: 1}
+    - _Glow: {r: 1, g: 0.025, b: 0.75, a: 0.5}
     - _Glow2: {r: 0.01, g: 1, b: 0.5, a: 0}
     - _GlowColor: {r: 1, g: 1, b: 1, a: 1}
-    - _GlowEnd: {r: 0.8184396, g: 1, b: 0.759434, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OverlayBackColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SeeThroughTintColor: {r: 0, g: 0, b: 0, a: 0.8}
+    - _SeeThroughTintColor: {r: 1, g: 0, b: 0, a: 0.8}
