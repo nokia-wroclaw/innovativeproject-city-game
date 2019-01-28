@@ -14,7 +14,8 @@ from .disconnect_event_handler import handle_disconnect_event
 # TODO: REMOVE THIS MONSTER LATER
 from . import auth_event_handler, building_placement_request_handler, guild_creation_request_handler, \
     chunk_request_handler, dynamic_chunk_data_request_handler, guild_data_request_handler, location_event_handler, \
-    multiplayer_structure_takeover_request_handler, structure_takeover_request_handler, player_data_request_handler
+    multiplayer_structure_takeover_request_handler, structure_takeover_request_handler, player_data_request_handler, \
+    guild_invite_response_handler, guild_invite_send_handler # a
 
 
 logger = logging.getLogger(__name__)

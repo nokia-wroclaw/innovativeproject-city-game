@@ -44,6 +44,12 @@ class Player(models.Model):
             id=player_id
         ).first()
 
+    @staticmethod
+    def get_by_nick(nick: str):
+        return Player.objects.filter(
+            nickname=nick
+        ).first()
+
 
 class ActivePlayer(models.Model):
     """

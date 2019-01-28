@@ -27,21 +27,6 @@ public class PlayerActions : MonoBehaviour {
             structureTakeoverCallback);
     }
 
-
-    public void sendCreateGuildRequest(string guildName)
-    {
-        ServerSocket.Instance.send(
-            gameObject,
-            JsonUtility.ToJson(
-                new GuildCreationRequestData(guildName)
-                ), guildCreationCallback);
-    }
-
-    public Request.callbackFunc guildCreationCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
-    {
-        Debug.Log("Guild created: " + data);
-    });
-
     public void enterBuildingMode()
     {
         cameraFollower.Instance.enabled = false;

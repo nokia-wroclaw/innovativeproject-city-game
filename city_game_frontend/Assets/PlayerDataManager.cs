@@ -23,6 +23,8 @@ public class PlayerDataManager : MonoBehaviour {
 
     private Request.callbackFunc playerDataRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
+        Debug.Log("PLAYER DATA:");
+        Debug.Log(data);
         PlayerData retrievedPlayerData = JsonUtility.FromJson<PlayerData>(data);
 
 
