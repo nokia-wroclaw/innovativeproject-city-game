@@ -6,7 +6,6 @@ using UnityEngine;
 public class PlayerActions : MonoBehaviour {
 
     public static PlayerActions Instance;
-    public PlayerData currentPlayerData;
 
     private void Awake()
     {
@@ -57,24 +56,7 @@ public class PlayerActions : MonoBehaviour {
     }
 
 
-    public void getPlayerData()
-    {
-        ServerSocket.Instance.send(this.gameObject, JsonUtility.ToJson(new PlayerDataRequestData()), playerDataRequestCallback);
-    }
-
-    private Request.callbackFunc playerDataRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
-    {
-        PlayerData retrievedPlayerData = JsonUtility.FromJson<PlayerData>(data);
-
-        sender.GetComponent<PlayerActions>().currentPlayerData = retrievedPlayerData;
-        PanelsContainerHandler.Instance.playerName.text = retrievedPlayerData.name;
-        PanelsContainerHandler.Instance.playerExp.text = retrievedPlayerData.exp.ToString();
-        PanelsContainerHandler.Instance.playerLvl.text = retrievedPlayerData.level.ToString();
-        PanelsContainerHandler.Instance.playerGuild.text = retrievedPlayerData.guild;
-        PanelsContainerHandler.Instance.playerRes1.text = retrievedPlayerData.cementia.ToString();
-        PanelsContainerHandler.Instance.playerRes2.text = retrievedPlayerData.plasmatia.ToString();
-        PanelsContainerHandler.Instance.playerRes3.text = retrievedPlayerData.auferia.ToString();
-    });
+    
 
     // Use this for initialization
     void Start () {

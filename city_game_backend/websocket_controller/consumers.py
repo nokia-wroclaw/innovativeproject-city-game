@@ -2,21 +2,21 @@ from channels.generic.websocket import WebsocketConsumer
 # TODO: check out JsonWebsocketConsumer or AsyncJsonWebsocketConsumer after we gather more info about django-channels
 # Now just get it to work as intended
 
+from .WebsocketRoutes import WebsocketRoutes
 import json
 import logging
 import city_game_backend.CONSTANTS as CONSTANTS
 from .message_utils import error_message
 
-from .location_event_handler import handle_location_event
-from .auth_event_handler import handle_auth_event
+from websocket_controller.auth_event_handler import handle_auth_event
 from .disconnect_event_handler import handle_disconnect_event
-from .chunk_request_handler import handle_chunk_request
-from .dynamic_chunk_data_request_handler import handle_dynamic_chunk_data_request
-from .structure_takeover_request_handler import handle_structure_takeover_request
-from .guild_creation_request_handler import handle_guild_creation_request
-from .building_placement_request_handler import handle_building_placement_request
-from .player_data_request_handler import handle_player_data_request
-from .guild_data_request_handler import handle_guild_data_request
+
+# TODO: REMOVE THIS MONSTER LATER
+from . import auth_event_handler, building_placement_request_handler, guild_creation_request_handler, \
+    chunk_request_handler, dynamic_chunk_data_request_handler, guild_data_request_handler, location_event_handler, \
+    multiplayer_structure_takeover_request_handler, structure_takeover_request_handler, player_data_request_handler, \
+    guild_invite_response_handler, guild_invite_send_handler
+
 
 logger = logging.getLogger(__name__)
 
@@ -84,24 +84,9 @@ class ClientCommunicationConsumer(WebsocketConsumer):
                 self.send('User not authorised')
                 self.close()
 
-        # If the user is authenticated, other actions are available to him
-        if message_type == CONSTANTS.MESSAGE_TYPE_LOCATION_EVENT:
-            return handle_location_event(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_CHUNK_REQUEST:
-            return handle_chunk_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST:
-            return handle_dynamic_chunk_data_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST:
-            return handle_structure_takeover_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_CREATE_GUILD:
-            return handle_guild_creation_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST:
-            return handle_building_placement_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_PLAYER_DATA_REQUEST:
-            return handle_player_data_request(message, self)
-        elif message_type == CONSTANTS.MESSAGE_TYPE_GUILD_DATA_REQUEST:
-            return handle_guild_data_request(message, self)
+        handler = WebsocketRoutes.get_route(message_type)
+        if handler is not None:
+            return handler(message, self)
 
-        # ... another message type handlers down here ...
         else:
             self.send(error_message('Wrong message type!'))

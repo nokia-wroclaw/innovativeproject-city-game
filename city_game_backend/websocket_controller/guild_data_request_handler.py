@@ -2,7 +2,7 @@ import json
 from player_manager.models import Player
 from guild_manager.models import Guild
 from game_map.utils import notify_dynamic_map_structure_change
-from .message_utils import error_message, SUCCESS_MESSAGE
+from websocket_controller.message_utils import error_message, SUCCESS_MESSAGE
 from city_game_backend import CONSTANTS
 
 

@@ -11,9 +11,9 @@ public class PlayerData
 
     public int level;
     public int exp;
-    public float cementia;
-    public float plasmatia;
-    public float auferia;
+    public float Cementia;
+    public float Plasmatia;
+    public float Auferia;
 
     public string guild;
 }

@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     public float current_chunk_lat = -10000;
     public float current_chunk_lon = -10000;
 
+    public bool isLoggedIn = false;
+
     // TEMPORARY LOCATION INDICATOR
     public GameObject locationIndicator;
     SmoothMovement locationIndicatorMovementScript;
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour {
     
     public void OnLogin()
     {
-        
+        isLoggedIn = true;
     }
 
     public void OnLocationChanged(float lon, float lat, float rotation)

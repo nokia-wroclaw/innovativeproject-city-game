@@ -8,13 +8,18 @@ public static class Const
 {
 
 	public static float CHUNK_SIZE = 0.01F;
+	public static int GUILD_INVITE_ACCEPT = 1;
+	public static int GUILD_INVITE_DENY = 2;
 	public static int MESSAGE_TYPE_AUTH_EVENT = 0;
 	public static int MESSAGE_TYPE_CHUNK_REQUEST = 2;
 	public static int MESSAGE_TYPE_CREATE_GUILD = 5;
 	public static int MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3;
 	public static int MESSAGE_TYPE_GUILD_DATA_REQUEST = 8;
 	public static int MESSAGE_TYPE_LOCATION_EVENT = 1;
+	public static int MESSAGE_TYPE_MULTIPLAYER_STRUCT_TAKEOVER_REQUEST = 9;
 	public static int MESSAGE_TYPE_PLAYER_DATA_REQUEST = 7;
+	public static int MESSAGE_TYPE_RESPOND_TO_GUILD_INVITE = 11;
+	public static int MESSAGE_TYPE_SEND_GUILD_INVITE = 10;
 	public static int MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST = 6;
 	public static int MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST = 4;
 	public static string RESOURCE_AUFERIA = "Auferia";

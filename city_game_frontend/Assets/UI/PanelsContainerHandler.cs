@@ -10,6 +10,7 @@ public class PanelsContainerHandler : MonoBehaviour {
     public GameObject playerPanel,guildPanel,skillTreePanel,actionsPanel,somethingPanel;
 
     public Text playerName, playerLvl, playerGuild, playerExp, playerRes1, playerRes2, playerRes3;
+    public Image expBar,hpBar;
 
     public static PanelsContainerHandler Instance;
 
@@ -69,19 +70,33 @@ public class PanelsContainerHandler : MonoBehaviour {
         showContainer();
         closeAllPanelsExcept(playerPanel);
     }
-
     public void goToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
     }
 
-	// Use this for initialization
-	void Start () {
+    public void refreshExp(PlayerDataManager p)
+    {
+        float currentLvl = p.currentPlayerData.level;
+        float currentExp = p.currentPlayerData.exp;
+        float maxLvlExp = Mathf.Ceil(Mathf.Exp(currentLvl+1));
+        expBar.fillAmount = currentExp/maxLvlExp;
+    }
+
+    public void refreshHP()
+    {
+        float hp = SystemInfo.batteryLevel;
+        if (hp < 0 || hp > 1)
+            hp = 0.8f;
+        hpBar.fillAmount = hp;
+    }
+
+    // Use this for initialization
+    void Start () {
         container.SetActive(false);
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
 	}
 }

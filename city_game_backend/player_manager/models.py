@@ -29,7 +29,7 @@ class Player(models.Model):
     def level(self):
         if self.exp == 0:
             return 1
-        return math.floor(math.log(self.exp, 10)) + 1
+        return math.floor(math.log(self.exp, math.e)) + 1
 
     # If the player joins a guild
     guild = models.ForeignKey('guild_manager.Guild', on_delete=models.SET_NULL, null=True, blank=True)
@@ -42,6 +42,12 @@ class Player(models.Model):
 
         return Player.objects.filter(
             id=player_id
+        ).first()
+
+    @staticmethod
+    def get_by_nick(nick: str):
+        return Player.objects.filter(
+            nickname=nick
         ).first()
 
 
