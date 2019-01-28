@@ -100,7 +100,7 @@ public class GameManager : MonoBehaviour {
         }
         else 
         {
-            Debug.Log("Location changed");
+            //Debug.Log("Location changed");
 
             current_chunk_lat = roundDownToChunkCords(lat);
             current_chunk_lon = roundDownToChunkCords(lon);

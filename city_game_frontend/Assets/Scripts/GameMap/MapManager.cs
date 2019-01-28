@@ -273,7 +273,7 @@ public class MapManager : MonoBehaviour
         {
 
             DynamicStruct targetData = target.GetComponent<DynamicStruct>();
-            Debug.Log(targetData.data.tier);
+            //Debug.Log(targetData.data.tier);
             return targetData.data;
 
         }
