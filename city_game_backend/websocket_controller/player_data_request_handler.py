@@ -24,7 +24,7 @@ def handle_player_data_request(message: dict, websocket) -> str:
         'invites': [
             {
                 'guild_name': invite.guild.guild_name,
-                'guild_id': invite.guild.id
+                'invite_id': invite.id
             }
             for invite in player_guild_invites
         ]

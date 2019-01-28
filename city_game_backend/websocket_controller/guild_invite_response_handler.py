@@ -5,12 +5,12 @@ from city_game_backend import CONSTANTS
 from websocket_controller.WebsocketRoutes import WebsocketRoutes
 
 
-@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_SEND_GUILD_INVITE)
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_RESPOND_TO_GUILD_INVITE)
 @require_message_content(
     ('answer', int),
     ('invite_id', int)
 )
-def handle_guild_invite_request(message, websocket) -> str:
+def handle_guild_invite_response(message, websocket) -> str:
 
     invite_id = message['invite_id']
     players_answer = message['answer']
@@ -26,6 +26,7 @@ def handle_guild_invite_request(message, websocket) -> str:
     elif players_answer == CONSTANTS.GUILD_INVITE_ACCEPT:
         receiver: Player = Player.get_by_id(websocket.player_id)
         invite.guild.add_player(receiver)
+        invite.delete()
         return SUCCESS_MESSAGE
 
     else:
