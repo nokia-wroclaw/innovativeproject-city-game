@@ -71,7 +71,7 @@ public class GuildInvitesHandler : MonoBehaviour {
             Text newItemsText = newItem.GetComponentInChildren<Text>();
             newItemsText.text = playersInParty[i];
 
-            Button newItemsButton = newItem.GetComponentInChildren<Button>();
+            Button newItemsButton = newItem.transform.Find("KickButton").GetComponent<Button>();
             newItemsButton.onClick.AddListener(() => kickThePlayerOutOfTheParty(newItem, newItemsText));
 
             RectTransform rectTransform = newItem.GetComponent<RectTransform>();
@@ -114,7 +114,9 @@ public class GuildInvitesHandler : MonoBehaviour {
             Text newItemsText = newItem.GetComponentInChildren<Text>();
             newItemsText.text = playersInParty[i];
 
-            
+            Button newItemsButton = newItem.transform.Find("KickButton").GetComponent<Button>();
+            newItemsButton.onClick.AddListener(() => kickThePlayerOutOfTheParty(newItem, newItemsText));
+
             RectTransform rectTransform = newItem.GetComponent<RectTransform>();
 
             float x = -invitesGridTransform.rect.width / 2 + width;

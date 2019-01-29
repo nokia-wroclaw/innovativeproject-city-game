@@ -2681,7 +2681,7 @@ GameObject:
   - component: {fileID: 544959911}
   - component: {fileID: 544959910}
   m_Layer: 5
-  m_Name: Button
+  m_Name: KickButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8153,7 +8153,7 @@ GameObject:
   - component: {fileID: 1341050934}
   - component: {fileID: 1341050933}
   m_Layer: 5
-  m_Name: MemeberImage
+  m_Name: MemberImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11804,7 +11804,7 @@ GameObject:
   - component: {fileID: 2133529908}
   - component: {fileID: 2133529907}
   m_Layer: 5
-  m_Name: MemeberName
+  m_Name: MemberName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
