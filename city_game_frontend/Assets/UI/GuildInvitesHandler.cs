@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class GuildInvitesHandler : MonoBehaviour {
 
     private List<string> playersInParty = null;
+    private List<string> invitesPending = null;
 
-    public GameObject itemPrefab, invitesGrid;
+
+    public GameObject itemPrefab, invitationTile, invitesGrid;
     private int itemCount = 1;
 
     public void getPlayersInPartyListFromServer()
@@ -22,6 +24,17 @@ public class GuildInvitesHandler : MonoBehaviour {
         //playersInParty.Add("Bulbazaur");
 
         itemCount = GuildDataManager.Instance.guildData.members_count;
+    }
+
+    public void getInvitationsListFromServer()
+    {
+        invitesPending = new List<string>();
+        itemCount = invitesPending.Count;
+    }
+
+    public void acceptThisInvite(GameObject inviteTile, Text playerName)
+    {
+        //TODO
     }
 
     public void invitePlayerByName(InputField inputField)
