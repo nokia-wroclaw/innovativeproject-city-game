@@ -13,25 +13,26 @@ public class GuildInvitesHandler : MonoBehaviour {
     public void getPlayersInPartyListFromServer()
     {
         //TODO
+        playersInParty = GuildDataManager.Instance.guildData.members;
         //get info from the server
-        playersInParty = new List<string>();
+        //playersInParty = new List<string>();
 
-        playersInParty.Add("Kacper");
-        playersInParty.Add("Melchior");
-        playersInParty.Add("Bulbazaur");
+        //playersInParty.Add("Kacper");
+        //playersInParty.Add("Melchior");
+        //playersInParty.Add("Bulbazaur");
 
-        itemCount = playersInParty.Count;
+        itemCount = GuildDataManager.Instance.guildData.members_count;
     }
 
     public void invitePlayerByName(InputField inputField)
     {
         if (inputField.text != "")
         {
+            GuildActions.Instance.inviteToGuild(inputField.text);
+            //TODO some sort of authorization
             playersInParty.Add(inputField.text);
             updatePlayersInPartyList();
         }
-        //TODO
-        //send info to the server
     }
 
     public void kickThePlayerOutOfTheParty(GameObject memberTile, Text playerName)
@@ -43,8 +44,9 @@ public class GuildInvitesHandler : MonoBehaviour {
 
     public void updatePlayersInPartyList()
     {
+        playersInParty = GuildDataManager.Instance.guildData.members;
+        itemCount = GuildDataManager.Instance.guildData.members_count;
 
-        itemCount = playersInParty.Count;
         playersInParty.Sort();
 
         foreach (Transform g in invitesGrid.transform)
