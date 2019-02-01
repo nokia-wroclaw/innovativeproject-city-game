@@ -10,6 +10,7 @@ public class GuildActionsExtensions: Editor
     string invitationReceiver = "";
     string guildName = "";
     int invite_id = 0;
+    string nick_to_kick = "";
 
     public override void OnInspectorGUI()
     {
@@ -89,6 +90,25 @@ public class GuildActionsExtensions: Editor
 
             targetScript.rejectInvite(invite_id);
         }
+
+
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Send kick request");
+        nick_to_kick = EditorGUILayout.TextField(nick_to_kick);
+
+        if (GUILayout.Button("Send"))
+        {
+            if (!Application.isPlaying)
+            {
+                Debug.Log("Game not started!");
+                return;
+            }
+
+            targetScript.sendKickRequest(nick_to_kick);
+        }
+
+        
 
     }
 }

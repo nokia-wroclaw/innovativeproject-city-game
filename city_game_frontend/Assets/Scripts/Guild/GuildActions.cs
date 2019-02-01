@@ -84,11 +84,26 @@ public class GuildActions : MonoBehaviour {
                 ), guildInvitationAnswerCallback);
     }
 
+    public void sendKickRequest(string player_nick)
+    {
+        ServerSocket.Instance.send(
+           gameObject,
+           JsonUtility.ToJson(
+
+               new GuildKickRequestData(
+                   player_nick
+                   )
+               ), guildKickRequestCallback);
+    }
+
     public Request.callbackFunc guildInvitationAnswerCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
         Debug.Log("Invite status: " + data);
     });
 
-
+    public Request.callbackFunc guildKickRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+        Debug.Log("Kick request status: " + data);
+    });
 
 }
