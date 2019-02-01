@@ -38,6 +38,10 @@ public class PlayerDataManager : MonoBehaviour {
         PanelsContainerHandler.Instance.playerRes3.text = retrievedPlayerData.Auferia.ToString();
         PanelsContainerHandler.Instance.refreshExp(PlayerDataManager.Instance);
         PanelsContainerHandler.Instance.refreshHP();
+        if (GuildInvitesHandler.Instance.guildPanel.activeSelf)
+            GuildInvitesHandler.Instance.updatePlayersInPartyList();
+        else if (GuildInvitesHandler.Instance.invitationsPanel.activeSelf)
+            GuildInvitesHandler.Instance.updateInvitesList();
 
         //PlayersBarHandler.Instance.refreshExp(retrievedPlayerData);
     });
