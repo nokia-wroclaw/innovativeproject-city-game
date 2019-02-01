@@ -1,7 +1,7 @@
 from django.db import models
 from .utils import round_down
 import city_game_backend.CONSTANTS as CONSTANTS
-
+import random
 
 class Chunk(models.Model):
     """
@@ -21,6 +21,24 @@ class Chunk(models.Model):
     def __str__(self):
         return f"Chunk: {self.latitude_lower_bound}, {self.longitude_lower_bound}"
 
+    def fill_with_random_structures(self, how_many):
+        if how_many > 10:
+            how_many = 10
+
+        latitudes = [x / 10 * CONSTANTS.CHUNK_SIZE + self.latitude_lower_bound
+                     for x in random.sample(range(0, 10), how_many)]
+
+        longitudes = [x / 10 * CONSTANTS.CHUNK_SIZE + self.longitude_lower_bound
+                      for x in random.sample(range(0, 10), how_many)]
+
+        for struct_lon, struct_lat in zip(longitudes, latitudes):
+            new_struct = Structure()
+            new_struct.longitude = struct_lon
+            new_struct.latitude = struct_lat
+            new_struct.tier = random.randint(1, 3)
+            new_struct.resource_type = random.randint(1, 2)
+            new_struct.resources_left = new_struct.tier * 100
+            new_struct.save()
 
 class Structure(models.Model):
     """
