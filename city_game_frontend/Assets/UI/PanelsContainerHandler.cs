@@ -43,8 +43,8 @@ public class PanelsContainerHandler : MonoBehaviour {
     public void guildPanelOn()
     {
         showContainer();
+        GuildInvitesHandler.Instance.start();
         closeAllPanelsExcept(guildPanel);
-        //guildPanel.SetActive(true);
     }
 
     public void skillTreePanelOn()
