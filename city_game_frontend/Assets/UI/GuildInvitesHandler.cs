@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GuildInvitesHandler : MonoBehaviour {
+    //TODO make double lists of invites && members disappear
+    //TODO refresh window after invite acceptance
 
     public static GuildInvitesHandler Instance;
 
@@ -12,7 +14,7 @@ public class GuildInvitesHandler : MonoBehaviour {
 
     public GameObject guildPanel, invitationsPanel;
     public GameObject itemPrefab, invitationTile, invitesGrid, membersGrid;
-    private int itemCount = 1;
+    private int itemCount;
 
     private void Awake()
     {
@@ -21,14 +23,8 @@ public class GuildInvitesHandler : MonoBehaviour {
 
     public void getPlayersInPartyListFromServer()
     {
-        //TODO
+        GuildActions.Instance.getGuildData();
         playersInParty = GuildDataManager.Instance.guildData.members;
-        //get info from the server
-        //playersInParty = new List<string>();
-
-        //playersInParty.Add("Kacper");
-        //playersInParty.Add("Melchior");
-        //playersInParty.Add("Bulbazaur");
 
         itemCount = GuildDataManager.Instance.guildData.members_count;
     }
@@ -42,12 +38,13 @@ public class GuildInvitesHandler : MonoBehaviour {
             invitesPending.Add(gi[i].guild_name);
         }
         itemCount = invitesPending.Count;
-        //Debug.Log(itemCount);
     }
 
     public void acceptThisInvite(Text guildName)
     {
-        //TODO
+        int inviteId = PlayerDataManager.Instance.currentPlayerData.invites.Find(x => x.guild_name == guildName.text).invite_id;
+        GuildActions.Instance.acceptInvite(inviteId);
+        start();
     }
 
     public void invitePlayerByName(InputField inputField)
@@ -55,7 +52,6 @@ public class GuildInvitesHandler : MonoBehaviour {
         if (inputField.text != "")
         {
             GuildActions.Instance.inviteToGuild(inputField.text);
-            //TODO some sort of authorization
             playersInParty.Add(inputField.text);
             updatePlayersInPartyList();
         }
@@ -63,7 +59,7 @@ public class GuildInvitesHandler : MonoBehaviour {
 
     public void kickThePlayerOutOfTheParty(GameObject memberTile, Text playerName)
     {
-        //TODO
+        GuildActions.Instance.sendKickRequest(playerName.text);
         playersInParty.Remove(playerName.text);
         GameObject.Destroy(memberTile);
         updatePlayersInPartyList();
@@ -95,6 +91,7 @@ public class GuildInvitesHandler : MonoBehaviour {
             GameObject newItem = Instantiate(itemPrefab) as GameObject;
             newItem.name = playersInParty[i] + " member tile";
             newItem.transform.parent = membersGrid.transform;
+            newItem.SetActive(true);
 
             Text newItemsText = newItem.GetComponentInChildren<Text>();
             newItemsText.text = playersInParty[i];
@@ -125,7 +122,7 @@ public class GuildInvitesHandler : MonoBehaviour {
         foreach (Transform g in invitesGrid.transform)
             GameObject.Destroy(g.gameObject);
 
-        RectTransform rowTransform = itemPrefab.GetComponent<RectTransform>();
+        RectTransform rowTransform = invitationTile.GetComponent<RectTransform>();
         RectTransform invitesGridTransform = invitesGrid.GetComponent<RectTransform>();
 
         float width = invitesGridTransform.rect.width;
@@ -141,6 +138,7 @@ public class GuildInvitesHandler : MonoBehaviour {
             GameObject newItem = Instantiate(invitationTile) as GameObject;
             newItem.name = invitesPending[i] + " invite tile";
             newItem.transform.parent = invitesGrid.transform;
+            newItem.SetActive(true);
 
             Text newItemsText = newItem.GetComponentInChildren<Text>();
             newItemsText.text = invitesPending[i];
@@ -169,6 +167,9 @@ public class GuildInvitesHandler : MonoBehaviour {
 
         getPlayersInPartyListFromServer();
 
+        foreach (Transform g in invitesGrid.transform)
+            GameObject.Destroy(g.gameObject);
+
         RectTransform rowTransform = itemPrefab.GetComponent<RectTransform>();
         RectTransform invitesGridTransform = membersGrid.GetComponent<RectTransform>();
 
@@ -186,6 +187,7 @@ public class GuildInvitesHandler : MonoBehaviour {
             GameObject newItem = Instantiate(itemPrefab) as GameObject;
             newItem.name = playersInParty[i] + " member tile";
             newItem.transform.parent = membersGrid.transform;
+            newItem.SetActive(true);
 
             Text newItemsText = newItem.GetComponentInChildren<Text>();
             newItemsText.text = playersInParty[i];
@@ -204,6 +206,7 @@ public class GuildInvitesHandler : MonoBehaviour {
             rectTransform.offsetMax = new Vector2(x, y);
         }
     }
+
     public void startInvitationPanel()
     {
         invitationsPanel.SetActive(true);
@@ -226,10 +229,10 @@ public class GuildInvitesHandler : MonoBehaviour {
 
         for (int i = 0; i < itemCount; i++)
         {
-
             GameObject newItem = Instantiate(invitationTile) as GameObject;
             newItem.name = invitesPending[i] + " invite tile";
             newItem.transform.parent = invitesGrid.transform;
+            newItem.SetActive(true);
 
             Text newItemsText = newItem.GetComponentInChildren<Text>();
             newItemsText.text = invitesPending[i];
@@ -255,5 +258,10 @@ public class GuildInvitesHandler : MonoBehaviour {
             startInvitationPanel();
         else
             startGuildPanel();
+    }
+
+    private void Start()
+    {
+        invitationTile.SetActive(false);
     }
 }
