@@ -72,6 +72,15 @@ public class GameManager : MonoBehaviour {
         {
             MapManager.Instance.handleGuildMemberLocationUpdate(responseData.message);
         }
+
+
+        if (responseData.specialMessageID == Const.SPECIAL_MESSAGE_GUILD_INVITE_NOTIFICATION)
+        {
+            Debug.Log("invite received!");
+            GuildInvite inviteData = JsonUtility.FromJson<GuildInvite>(responseData.message);
+            Debug.Log(inviteData.guild_name);
+            //TUTAJ KRZYŚ MOŻE HANDLOWAĆ UI
+        }
     }
 
     

@@ -3996,6 +3996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 1627943238}
+  invitationTile: {fileID: 0}
   invitesGrid: {fileID: 1692231622}
 --- !u!4 &657135906
 Transform:
@@ -9016,6 +9017,8 @@ GameObject:
   - component: {fileID: 1385913353}
   - component: {fileID: 1385913352}
   - component: {fileID: 1385913354}
+  - component: {fileID: 1385913356}
+  - component: {fileID: 1385913355}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -9067,6 +9070,32 @@ MonoBehaviour:
     Auferia: 0
     guild: 
     invites: []
+--- !u!114 &1385913355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1385913351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9c28185333db6e40acc70cf7767ab3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1385913356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1385913351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d879c261825e89241913f423e8c3016a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  guildData:
+    name: 
+    members_count: 0
+    members: []
 --- !u!1 &1399128105
 GameObject:
   m_ObjectHideFlags: 0
