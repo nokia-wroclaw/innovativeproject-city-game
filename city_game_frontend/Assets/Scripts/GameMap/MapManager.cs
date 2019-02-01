@@ -8,8 +8,25 @@ public class MapManager : MonoBehaviour
 
     public Material roadMaterial;
 
-    public GameObject orePrefab;
-    public GameObject minePrefab;
+    public GameObject ore_1_small;
+    public GameObject ore_2_small;
+    public GameObject ore_3_small;
+
+    public GameObject ore_1_mid;
+    public GameObject ore_2_mid;
+    public GameObject ore_3_mid;
+
+    public GameObject mine_1_small;
+    public GameObject mine_2_small;
+    public GameObject mine_3_small;
+
+    public GameObject mine_1_mid;
+    public GameObject mine_2_mid;
+    public GameObject mine_3_mid;
+
+
+
+
     public GameObject otherPlayerModel;
     public GameObject playerPlacedStructPrefab;
 
@@ -131,19 +148,48 @@ public class MapManager : MonoBehaviour
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
             */
 
-
+        GameObject structureToSpawn = null;
         GameObject structureObject = null;
 
+        
         if(structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
         {
-            structureObject = Instantiate(playerPlacedStructPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
+            structureToSpawn = playerPlacedStructPrefab;
         }
+
         else if (structData.taken_over)
         {
-            structureObject = Instantiate(minePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //Debug.Log("Creating a taken over object!");
+            if(structData.tier == 1)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = mine_1_small;
+                } else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = mine_2_small;
+                } else
+                {
+                    structureToSpawn = mine_3_small;
+                }
+            } else if (structData.tier == 2)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = mine_1_mid;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = mine_2_mid;
+                }
+                else
+                {
+                    structureToSpawn = mine_3_mid;
+                }
+            }
+               
 
+            structureObject = Instantiate(structureToSpawn, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
+            
         }
         else
         {
@@ -151,6 +197,8 @@ public class MapManager : MonoBehaviour
             structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             //Debug.Log("Creating a free object!");
         }
+
+        structureObject = Instantiate(structureToSpawn, new Vector3(0, 0, 0), Quaternion.identity);
 
 
         // Save the object's data as one of the objects components
