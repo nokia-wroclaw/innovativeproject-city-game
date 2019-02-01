@@ -158,9 +158,9 @@ public class MapManager : MonoBehaviour
         structureObjectScript.data = structData;
 
         
-        structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
+        //structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
 
-        Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
+        //Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
 
         //structureObject.GetComponent<Fadable>().show();
 

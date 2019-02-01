@@ -2235,8 +2235,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roadMaterial: {fileID: 2100000, guid: 8fec9b8ce158a954b9be39ce8ac2c8ec, type: 2}
-  orePrefab: {fileID: 1164407371883500, guid: c8cf262bb0f405a4fa2eaab7110c27d6, type: 2}
-  minePrefab: {fileID: 1064660362618358, guid: c9eba2d1d0a12eb4ca1275d26ed9158c, type: 2}
+  orePrefab: {fileID: 1722660632681786, guid: 873ef78214b83214e979c7253973407a, type: 2}
+  minePrefab: {fileID: 1527300405829896, guid: a671bf75c0c6d6c4c9815cc6d76a9608, type: 2}
   otherPlayerModel: {fileID: 1459559249895234, guid: 5a8851458ff973d488f2cf597e33b7fd,
     type: 2}
   playerPlacedStructPrefab: {fileID: 1135096713295376, guid: e1fe1f87b8801ec48992df6ce9239bb0,
