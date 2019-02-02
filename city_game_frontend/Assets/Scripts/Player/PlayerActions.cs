@@ -19,6 +19,11 @@ public class PlayerActions : MonoBehaviour {
 
     public void sendStructureTakeoverRequest(int structureID)
     {
+        EffectsManager.Instance.spawnEffect(
+            MapManager.Instance.dynamicStructs[structureID].transform.position,
+            5
+            );
+
         ServerSocket.Instance.send(
             gameObject,
             JsonUtility.ToJson(
@@ -34,10 +39,13 @@ public class PlayerActions : MonoBehaviour {
         placeBuilding.Instance.enabled = true;
     }
 
-    public void leaveBuildingMode() {
+    public void leaveBuildingMode()
+    {
+        placeBuilding.Instance.enabled = false;
         cameraFollower.Instance.enabled = true;
         SelectObject.Instance.enabled = true;
-        placeBuilding.Instance.enabled = false;
+
+        Destroy(placeBuilding.Instance.placableThing);
     }
 
 

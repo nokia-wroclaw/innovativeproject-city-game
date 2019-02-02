@@ -52,7 +52,7 @@ public class MapManager : MonoBehaviour
      * Dynamic struct that will change during runtime are stored separately
      * the dictionary key is the ID of the struct
      */
-    Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
 
 
     /*
@@ -133,7 +133,7 @@ public class MapManager : MonoBehaviour
 
             //dynamicStructs[structData.id].GetComponent<Fadable>().hide();
             //dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
-            //Destroy(dynamicStructs[structData.id]);
+            Destroy(dynamicStructs[structData.id]);
             dynamicStructs.Remove(structData.id);
 
         }

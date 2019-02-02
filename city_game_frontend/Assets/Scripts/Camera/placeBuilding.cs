@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Sockets;
+using UnityEngine.EventSystems;
 
 public class placeBuilding : MonoBehaviour {
 
     public GameObject groundPlane;
     public GameObject placableThing;
+    public int currentTier;
 
     public static placeBuilding Instance;
 
@@ -18,7 +20,6 @@ public class placeBuilding : MonoBehaviour {
     private void Awake()
     {
         placeBuilding.Instance = this;
-
     }
 
     private void OnEnable()
@@ -26,17 +27,43 @@ public class placeBuilding : MonoBehaviour {
         placableThing.GetComponent<Renderer>().material.shader = transparentShader;   
     }
 
+    public void setStructureToBuild(GameObject structure, int tier)
+    {
+        if (placableThing != null)
+            Destroy(placableThing);
+
+        placableThing = Instantiate(structure);
+        placableThing.transform.position = new Vector3(2000, 0, 2000);
+
+        setShader(transparentShader);
+
+        currentTier = tier;
+    }
+
+    private void setShader(Shader shaderToSet)
+    {
+        foreach(Renderer r in placableThing.GetComponentsInChildren<Renderer>())
+        {
+            r.material.shader = shaderToSet;
+        }
+        foreach (Renderer r in placableThing.GetComponents<Renderer>())
+        {
+            r.material.shader = shaderToSet;
+        }
+        
+    }
+
 
     [ContextMenu("Confirm placement")]
     public void confirmBuildingPlacement()
     {
-        placableThing.GetComponent<Renderer>().material.shader = normalShader;
+        setShader(normalShader);
 
         PlaceBuildingRequestData newBuildingData = new PlaceBuildingRequestData(
             Utils.GameCoordinateXToLatitude(placableThing.transform.position.x),
             Utils.GameCoordinateZToLongitude(placableThing.transform.position.z),
             placableThing.transform.rotation.eulerAngles.y,
-            1 // TODO: MAKE TIER MATTER
+            this.currentTier
         );
 
         ServerSocket.Instance.send(this.gameObject, JsonUtility.ToJson(newBuildingData), structurePlacementCallback);
@@ -56,8 +83,10 @@ public class placeBuilding : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        //if (EventSystem.current.IsPointerOverGameObject())
+            //return;
 
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
+            if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             
 
@@ -76,11 +105,11 @@ public class placeBuilding : MonoBehaviour {
         }
 
         // Move this object to the position clicked by the mouse.
-        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if (Input.touchCount == 2)
         {
 
             //Touch touch = Input.GetTouch(0);
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);  //(touch.position);// 
+            Ray ray = Camera.main.ScreenPointToRay((Input.GetTouch(0).position + Input.GetTouch(1).position) / 2) ;  //(touch.position);// 
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, 100.0f))

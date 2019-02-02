@@ -1,31 +1,16 @@
 fileFormatVersion: 2
-guid: f9e2773fa1112ce43abd090538bcd169
+guid: 01f80d3950c8b7342bf4b42bf9a47ca5
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Cone
-    100002: Icosphere
-    100004: Icosphere_001
-    100006: //RootNode
-    400000: Cone
-    400002: Icosphere
-    400004: Icosphere_001
-    400006: //RootNode
-    2100000: Material_003
-    2100002: Material_001
-    2100004: Material_002
-    2300000: Cone
-    2300002: Icosphere
-    2300004: Icosphere_001
-    3300000: Cone
-    3300002: Icosphere
-    3300004: Icosphere_001
-    4300000: Cone
-    4300002: Icosphere_001
-    4300004: Icosphere
-    7400000: Default Take
-    9500000: //RootNode
-    2186277476908879412: ImportLogs
+    100000: default
+    100002: //RootNode
+    400000: default
+    400002: //RootNode
+    2100000: defaultMat
+    2300000: default
+    3300000: default
+    4300000: default
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -101,7 +86,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
