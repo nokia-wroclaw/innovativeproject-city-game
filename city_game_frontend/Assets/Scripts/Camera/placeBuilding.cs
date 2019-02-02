@@ -7,6 +7,7 @@ public class placeBuilding : MonoBehaviour {
 
     public GameObject groundPlane;
     public GameObject placableThing;
+    public int currentTier;
 
     public static placeBuilding Instance;
 
@@ -33,6 +34,8 @@ public class placeBuilding : MonoBehaviour {
         placableThing = Instantiate(structure);
         placableThing.transform.position = new Vector3(2000, 0, 2000);
         placableThing.GetComponent<Renderer>().material.shader = transparentShader;
+
+        currentTier = tier;
     }
 
 
@@ -45,7 +48,7 @@ public class placeBuilding : MonoBehaviour {
             Utils.GameCoordinateXToLatitude(placableThing.transform.position.x),
             Utils.GameCoordinateZToLongitude(placableThing.transform.position.z),
             placableThing.transform.rotation.eulerAngles.y,
-            1 // TODO: MAKE TIER MATTER
+            this.currentTier
         );
 
         ServerSocket.Instance.send(this.gameObject, JsonUtility.ToJson(newBuildingData), structurePlacementCallback);
