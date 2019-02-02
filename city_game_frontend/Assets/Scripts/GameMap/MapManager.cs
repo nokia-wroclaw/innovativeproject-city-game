@@ -246,7 +246,7 @@ public class MapManager : MonoBehaviour
         //TODO: FIX THE SCALING
         //structureObject.transform.localScale = new Vector3(100, 100, 100);
 
-        structureObject.transform.SetParent(this.gameObject.transform);
+        //structureObject.transform.SetParent(this.gameObject.transform);
 
         dynamicStructs.Add(structData.id, structureObject);
     }
@@ -264,7 +264,7 @@ public class MapManager : MonoBehaviour
 
 
         var emptyChunk = new GameObject("Chunk");
-        emptyChunk.transform.SetParent(this.gameObject.transform);
+        //emptyChunk.transform.SetParent(this.gameObject.transform);
         chunks.Add(key, emptyChunk);
 
         //TODO: ENABLE THIS BACK AFTER WE HAVE TEXTURES
