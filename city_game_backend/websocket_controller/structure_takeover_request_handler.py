@@ -1,9 +1,12 @@
-from .message_utils import require_message_content, error_message, SUCCESS_MESSAGE
+from websocket_controller.message_utils import require_message_content, error_message, SUCCESS_MESSAGE
 from game_map.models import Structure
 from game_map.utils import notify_dynamic_map_structure_change
 from player_manager.models import Player
+from city_game_backend import CONSTANTS
+from websocket_controller.WebsocketRoutes import WebsocketRoutes
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST)
 @require_message_content(
     ('id', int)
 )
@@ -13,12 +16,17 @@ def handle_structure_takeover_request(message, websocket) -> str:
     TODO: SECURE THIS.. but focus on more important stuff first (like game UI)
     """
     id = message['id']
+    new_potential_owner: Player = Player.get_by_id(websocket.player_id)
+
     structure_to_claim: Structure = Structure.objects.filter(
         id=id
     ).first()
 
     if structure_to_claim is None:
         return error_message(f'No struct with a given id: {id}')
+
+    if structure_to_claim.tier > new_potential_owner.level:
+        return error_message(f'Level to low :(')
 
     structure_to_claim.taken_over = True
     structure_to_claim.owner = Player.get_by_id(websocket.player_id) 

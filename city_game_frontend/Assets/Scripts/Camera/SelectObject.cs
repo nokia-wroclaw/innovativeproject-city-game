@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class SelectObject : MonoBehaviour
 {
-    Collider coll;
     GameObject anchor;
     public GameObject playerCharacter;
     public static SelectObject Instance;
@@ -18,7 +17,6 @@ public class SelectObject : MonoBehaviour
 
     void Start()
     {
-        coll = GetComponent<Collider>();
         anchor = GameObject.Find("/CameraAnchor/MainCamera");
     }
 
@@ -32,10 +30,10 @@ public class SelectObject : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);  //(touch.position);// 
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100.0f))
+            if (Physics.Raycast(ray, out hit, 500.0f))
             {
                 //transform.position = ray.GetPoint(100.0f);
-                //Debug.Log("Clicked");
+                Debug.Log("Clicked " + hit.collider.gameObject.name);
 
 
                 

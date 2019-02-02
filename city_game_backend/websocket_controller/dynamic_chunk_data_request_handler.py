@@ -1,11 +1,14 @@
 from game_map.models import Structure, Chunk
-from .message_utils import round_down, error_message, require_message_content
+from websocket_controller.message_utils import round_down, error_message, require_message_content
 from city_game_backend import CONSTANTS
 from game_map.utils import struct_2_dict
 # from django.core import serializers
 import json
+from websocket_controller.WebsocketRoutes import WebsocketRoutes
+from city_game_backend import CONSTANTS
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST)
 @require_message_content(
     ('lat', float),
     ('lon', float)

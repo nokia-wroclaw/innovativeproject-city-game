@@ -1,0 +1,234 @@
+fileFormatVersion: 2
+guid: 6478c069695d21345993eb0c08576948
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: BUDOWLA
+    100002: KILOF
+    100004: KILOF_UCHWYT
+    100006: KILOF_UCHWYT_001
+    100008: KILOFG
+    100010: KILOFG_001
+    100012: KILOFG_002
+    100014: kolkadowozkatenadole
+    100016: kolobudynku
+    100018: KRYSZTALY
+    100020: KRYSZTALYwystajacezwozka
+    100022: kulkinawozku
+    100024: metalowedowozka
+    100026: //RootNode
+    100028: PLOTEK
+    100030: PLOTEK_GWOZDIE
+    100032: podwozie
+    100034: SZYNY
+    100036: SZYNY_DETAL
+    100038: takieokraglewystajacezwozka
+    100040: TORY
+    100042: towsrodkuwozka
+    100044: WJAZD
+    100046: wozek
+    100048: wozek-drewno
+    400000: BUDOWLA
+    400002: KILOF
+    400004: KILOF_UCHWYT
+    400006: KILOF_UCHWYT_001
+    400008: KILOFG
+    400010: KILOFG_001
+    400012: KILOFG_002
+    400014: kolkadowozkatenadole
+    400016: kolobudynku
+    400018: KRYSZTALY
+    400020: KRYSZTALYwystajacezwozka
+    400022: kulkinawozku
+    400024: metalowedowozka
+    400026: //RootNode
+    400028: PLOTEK
+    400030: PLOTEK_GWOZDIE
+    400032: podwozie
+    400034: SZYNY
+    400036: SZYNY_DETAL
+    400038: takieokraglewystajacezwozka
+    400040: TORY
+    400042: towsrodkuwozka
+    400044: WJAZD
+    400046: wozek
+    400048: wozek-drewno
+    2100000: Material_003
+    2100002: Material_011
+    2100004: Material_010
+    2100006: Material_015
+    2100008: Material_014
+    2100010: Material_012
+    2100012: Material_013
+    2100014: Material_008
+    2100016: Material_009
+    2100018: Material_018
+    2100020: Material_019
+    2100022: Material_017
+    2100024: Material_021
+    2100026: Material_022
+    2100028: Material_016
+    2100030: Material_001
+    2100032: Material_002
+    2100034: Material
+    2100036: Material_007
+    2100038: Material_006
+    2100040: Material_000
+    2100042: Material_004
+    2100044: Material_005
+    2300000: BUDOWLA
+    2300002: KILOF
+    2300004: KILOF_UCHWYT
+    2300006: KILOF_UCHWYT_001
+    2300008: KILOFG
+    2300010: KILOFG_001
+    2300012: KILOFG_002
+    2300014: kolkadowozkatenadole
+    2300016: kolobudynku
+    2300018: KRYSZTALY
+    2300020: KRYSZTALYwystajacezwozka
+    2300022: kulkinawozku
+    2300024: metalowedowozka
+    2300026: PLOTEK
+    2300028: PLOTEK_GWOZDIE
+    2300030: podwozie
+    2300032: SZYNY
+    2300034: SZYNY_DETAL
+    2300036: takieokraglewystajacezwozka
+    2300038: TORY
+    2300040: towsrodkuwozka
+    2300042: WJAZD
+    2300044: wozek
+    2300046: wozek-drewno
+    3300000: BUDOWLA
+    3300002: KILOF
+    3300004: KILOF_UCHWYT
+    3300006: KILOF_UCHWYT_001
+    3300008: KILOFG
+    3300010: KILOFG_001
+    3300012: KILOFG_002
+    3300014: kolkadowozkatenadole
+    3300016: kolobudynku
+    3300018: KRYSZTALY
+    3300020: KRYSZTALYwystajacezwozka
+    3300022: kulkinawozku
+    3300024: metalowedowozka
+    3300026: PLOTEK
+    3300028: PLOTEK_GWOZDIE
+    3300030: podwozie
+    3300032: SZYNY
+    3300034: SZYNY_DETAL
+    3300036: takieokraglewystajacezwozka
+    3300038: TORY
+    3300040: towsrodkuwozka
+    3300042: WJAZD
+    3300044: wozek
+    3300046: wozek-drewno
+    4300000: KRYSZTALYwystajacezwozka
+    4300002: takieokraglewystajacezwozka
+    4300004: towsrodkuwozka
+    4300006: kolkadowozkatenadole
+    4300008: kulkinawozku
+    4300010: podwozie
+    4300012: metalowedowozka
+    4300014: wozek-drewno
+    4300016: wozek
+    4300018: SZYNY_DETAL
+    4300020: SZYNY
+    4300022: TORY
+    4300024: PLOTEK_GWOZDIE
+    4300026: PLOTEK
+    4300028: WJAZD
+    4300030: KRYSZTALY
+    4300032: kolobudynku
+    4300034: BUDOWLA
+    4300036: KILOF
+    4300038: KILOF_UCHWYT_001
+    4300040: KILOF_UCHWYT
+    4300042: KILOFG_002
+    4300044: KILOFG_001
+    4300046: KILOFG
+    7400000: Default Take
+    9500000: //RootNode
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

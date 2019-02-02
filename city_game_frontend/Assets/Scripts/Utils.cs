@@ -28,6 +28,5 @@ public class Utils {
     public static float GameCoordinateZToLongitude(float z)
     {
         return z / MapManager.MAP_SCALE_FACTOR + MapManager.LONGITUDE_OFFSET;
-        return MapManager.LONGITUDE_OFFSET - z / MapManager.MAP_SCALE_FACTOR;
     }
 }

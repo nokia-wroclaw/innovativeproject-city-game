@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
     public float current_chunk_lat = -10000;
     public float current_chunk_lon = -10000;
 
+    public bool isLoggedIn = false;
+
     // TEMPORARY LOCATION INDICATOR
     public GameObject locationIndicator;
     SmoothMovement locationIndicatorMovementScript;
@@ -70,12 +72,21 @@ public class GameManager : MonoBehaviour {
         {
             MapManager.Instance.handleGuildMemberLocationUpdate(responseData.message);
         }
+
+
+        if (responseData.specialMessageID == Const.SPECIAL_MESSAGE_GUILD_INVITE_NOTIFICATION)
+        {
+            Debug.Log("invite received!");
+            GuildInvite inviteData = JsonUtility.FromJson<GuildInvite>(responseData.message);
+            Debug.Log(inviteData.guild_name);
+            //TUTAJ KRZYŚ MOŻE HANDLOWAĆ UI
+        }
     }
 
     
     public void OnLogin()
     {
-        
+        isLoggedIn = true;
     }
 
     public void OnLocationChanged(float lon, float lat, float rotation)
@@ -98,7 +109,7 @@ public class GameManager : MonoBehaviour {
         }
         else 
         {
-            Debug.Log("Location changed");
+            //Debug.Log("Location changed");
 
             current_chunk_lat = roundDownToChunkCords(lat);
             current_chunk_lon = roundDownToChunkCords(lon);

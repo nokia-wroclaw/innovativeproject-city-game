@@ -8,8 +8,25 @@ public class MapManager : MonoBehaviour
 
     public Material roadMaterial;
 
-    public GameObject orePrefab;
-    public GameObject minePrefab;
+    public GameObject ore_1_small;
+    public GameObject ore_2_small;
+    public GameObject ore_3_small;
+
+    public GameObject ore_1_mid;
+    public GameObject ore_2_mid;
+    public GameObject ore_3_mid;
+
+    public GameObject mine_1_small;
+    public GameObject mine_2_small;
+    public GameObject mine_3_small;
+
+    public GameObject mine_1_mid;
+    public GameObject mine_2_mid;
+    public GameObject mine_3_mid;
+
+
+
+
     public GameObject otherPlayerModel;
     public GameObject playerPlacedStructPrefab;
 
@@ -35,7 +52,7 @@ public class MapManager : MonoBehaviour
      * Dynamic struct that will change during runtime are stored separately
      * the dictionary key is the ID of the struct
      */
-    Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
 
 
     /*
@@ -86,6 +103,7 @@ public class MapManager : MonoBehaviour
         //Debug.Log(data);
         var chunkData = JsonUtility.FromJson<Assets.ChunkData>(data);
 
+
         //Debug.Log(chunkData.latitude_lower_bound);
 
         sender.GetComponent<MapManager>().drawChunk(chunkData);
@@ -97,8 +115,8 @@ public class MapManager : MonoBehaviour
      */
     public Request.callbackFunc structsDataCallbackFunction = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
-        Debug.LogWarning("DYNAMIC STRUCTS UPDATE");
-        Debug.Log(data);
+        //Debug.LogWarning("DYNAMIC STRUCTS UPDATE");
+        //Debug.Log(data);
         DynamicStructsResponseData structsData = JsonUtility.FromJson<DynamicStructsResponseData>(data);
 
         foreach (var structureData in structsData.structures)
@@ -113,9 +131,9 @@ public class MapManager : MonoBehaviour
         if (dynamicStructs.ContainsKey(structData.id))
         {
 
-            dynamicStructs[structData.id].GetComponent<Fadable>().hide();
-            dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
-            //Destroy(dynamicStructs[structData.id]);
+            //dynamicStructs[structData.id].GetComponent<Fadable>().hide();
+            //dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
+            Destroy(dynamicStructs[structData.id]);
             dynamicStructs.Remove(structData.id);
 
         }
@@ -130,25 +148,81 @@ public class MapManager : MonoBehaviour
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
             */
 
-
+        GameObject structureToSpawn = null;
         GameObject structureObject = null;
 
+        
         if(structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
         {
-            structureObject = Instantiate(playerPlacedStructPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
+            structureToSpawn = playerPlacedStructPrefab;
         }
+
         else if (structData.taken_over)
         {
-            structureObject = Instantiate(minePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Debug.Log("Creating a taken over object!");
-
+            if(structData.tier == 1)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = mine_1_small;
+                } else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = mine_2_small;
+                } else
+                {
+                    structureToSpawn = mine_3_small;
+                }
+            } else if (structData.tier == 2)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = mine_1_mid;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = mine_2_mid;
+                }
+                else
+                {
+                    structureToSpawn = mine_3_mid;
+                }
+            }
+            
         }
         else
         {
-            structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            Debug.Log("Creating a free object!");
+            if (structData.tier == 1)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = ore_1_small;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = ore_2_small;
+                }
+                else
+                {
+                    structureToSpawn = ore_3_small;
+                }
+            }
+            else if (structData.tier == 2)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = ore_1_mid;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = ore_2_mid;
+                }
+                else
+                {
+                    structureToSpawn = ore_3_mid;
+                }
+            }
         }
+
+        structureObject = Instantiate(structureToSpawn, new Vector3(0, 0, 0), Quaternion.identity);
 
 
         // Save the object's data as one of the objects components
@@ -156,12 +230,11 @@ public class MapManager : MonoBehaviour
         structureObjectScript.data = structData;
 
         
-        structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
+        //structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
 
-        Debug.LogError(structData.rotation);
-        Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
+        //Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
 
-        structureObject.GetComponent<Fadable>().show();
+        //structureObject.GetComponent<Fadable>().show();
 
 
         structureObject.transform.position = new Vector3(
@@ -171,7 +244,9 @@ public class MapManager : MonoBehaviour
         );
 
         //TODO: FIX THE SCALING
-        structureObject.transform.localScale = new Vector3(100, 100, 100);
+        //structureObject.transform.localScale = new Vector3(100, 100, 100);
+
+        //structureObject.transform.SetParent(this.gameObject.transform);
 
         dynamicStructs.Add(structData.id, structureObject);
     }
@@ -189,6 +264,7 @@ public class MapManager : MonoBehaviour
 
 
         var emptyChunk = new GameObject("Chunk");
+        //emptyChunk.transform.SetParent(this.gameObject.transform);
         chunks.Add(key, emptyChunk);
 
         //TODO: ENABLE THIS BACK AFTER WE HAVE TEXTURES
@@ -272,13 +348,12 @@ public class MapManager : MonoBehaviour
         {
 
             DynamicStruct targetData = target.GetComponent<DynamicStruct>();
-            Debug.Log(targetData.data.tier);
+            //Debug.Log(targetData.data.tier);
             return targetData.data;
 
         }
-        catch (System.Exception e)
+        catch (System.Exception)
         {
-            //Debug.LogError(e);
             return null;
         }
     }

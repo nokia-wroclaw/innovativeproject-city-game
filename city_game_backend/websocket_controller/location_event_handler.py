@@ -1,13 +1,17 @@
 import logging
-from .message_utils import SUCCESS_MESSAGE, require_message_content
+from websocket_controller.message_utils import SUCCESS_MESSAGE, require_message_content
 from player_manager.models import ActivePlayer
 from guild_manager.utils import notify_players_about_guild_member_position_change
+
+from websocket_controller.WebsocketRoutes import WebsocketRoutes
+from city_game_backend import CONSTANTS
 
 logger = logging.getLogger(__name__)
 
 MAP_DATA_MESSAGE_TYPE = 'map_data'
 
 
+@WebsocketRoutes.route(CONSTANTS.MESSAGE_TYPE_LOCATION_EVENT)
 @require_message_content(
     ('lat', float),
     ('lon', float),

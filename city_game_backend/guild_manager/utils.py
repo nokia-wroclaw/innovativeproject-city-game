@@ -1,6 +1,5 @@
 from player_manager.models import ActivePlayer
 from player_manager.models import Player
-from .models import Guild
 from websocket_controller.active_connections_storage import ActiveConnectionsStorage
 import json
 from city_game_backend import CONSTANTS

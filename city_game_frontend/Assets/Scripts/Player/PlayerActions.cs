@@ -19,6 +19,11 @@ public class PlayerActions : MonoBehaviour {
 
     public void sendStructureTakeoverRequest(int structureID)
     {
+        EffectsManager.Instance.spawnEffect(
+            MapManager.Instance.dynamicStructs[structureID].transform.position,
+            5
+            );
+
         ServerSocket.Instance.send(
             gameObject,
             JsonUtility.ToJson(
@@ -27,21 +32,6 @@ public class PlayerActions : MonoBehaviour {
             structureTakeoverCallback);
     }
 
-
-    public void sendCreateGuildRequest(string guildName)
-    {
-        ServerSocket.Instance.send(
-            gameObject,
-            JsonUtility.ToJson(
-                new GuildCreationRequestData(guildName)
-                ), guildCreationCallback);
-    }
-
-    public Request.callbackFunc guildCreationCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
-    {
-        Debug.Log("Guild created: " + data);
-    });
-
     public void enterBuildingMode()
     {
         cameraFollower.Instance.enabled = false;
@@ -49,11 +39,17 @@ public class PlayerActions : MonoBehaviour {
         placeBuilding.Instance.enabled = true;
     }
 
-    public void leaveBuildingMode() {
+    public void leaveBuildingMode()
+    {
+        placeBuilding.Instance.enabled = false;
         cameraFollower.Instance.enabled = true;
         SelectObject.Instance.enabled = true;
-        placeBuilding.Instance.enabled = false;
+
+        Destroy(placeBuilding.Instance.placableThing);
     }
+
+
+    
 
     // Use this for initialization
     void Start () {

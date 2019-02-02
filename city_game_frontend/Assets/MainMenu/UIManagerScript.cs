@@ -8,20 +8,18 @@ public class UIManagerScript : MonoBehaviour {
 
     public Text loginText;
     public Text passwordText;
-    public static string constLoginKey, constPasswordKey;
+    public static string CONST_LOGIN_KEY = "login", CONST_PASSWORD_KEY = "pass";
     public GameObject loginPanel;
     //public Button loginButton;
 
     public void Login()
     {
-        if (loginText == null && passwordText == null)
+        if (loginText == null || passwordText == null)
             Debug.Log("Login and password needed!");
         else
         {
-            constLoginKey = loginText.text;
-            constPasswordKey = passwordText.text;
-            PlayerPrefs.SetString("Login", constLoginKey);
-            PlayerPrefs.SetString("Password", constPasswordKey);
+            PlayerPrefs.SetString(CONST_LOGIN_KEY, loginText.text);
+            PlayerPrefs.SetString(CONST_PASSWORD_KEY, passwordText.text);
         }
 
         StartTheGame();

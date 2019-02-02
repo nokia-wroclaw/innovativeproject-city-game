@@ -6,8 +6,8 @@ import json
 
 import logging
 from city_game_backend.CONSTANTS import CHUNK_SIZE
-logger = logging.getLogger(__name__)
 
+logger = logging.getLogger(__name__)
 
 OVERPASS_API_URL = 'https://lz4.overpass-api.de/api/interpreter'
 STANDARD_QUERY = '''
@@ -24,7 +24,6 @@ way
 out;
 
 '''
-
 
 def perform_overpass_query(query: str) -> str:
     """

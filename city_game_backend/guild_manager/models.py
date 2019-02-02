@@ -36,3 +36,29 @@ class Guild(models.Model):
 
         player.guild = None
         player.save()
+
+
+class GuildInvite(models.Model):
+    receiver = models.ForeignKey('player_manager.Player', on_delete=models.CASCADE)
+    guild = models.ForeignKey(Guild, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.receiver.nickname}\'s invite to {self.guild.guild_name}'
+
+    @staticmethod
+    def get_invites_of_player(player):
+        return GuildInvite.objects.filter(
+            receiver=player
+        ).all()
+
+    def accept(self):
+        self.guild.add_player(self.receiver)
+
+    def deny(self):
+        self.delete()
+
+    @staticmethod
+    def get_by_id(invite_id):
+        return GuildInvite.objects.filter(
+            id=invite_id
+        ).first()
