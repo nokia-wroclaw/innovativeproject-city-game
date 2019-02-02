@@ -3813,12 +3813,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0b8fbc8c1d36664ca0dc0ffc07065ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guildPanel: {fileID: 0}
-  invitationsPanel: {fileID: 0}
+  guildPanel: {fileID: 1415946735}
+  invitationsPanel: {fileID: 1082221567}
   itemPrefab: {fileID: 1627943238}
   invitationTile: {fileID: 1721624400}
   invitesGrid: {fileID: 1412097908}
-  membersGrid: {fileID: 0}
+  membersGrid: {fileID: 1692231622}
 --- !u!4 &657135906
 Transform:
   m_ObjectHideFlags: 0

@@ -43,7 +43,7 @@ public class PanelsContainerHandler : MonoBehaviour {
     public void guildPanelOn()
     {
         showContainer();
-        GuildInvitesHandler.Instance.start();
+        GuildInvitesHandler.Instance.refresh();
         closeAllPanelsExcept(guildPanel);
     }
 
