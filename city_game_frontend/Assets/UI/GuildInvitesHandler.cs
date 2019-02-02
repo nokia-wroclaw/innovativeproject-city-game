@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GuildInvitesHandler : MonoBehaviour {
-    //TODO make double lists of invites && members disappear
-    //TODO refresh window after invite acceptance
 
     public static GuildInvitesHandler Instance;
 
@@ -15,6 +13,8 @@ public class GuildInvitesHandler : MonoBehaviour {
     public GameObject guildPanel, invitationsPanel;
     public GameObject itemPrefab, invitationTile, invitesGrid, membersGrid;
     private int itemCount;
+
+    public bool wasAlreadyStarted = false;
 
     private void Awake()
     {
@@ -44,7 +44,7 @@ public class GuildInvitesHandler : MonoBehaviour {
     {
         int inviteId = PlayerDataManager.Instance.currentPlayerData.invites.Find(x => x.guild_name == guildName.text).invite_id;
         GuildActions.Instance.acceptInvite(inviteId);
-        start();
+        startGuildPanel();
     }
 
     public void invitePlayerByName(InputField inputField)
@@ -252,16 +252,37 @@ public class GuildInvitesHandler : MonoBehaviour {
         }
     }
 
-    public void start()
+    public void refresh()
     {
+        if (wasAlreadyStarted)
+        {
+            if (PlayerDataManager.Instance.currentPlayerData.guild == "")
+            {
+                guildPanel.SetActive(false);
+                invitationsPanel.SetActive(true);
+                updateInvitesList();
+            }
+            else
+            {
+                guildPanel.SetActive(true);
+                invitationsPanel.SetActive(false);
+                updatePlayersInPartyList();
+            }
+        }
+        else
+        {
+
+            wasAlreadyStarted = true;
+            Start();
+        }
+    }
+
+    void Start()
+    {
+        invitationTile.SetActive(false);
         if (PlayerDataManager.Instance.currentPlayerData.guild == "")
             startInvitationPanel();
         else
             startGuildPanel();
-    }
-
-    private void Start()
-    {
-        invitationTile.SetActive(false);
     }
 }
