@@ -167,7 +167,7 @@ public class GuildInvitesHandler : MonoBehaviour {
 
         getPlayersInPartyListFromServer();
 
-        foreach (Transform g in invitesGrid.transform)
+        foreach (Transform g in membersGrid.transform)
             GameObject.Destroy(g.gameObject);
 
         RectTransform rowTransform = itemPrefab.GetComponent<RectTransform>();
@@ -215,6 +215,9 @@ public class GuildInvitesHandler : MonoBehaviour {
         getInvitationsListFromServer();
 
         invitesPending.Sort();
+
+        foreach (Transform g in invitesGrid.transform)
+            GameObject.Destroy(g.gameObject);
 
         RectTransform rowTransform = invitationTile.GetComponent<RectTransform>();
         RectTransform invitesGridTransform = invitesGrid.GetComponent<RectTransform>();
