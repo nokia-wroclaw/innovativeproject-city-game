@@ -33,9 +33,23 @@ public class placeBuilding : MonoBehaviour {
 
         placableThing = Instantiate(structure);
         placableThing.transform.position = new Vector3(2000, 0, 2000);
-        placableThing.GetComponent<Renderer>().material.shader = transparentShader;
+
+        setShader();
 
         currentTier = tier;
+    }
+
+    private void setShader()
+    {
+        foreach(Renderer r in placableThing.GetComponentsInChildren<Renderer>())
+        {
+            r.material.shader = transparentShader;
+        }
+        foreach (Renderer r in placableThing.GetComponents<Renderer>())
+        {
+            r.material.shader = transparentShader;
+        }
+        
     }
 
 
