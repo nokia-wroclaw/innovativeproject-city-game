@@ -113,27 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &46958246 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 100000, guid: 01f80d3950c8b7342bf4b42bf9a47ca5, type: 3}
-  m_PrefabInternal: {fileID: 193155123}
---- !u!114 &46958248
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 46958246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6904a0395c7e2fa4ba8a66ce3fd1ce2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  intensity: 10
-  range: 10
-  fadeInOutShader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
-  defaultShader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
-  _fade: 0
-  shader: 0
 --- !u!1 &99828530 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1864861097570450, guid: 873ef78214b83214e979c7253973407a,
@@ -1012,6 +991,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1123197788 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 100002, guid: 01f80d3950c8b7342bf4b42bf9a47ca5, type: 3}
+  m_PrefabInternal: {fileID: 193155123}
+--- !u!114 &1123197789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1123197788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6904a0395c7e2fa4ba8a66ce3fd1ce2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 10
+  range: 10
+  fadeInOutShader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
+  defaultShader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
+  _fade: 0
+  shader: 0
 --- !u!1 &1162266941
 GameObject:
   m_ObjectHideFlags: 0
