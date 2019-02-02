@@ -18,12 +18,21 @@ public class placeBuilding : MonoBehaviour {
     private void Awake()
     {
         placeBuilding.Instance = this;
-
     }
 
     private void OnEnable()
     {
         placableThing.GetComponent<Renderer>().material.shader = transparentShader;   
+    }
+
+    public void setStructureToBuild(GameObject structure, int tier)
+    {
+        if (placableThing != null)
+            Destroy(placableThing);
+
+        placableThing = Instantiate(structure);
+        placableThing.transform.position = new Vector3(2000, 0, 2000);
+        placableThing.GetComponent<Renderer>().material.shader = transparentShader;
     }
 
 
