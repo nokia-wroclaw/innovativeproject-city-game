@@ -39,12 +39,13 @@ public class PlayerActions : MonoBehaviour {
         placeBuilding.Instance.enabled = true;
     }
 
-    public void leaveBuildingMode() {
+    public void leaveBuildingMode()
+    {
+        placeBuilding.Instance.enabled = false;
         cameraFollower.Instance.enabled = true;
         SelectObject.Instance.enabled = true;
 
         Destroy(placeBuilding.Instance.placableThing);
-        placeBuilding.Instance.enabled = false;
     }
 
 
