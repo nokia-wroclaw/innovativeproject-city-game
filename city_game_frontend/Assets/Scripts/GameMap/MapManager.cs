@@ -186,16 +186,40 @@ public class MapManager : MonoBehaviour
                     structureToSpawn = mine_3_mid;
                 }
             }
-               
-
-            structureObject = Instantiate(structureToSpawn, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
             
         }
         else
         {
-            Debug.Log("ore object created");
-            structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //Debug.Log("Creating a free object!");
+            if (structData.tier == 1)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = ore_1_small;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = ore_2_small;
+                }
+                else
+                {
+                    structureToSpawn = ore_3_small;
+                }
+            }
+            else if (structData.tier == 2)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = ore_1_mid;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = ore_2_mid;
+                }
+                else
+                {
+                    structureToSpawn = ore_3_mid;
+                }
+            }
         }
 
         structureObject = Instantiate(structureToSpawn, new Vector3(0, 0, 0), Quaternion.identity);
@@ -222,6 +246,8 @@ public class MapManager : MonoBehaviour
         //TODO: FIX THE SCALING
         //structureObject.transform.localScale = new Vector3(100, 100, 100);
 
+        structureObject.transform.SetParent(this.gameObject.transform);
+
         dynamicStructs.Add(structData.id, structureObject);
     }
 
@@ -238,6 +264,7 @@ public class MapManager : MonoBehaviour
 
 
         var emptyChunk = new GameObject("Chunk");
+        emptyChunk.transform.SetParent(this.gameObject.transform);
         chunks.Add(key, emptyChunk);
 
         //TODO: ENABLE THIS BACK AFTER WE HAVE TEXTURES

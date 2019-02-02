@@ -292,7 +292,7 @@ GameObject:
   - component: {fileID: 4673726956506032}
   - component: {fileID: 65497687747899010}
   m_Layer: 0
-  m_Name: ore_1_mid_occupied
+  m_Name: mine_1_mid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
