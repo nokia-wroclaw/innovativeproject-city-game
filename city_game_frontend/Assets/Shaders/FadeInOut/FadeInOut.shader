@@ -19,6 +19,12 @@
 			}
 			LOD 100
 
+			Pass{
+				ZWrite On
+				ColorMask 0
+			}
+
+
 			CGPROGRAM
 			#pragma surface surf Lambert alpha:blend
 			#pragma target 3.0

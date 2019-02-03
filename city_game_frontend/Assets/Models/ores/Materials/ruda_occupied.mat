@@ -68,6 +68,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _BumpScale: 1
+    - _ColorMask: 15
     - _Cutoff: 0
     - _DetailNormalMapScale: 1
     - _Direction: 0
@@ -95,7 +96,13 @@ Material:
     - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _StartTime: 14.28
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
     - _UVSec: 0
+    - _UseUIAlphaClip: 0
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 0}
@@ -103,7 +110,7 @@ Material:
     - _DissolveStart: {r: 1, g: 1, b: 1, a: 1}
     - _EdgeColor: {r: 1, g: 0, b: 0, a: 1}
     - _Emission: {r: 0.38679248, g: 0, b: 0.28668153, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.38679248, g: 0, b: 0.28668153, a: 1}
     - _EmmisionColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmmisionColorH: {r: 0, g: 0, b: 0, a: 1}
     - _EmmisionColorL: {r: 0.6037736, g: 0, b: 0.44680384, a: 1}
