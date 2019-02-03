@@ -10,7 +10,7 @@ public class GuildInvitesHandler : MonoBehaviour {
     private List<string> playersInParty = null;
     private List<string> invitesPending = null;
 
-    public GameObject guildPanel, invitationsPanel;
+    public GameObject guildPanel, invitationsPanel, createGuildPanel;
     public GameObject itemPrefab, invitationTile, invitesGrid, membersGrid;
     private int itemCount;
 
@@ -19,6 +19,25 @@ public class GuildInvitesHandler : MonoBehaviour {
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void openCreateGuildPanel()
+    {
+        createGuildPanel.SetActive(true);
+    }
+
+    public void closeCreateGuildPanel()
+    {
+        createGuildPanel.SetActive(false);
+    }
+
+    public void createGuild(InputField guildNameInputField)
+    {
+        if (guildNameInputField.text != "")
+        {
+            GuildActions.Instance.sendCreateGuildRequest(guildNameInputField.text);
+            createGuildPanel.SetActive(false);
+        }
     }
 
     public void getPlayersInPartyListFromServer()
@@ -283,6 +302,7 @@ public class GuildInvitesHandler : MonoBehaviour {
     void Start()
     {
         invitationTile.SetActive(false);
+        createGuildPanel.SetActive(false);
         if (PlayerDataManager.Instance.currentPlayerData.guild == "")
             startInvitationPanel();
         else
