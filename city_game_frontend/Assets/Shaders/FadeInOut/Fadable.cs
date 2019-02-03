@@ -12,6 +12,7 @@ public class Fadable : MonoBehaviour
     
     const float animationTime = 5f; // in seconds
 
+
     public Shader fadeInOutShader;// = null;
     public Shader defaultShader;// = null;
 
@@ -165,6 +166,7 @@ public class Fadable : MonoBehaviour
     {
         init();
 
+
         Renderer renderer = GetComponent<Renderer>();
         Vector4 time = Shader.GetGlobalVector("_Time");
 
@@ -175,7 +177,7 @@ public class Fadable : MonoBehaviour
             
 
             renderer.material.SetFloat("_StartTime", time.y + delay);
-            renderer.material.SetFloat("_Duration", animationTime);
+            renderer.material.SetFloat("_Duration", animationTime * 0.8F);
             renderer.material.SetFloat("_Direction", 0);
         }
         visible = false;
@@ -187,14 +189,14 @@ public class Fadable : MonoBehaviour
 
             //set params in shader
             r.material.SetFloat("_StartTime", time.y + delay);
-            r.material.SetFloat("_Duration", animationTime);
+            r.material.SetFloat("_Duration", animationTime * 0.8F);
             r.material.SetFloat("_Direction", 0);
         }
 
 
 
         //switch shader to 
-        Invoke("swichShader_fadeInOut", animationTime);
+        Invoke("swichShader_fadeInOut", animationTime * 0.8F);
     }
 
     public void destroyAfterTime(float time = animationTime) // time in seconds

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Sockets;
+using System;
 
 public class MapManager : MonoBehaviour
 {
@@ -128,13 +129,29 @@ public class MapManager : MonoBehaviour
 
     void addOrUpdateStruct(DynamicStructData structData)
     {
+        bool cameraShouldChangeFocus = false;
+
         if (dynamicStructs.ContainsKey(structData.id))
         {
 
-            //dynamicStructs[structData.id].GetComponent<Fadable>().hide();
-            //dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
-            Destroy(dynamicStructs[structData.id]);
+            dynamicStructs[structData.id].gameObject.transform.localScale = new Vector3(0.99F, 0.99F, 0.99F);
+
+            try { 
+            dynamicStructs[structData.id].GetComponent<Fadable>().hide();
+            dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
+
+            } catch(Exception)
+            {
+                Debug.LogError(dynamicStructs[structData.id].name + "'s fadable component not set up!");
+            }
+
+
+            if (dynamicStructs[structData.id] == cameraFollower.Instance.getObjectToFollow())
+                cameraShouldChangeFocus = true;
+
+            //Destroy(dynamicStructs[structData.id]);
             dynamicStructs.Remove(structData.id);
+
 
         }
 
@@ -151,15 +168,15 @@ public class MapManager : MonoBehaviour
         GameObject structureToSpawn = null;
         GameObject structureObject = null;
 
-        
-        if(structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
+
+        if (structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
         {
             structureToSpawn = playerPlacedStructPrefab;
         }
 
         else if (structData.taken_over)
         {
-            if(structData.tier == 1)
+            if (structData.tier == 1)
             {
                 if (structData.resource_type == Const.RESOURCE_TYPE_1)
                 {
@@ -186,7 +203,7 @@ public class MapManager : MonoBehaviour
                     structureToSpawn = mine_3_mid;
                 }
             }
-            
+
         }
         else
         {
@@ -229,12 +246,18 @@ public class MapManager : MonoBehaviour
         DynamicStruct structureObjectScript = structureObject.AddComponent(typeof(DynamicStruct)) as DynamicStruct;
         structureObjectScript.data = structData;
 
-        
-        //structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
+        if (cameraShouldChangeFocus)
+            cameraFollower.Instance.changeObjectToFollow(structureObject);
 
-        //Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
 
-        //structureObject.GetComponent<Fadable>().show();
+        try
+        {
+            structureObject.GetComponent<Fadable>().show();
+        }
+        catch (Exception)
+        {
+            Debug.LogError(structureObject.name + "'s Fadable component not set up!");
+        }
 
 
         structureObject.transform.position = new Vector3(

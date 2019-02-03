@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4445598305746268}
   - component: {fileID: 65993396891433236}
+  - component: {fileID: 114151990642509966}
   m_Layer: 0
   m_Name: ore_1_small
   m_TagString: Untagged
@@ -101,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1144768559950442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.139305, y: -0.01, z: 213.20508}
+  m_LocalPosition: {x: 66.65298, y: 0, z: 382.79623}
   m_LocalScale: {x: 36.99362, y: 36.993633, z: 36.99362}
   m_Children:
   - {fileID: 4083933881683096}
@@ -224,6 +225,23 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114151990642509966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1144768559950442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6904a0395c7e2fa4ba8a66ce3fd1ce2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 10
+  range: 10
+  fadeInOutShader: {fileID: 4800000, guid: 6aaef41a11a38434296db2c9429937df, type: 3}
+  defaultShader: {fileID: 4800000, guid: a71563fbbadbfdf49b7e25c3713d7335, type: 3}
+  _fade: 0
+  shader: 0
 --- !u!114 &114474435130625908
 MonoBehaviour:
   m_ObjectHideFlags: 1
