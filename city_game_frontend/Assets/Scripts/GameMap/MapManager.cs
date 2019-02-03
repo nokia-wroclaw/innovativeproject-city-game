@@ -385,7 +385,7 @@ public class MapManager : MonoBehaviour
     {
         Assets.GuildMemberLocationData newData = JsonUtility.FromJson<Assets.GuildMemberLocationData>(data);
 
-        Debug.Log("update on " + newData.nick);
+        Debug.Log("update on " + newData.nick + " " + newData.lon + ", " + newData.lat);
 
         if (guildPlayersDisplayedOnMap.ContainsKey(newData.id))
         {
@@ -403,13 +403,21 @@ public class MapManager : MonoBehaviour
         else
         {
             GameObject newDisplayedGuildMember = Instantiate(otherPlayerModel, new Vector3(
-                  Utils.LatitudeToGameCoordinate(newData.lat),
+                Utils.LatitudeToGameCoordinate(newData.lat),
                 4.659256F,
                 Utils.LongitudeToGameCoordinate(newData.lon)
-            ), Quaternion.Euler(-89.98F, 0, 0)
-                );
+            ), Quaternion.identity
+            );
 
             guildPlayersDisplayedOnMap[newData.id] = newDisplayedGuildMember;
+        }
+
+        if(newData.lat == Const.PLAYER_IS_GONE_COORD)
+        {
+            Debug.Log("Player logged out: " + newData.id);
+            Destroy(guildPlayersDisplayedOnMap[newData.id]);
+            guildPlayersDisplayedOnMap.Remove(newData.id);
+
         }
     }
 }
