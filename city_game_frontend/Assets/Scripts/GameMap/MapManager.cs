@@ -116,7 +116,7 @@ public class MapManager : MonoBehaviour
 
 
     // retrieve chunk data class depending on given position
-    Request.callbackFunc dynamicChunkDataCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    public Request.callbackFunc dynamicChunkDataCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
 
         //Debug.Log(data);

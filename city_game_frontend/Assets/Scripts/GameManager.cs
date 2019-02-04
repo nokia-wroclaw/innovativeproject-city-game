@@ -81,6 +81,13 @@ public class GameManager : MonoBehaviour {
             Debug.Log(inviteData.guild_name);
             //TUTAJ KRZYŚ MOŻE HANDLOWAĆ UI
         }
+
+        if(responseData.specialMessageID == Const.SPECIAL_MESSAGE_CHUNK_OWNER_CHANGE_NOTIFICATION)
+        {
+            Debug.Log("Chunk owner update!");
+
+            MapManager.Instance.dynamicChunkDataCallback(gameObject, "", responseData.message);
+        }
     }
 
     

@@ -22,10 +22,6 @@ public class placeBuilding : MonoBehaviour {
         placeBuilding.Instance = this;
     }
 
-    private void OnEnable()
-    {
-        placableThing.GetComponent<Renderer>().material.shader = transparentShader;   
-    }
 
     public void setStructureToBuild(GameObject structure, int tier)
     {
