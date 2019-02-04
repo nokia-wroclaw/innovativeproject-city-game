@@ -6,6 +6,7 @@ public class HexagonController : MonoBehaviour {
 
     MeshRenderer r;
     TextMesh t;
+    SpriteRenderer sr;
 
     public void setColorBlue()
     {
@@ -22,6 +23,16 @@ public class HexagonController : MonoBehaviour {
         r.material = hexagonSpawner.Instance.purple;
     }
 
+    void setIconSquare()
+    {
+        sr.sprite = hexagonSpawner.Instance.s2;
+    }
+
+    void setIconCircle()
+    {
+        sr.sprite = hexagonSpawner.Instance.s1;
+    }
+
 	// Use this for initialization
 	void Start () {
         float timeToDie = /* insert Blade Runner reference */
@@ -35,6 +46,7 @@ public class HexagonController : MonoBehaviour {
 
         r = GetComponentInChildren<MeshRenderer>();
         t = GetComponentInChildren<TextMesh>();
+        sr = GetComponentInChildren<SpriteRenderer>();
 
         t.fontSize = 0;
 
@@ -53,6 +65,16 @@ public class HexagonController : MonoBehaviour {
 
             if (owner.color == "" || owner.color == null)
                 return;
+
+            switch(owner.icon[0])
+            {
+                case 'c':
+                    setIconCircle();
+                    break;
+                default:
+                    setIconSquare();
+                    break;
+            }
 
 
             t.text = owner.owner_guild;
