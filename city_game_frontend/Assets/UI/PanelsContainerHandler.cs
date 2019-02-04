@@ -70,7 +70,9 @@ public class PanelsContainerHandler : MonoBehaviour {
 
     public void somethingPanelOn()
     {
-        showContainer();
+        hexagonSpawner.Instance.spawn();
+
+        //showContainer();
         closeAllPanelsExcept(somethingPanel);
     }
 

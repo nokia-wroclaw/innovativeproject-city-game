@@ -9323,6 +9323,53 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1958149897}
+--- !u!1 &1961953886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1961953888}
+  - component: {fileID: 1961953887}
+  m_Layer: 0
+  m_Name: HexagonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1961953887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1961953886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87e9e3999729c514a8367a20c7f82848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hexagon: {fileID: 1119651375259306, guid: 57c51117d4289d246b520ac347b53ea0, type: 2}
+  Xoffseter: 10
+  Yoffseter: -40
+  red: {fileID: 2100000, guid: aa01220e5dcfddd4bbe822c5accef025, type: 2}
+  purple: {fileID: 2100000, guid: 44ee33e143d059342b95b38c17517840, type: 2}
+  blue: {fileID: 2100000, guid: e0299b8a845fe914c92abb357d9ee1d5, type: 2}
+  green: {fileID: 2100000, guid: 6c2090f87d76cde4294f50b75ba8c54b, type: 2}
+--- !u!4 &1961953888
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1961953886}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.062302, y: 16.825117, z: 15.88566}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1965558875
 GameObject:
   m_ObjectHideFlags: 0
