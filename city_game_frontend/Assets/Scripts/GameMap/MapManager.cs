@@ -63,6 +63,9 @@ public class MapManager : MonoBehaviour
     Dictionary<int, GameObject> guildPlayersDisplayedOnMap = new Dictionary<int, GameObject>();
 
 
+    public Dictionary<Vector2, DynamicChunkData> chunkOwners = new Dictionary<Vector2, DynamicChunkData>();
+
+
     private void Awake()
     {
         Instance = this;
@@ -91,7 +94,7 @@ public class MapManager : MonoBehaviour
 
             server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
             server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
-
+            server.send(gameObject, JsonUtility.ToJson(new DynamicChunkDataRequestData(longitude, latitude)), dynamicChunkDataCallback);
         }
 
 
@@ -110,6 +113,24 @@ public class MapManager : MonoBehaviour
         sender.GetComponent<MapManager>().drawChunk(chunkData);
 
     });
+
+
+    // retrieve chunk data class depending on given position
+    Request.callbackFunc dynamicChunkDataCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+
+        //Debug.Log(data);
+        var chunkData = JsonUtility.FromJson<DynamicChunkData>(data);
+        string owner = chunkData.owner_guild == null || chunkData.owner_guild == "" ? "no one!" : chunkData.owner_guild;
+        Debug.Log(chunkData.chunk_id + "'s owner is " + owner);
+
+        Vector2 newKey = new Vector2(chunkData.lon_lower, chunkData.lat_lower);
+
+        MapManager mapManager = MapManager.Instance;
+
+        mapManager.chunkOwners[newKey] = chunkData;
+    });
+
 
     /*
      * Retrieve dynamic structs that are located on a given chunk
@@ -404,7 +425,7 @@ public class MapManager : MonoBehaviour
         {
             GameObject newDisplayedGuildMember = Instantiate(otherPlayerModel, new Vector3(
                 Utils.LatitudeToGameCoordinate(newData.lat),
-                4.659256F,
+                0,
                 Utils.LongitudeToGameCoordinate(newData.lon)
             ), Quaternion.identity
             );
