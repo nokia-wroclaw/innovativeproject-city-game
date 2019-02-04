@@ -22,22 +22,22 @@ public class HexagonController : MonoBehaviour {
         r.material = hexagonSpawner.Instance.purple;
     }
 
-    [ContextMenu("t")]
-    public void setText()
-    {
-        t.text = "Gildia zjebów";
-    }
-
 	// Use this for initialization
 	void Start () {
+        float timeToDie = /* insert Blade Runner reference */
+            Vector3.Distance(
+                GameManager.Instance.locationIndicator.transform.position,
+                transform.position
+                ) / 250;
 
-
-        Invoke("appearOnMap", Random.Range(0.0F, 1.0F));
-        Destroy(this.gameObject, 7 + Random.Range(0.0F, 1.0F));
+        Invoke("appearOnMap", timeToDie);
+        Destroy(this.gameObject, 14 - timeToDie);
 
         r = GetComponentInChildren<MeshRenderer>();
         t = GetComponentInChildren<TextMesh>();
-        //Destroy(this.gameObject, 10);
+
+        t.fontSize = 0;
+
 
         float latitude = Utils.GameCoordinateXToLatitude(transform.position.x);
         float longitude = Utils.GameCoordinateZToLongitude(transform.position.z);
@@ -79,6 +79,7 @@ public class HexagonController : MonoBehaviour {
     void appearOnMap()
     {
         transform.Translate(Vector3.up);
+        t.fontSize = 128;
     }
 
     // TODO: Move into utils ore something

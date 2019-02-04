@@ -14,6 +14,7 @@ public class hexagonSpawner : MonoBehaviour {
     public static hexagonSpawner Instance;
 
     public Material red, purple, blue, green;
+    public Sprite s1, s2, s3;
 
     private void Awake()
     {
