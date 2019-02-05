@@ -408,6 +408,17 @@ public class MapManager : MonoBehaviour
 
         Debug.Log("update on " + newData.nick + " " + newData.lon + ", " + newData.lat);
 
+        if (newData.lat == Const.PLAYER_IS_GONE_COORD)
+        {
+            Debug.Log("Player logged out: " + newData.id);
+
+
+            guildPlayersDisplayedOnMap[newData.id].GetComponent<Fadable>().hide();
+            guildPlayersDisplayedOnMap[newData.id].GetComponent<Fadable>().destroyAfterTime();
+            guildPlayersDisplayedOnMap.Remove(newData.id);
+            return;
+        }
+
         if (guildPlayersDisplayedOnMap.ContainsKey(newData.id))
         {
             GameObject playerToUpdate = guildPlayersDisplayedOnMap[newData.id];
@@ -420,6 +431,7 @@ public class MapManager : MonoBehaviour
             playerToUpdate.GetComponent<SmoothMovement>().setTargetRotation(
                 newData.rotation
             );
+
         }
         else
         {
@@ -431,14 +443,9 @@ public class MapManager : MonoBehaviour
             );
 
             guildPlayersDisplayedOnMap[newData.id] = newDisplayedGuildMember;
+            newDisplayedGuildMember.GetComponent<Fadable>().show();
         }
 
-        if(newData.lat == Const.PLAYER_IS_GONE_COORD)
-        {
-            Debug.Log("Player logged out: " + newData.id);
-            Destroy(guildPlayersDisplayedOnMap[newData.id]);
-            guildPlayersDisplayedOnMap.Remove(newData.id);
-
-        }
+        
     }
 }
