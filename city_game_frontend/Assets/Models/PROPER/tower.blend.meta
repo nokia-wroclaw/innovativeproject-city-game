@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: cfd658e629fa9104e801f726532c7da5
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: cegly
+    100002: Cone
+    100004: Cylinder
+    100006: cylinder_gorny
+    100008: dach
+    100010: dach_dolny
+    100012: drzwi
+    100014: fasada_dolna
+    100016: gwozdzie
+    100018: klamka
+    100020: klejnoty_lewitujace
+    100022: klejnoty_na_gorze
+    100024: przy_fasada
+    100026: schody
+    100028: Torus
+    100030: //RootNode
+    100032: wejscie_drzwi
+    400000: cegly
+    400002: Cone
+    400004: Cylinder
+    400006: cylinder_gorny
+    400008: dach
+    400010: dach_dolny
+    400012: drzwi
+    400014: fasada_dolna
+    400016: gwozdzie
+    400018: klamka
+    400020: klejnoty_lewitujace
+    400022: klejnoty_na_gorze
+    400024: przy_fasada
+    400026: schody
+    400028: Torus
+    400030: //RootNode
+    400032: wejscie_drzwi
+    2100000: Material_016
+    2100002: Material_017
+    2100004: Material_015
+    2100006: Material_014
+    2100008: Material_013
+    2100010: Material_009
+    2100012: Material_010
+    2100014: Material_004
+    2100016: Material_003
+    2100018: Material_005
+    2100020: Material_001
+    2100022: Material_011
+    2100024: Material_012
+    2100026: Material_002
+    2100028: Material_007
+    2100030: Material_006
+    2300000: cegly
+    2300002: Cone
+    2300004: Cylinder
+    2300006: cylinder_gorny
+    2300008: dach
+    2300010: dach_dolny
+    2300012: drzwi
+    2300014: fasada_dolna
+    2300016: gwozdzie
+    2300018: klamka
+    2300020: klejnoty_lewitujace
+    2300022: klejnoty_na_gorze
+    2300024: przy_fasada
+    2300026: schody
+    2300028: Torus
+    2300030: wejscie_drzwi
+    3300000: cegly
+    3300002: Cone
+    3300004: Cylinder
+    3300006: cylinder_gorny
+    3300008: dach
+    3300010: dach_dolny
+    3300012: drzwi
+    3300014: fasada_dolna
+    3300016: gwozdzie
+    3300018: klamka
+    3300020: klejnoty_lewitujace
+    3300022: klejnoty_na_gorze
+    3300024: przy_fasada
+    3300026: schody
+    3300028: Torus
+    3300030: wejscie_drzwi
+    4300000: gwozdzie
+    4300002: klamka
+    4300004: Cone
+    4300006: klejnoty_lewitujace
+    4300008: drzwi
+    4300010: cegly
+    4300012: klejnoty_na_gorze
+    4300014: Torus
+    4300016: dach
+    4300018: Cylinder
+    4300020: schody
+    4300022: wejscie_drzwi
+    4300024: cylinder_gorny
+    4300026: dach_dolny
+    4300028: przy_fasada
+    4300030: fasada_dolna
+    7400000: Default Take
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
