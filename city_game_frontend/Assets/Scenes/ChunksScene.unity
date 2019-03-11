@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43975636, g: 0.48818225, b: 0.56839883, a: 1}
+  m_IndirectSpecularColor: {r: 0.1751103, g: 0.21907142, b: 0.30137235, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2720,8 +2720,8 @@ MonoBehaviour:
   latitude: 0
   longitude: 0
   rotation: 0
-  fakeLatitude: 51.1045
-  fakeLongitude: 17.037
+  fakeLatitude: 51.10924
+  fakeLongitude: 17.06004
   fakeRotation: 0
   fakeLocation: 1
 --- !u!4 &432948545
@@ -3964,7 +3964,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 656957027}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
