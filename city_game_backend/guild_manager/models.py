@@ -9,6 +9,24 @@ class Guild(models.Model):
     Plasmatia = models.FloatField(default=0.0)
     Auferia = models.FloatField(default=0.0)
 
+    color = models.TextField(default="#C62828")
+
+    CIRCLE = 'c'
+    SQUARE = 's'
+    TRIANGLE = 't'
+
+    ICONS = (
+        (CIRCLE, 'Circle'),
+        (SQUARE, 'Square'),
+        (TRIANGLE, 'Triangle'),
+    )
+
+    icon = models.CharField(
+        max_length=1,
+        choices=ICONS,
+        default=CIRCLE
+    )
+
     def __str__(self):
         return self.guild_name
 

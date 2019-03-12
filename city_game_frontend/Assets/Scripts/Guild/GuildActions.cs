@@ -99,11 +99,13 @@ public class GuildActions : MonoBehaviour {
     public Request.callbackFunc guildInvitationAnswerCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
         Debug.Log("Invite status: " + data);
+        GuildActions.Instance.getGuildData();
     });
 
     public Request.callbackFunc guildKickRequestCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
     {
         Debug.Log("Kick request status: " + data);
+        GuildActions.Instance.getGuildData();
     });
 
 }

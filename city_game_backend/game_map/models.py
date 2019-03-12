@@ -18,6 +18,9 @@ class Chunk(models.Model):
     # All the roads inside a json
     roads = models.TextField()
 
+    owner_guild = models.ForeignKey('guild_manager.Guild', on_delete=models.SET_NULL, default=None, null=True,
+                                    blank=True)
+
     def __str__(self):
         return f"Chunk: {self.latitude_lower_bound}, {self.longitude_lower_bound}"
 

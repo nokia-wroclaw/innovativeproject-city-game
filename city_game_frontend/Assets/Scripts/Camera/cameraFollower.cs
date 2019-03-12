@@ -221,7 +221,12 @@ public class cameraFollower : MonoBehaviour {
         objectToFollow = g;
     }
 
-    void changeObjectToFollowToPlayer(GameObject g)
+    public GameObject getObjectToFollow()
+    {
+        return objectToFollow;
+    }
+
+    void changeObjectToFollowToPlayer()
     {
         objectToFollow = player;
     }

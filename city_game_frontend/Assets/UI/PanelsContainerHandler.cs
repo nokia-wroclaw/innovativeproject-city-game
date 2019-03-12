@@ -19,6 +19,15 @@ public class PanelsContainerHandler : MonoBehaviour {
         Instance = this;
     }
 
+    public void closeAllPanels()
+    {
+        playerPanel.SetActive(false);
+        guildPanel.SetActive(false);
+        skillTreePanel.SetActive(false);
+        actionsPanel.SetActive(false);
+        somethingPanel.SetActive(false);
+    }
+
     public void closeAllPanelsExcept(GameObject g)
     {
         playerPanel.SetActive(false);
@@ -43,7 +52,7 @@ public class PanelsContainerHandler : MonoBehaviour {
     public void guildPanelOn()
     {
         showContainer();
-        GuildInvitesHandler.Instance.start();
+        GuildInvitesHandler.Instance.refresh();
         closeAllPanelsExcept(guildPanel);
     }
 
@@ -61,7 +70,9 @@ public class PanelsContainerHandler : MonoBehaviour {
 
     public void somethingPanelOn()
     {
-        showContainer();
+        hexagonSpawner.Instance.spawn();
+
+        //showContainer();
         closeAllPanelsExcept(somethingPanel);
     }
 

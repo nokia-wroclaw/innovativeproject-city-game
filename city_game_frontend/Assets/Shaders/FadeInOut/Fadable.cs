@@ -12,6 +12,7 @@ public class Fadable : MonoBehaviour
     
     const float animationTime = 5f; // in seconds
 
+
     public Shader fadeInOutShader;// = null;
     public Shader defaultShader;// = null;
 
@@ -68,8 +69,15 @@ public class Fadable : MonoBehaviour
     {
         init();
 
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (var r in renderers)
+        {
+            r.material.shader = defaultShader;
+        }
+
         Renderer renderer = GetComponent<Renderer>();
-        renderer.material.shader = defaultShader;
+        if (renderer != null)
+            renderer.material.shader = defaultShader;
 
         // Not all objects have lights
         // We might need to rethink this again
@@ -87,15 +95,27 @@ public class Fadable : MonoBehaviour
     public void swichShader_fadeInOut()
     {
         init();
+        
+
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (var r in renderers)
+        {
+            r.material.shader = fadeInOutShader;
+        }
 
         Renderer renderer = GetComponent<Renderer>();
-        renderer.material.shader = fadeInOutShader;
+
+        if (renderer != null)
+            renderer.material.shader = fadeInOutShader;
 
         Light light = GetComponentInChildren<Light>();
-        light.intensity = 0;
-        light.range = 0;
-        light.enabled = false;
 
+        if (light != null)
+        {
+            light.intensity = 0;
+            light.range = 0;
+            light.enabled = false;
+        }
 
         ParticleSystem emiter = GetComponentInChildren<ParticleSystem>();
         if(emiter != null)
@@ -109,18 +129,32 @@ public class Fadable : MonoBehaviour
     {
         init();
 
-        Renderer renderer = GetComponent<Renderer>();
-
-
-
-        renderer.material.shader = fadeInOutShader;
         //get time vector
         Vector4 time = Shader.GetGlobalVector("_Time");
 
-        //set params in shader
-        renderer.material.SetFloat("_StartTime", time.y+delay);
-        renderer.material.SetFloat("_Duration", animationTime);
-        renderer.material.SetFloat("_Direction", 1);
+
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (var r in renderers)
+        {
+            r.material.shader = fadeInOutShader;
+
+            //set params in shader
+            r.material.SetFloat("_StartTime", time.y + delay);
+            r.material.SetFloat("_Duration", animationTime);
+            r.material.SetFloat("_Direction", 1);
+        }
+
+        Renderer renderer = GetComponent<Renderer>();
+
+        if (renderer != null)
+        {
+            renderer.material.shader = fadeInOutShader;
+
+            //set params in shader
+            renderer.material.SetFloat("_StartTime", time.y + delay);
+            renderer.material.SetFloat("_Duration", animationTime);
+            renderer.material.SetFloat("_Direction", 1);
+        }
         visible = true;
 
         //switch shader to default
@@ -132,20 +166,37 @@ public class Fadable : MonoBehaviour
     {
         init();
 
+
         Renderer renderer = GetComponent<Renderer>();
-        renderer.material.shader = fadeInOutShader;
-        //same as above
         Vector4 time = Shader.GetGlobalVector("_Time");
 
-        renderer.material.SetFloat("_StartTime", time.y + delay);
-        renderer.material.SetFloat("_Duration", animationTime);
-        renderer.material.SetFloat("_Direction", 0);
+        if (renderer != null)
+        {
+            renderer.material.shader = fadeInOutShader;
+            //same as above
+            
+
+            renderer.material.SetFloat("_StartTime", time.y + delay);
+            renderer.material.SetFloat("_Duration", animationTime * 0.8F);
+            renderer.material.SetFloat("_Direction", 0);
+        }
         visible = false;
+
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (var r in renderers)
+        {
+            r.material.shader = fadeInOutShader;
+
+            //set params in shader
+            r.material.SetFloat("_StartTime", time.y + delay);
+            r.material.SetFloat("_Duration", animationTime * 0.8F);
+            r.material.SetFloat("_Direction", 0);
+        }
 
 
 
         //switch shader to 
-        Invoke("swichShader_fadeInOut", animationTime);
+        Invoke("swichShader_fadeInOut", animationTime * 0.8F);
     }
 
     public void destroyAfterTime(float time = animationTime) // time in seconds

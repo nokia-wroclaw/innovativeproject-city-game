@@ -25,7 +25,7 @@ public class LoginData
         }
 
         // Using Pawel's account as a 'default' one
-        this.login = "gracz";
+        this.login = "baczek";
         this.pass = "baczekbezraczek";
 
     }

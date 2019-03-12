@@ -11,6 +11,7 @@ public static class Const
 	public static int GUILD_INVITE_ACCEPT = 1;
 	public static int GUILD_INVITE_DENY = 2;
 	public static int MESSAGE_TYPE_AUTH_EVENT = 0;
+	public static int MESSAGE_TYPE_CHUNK_OWNER_REQUEST = 13;
 	public static int MESSAGE_TYPE_CHUNK_REQUEST = 2;
 	public static int MESSAGE_TYPE_CREATE_GUILD = 5;
 	public static int MESSAGE_TYPE_DYNAMIC_CHUNK_DATA_REQUEST = 3;
@@ -23,6 +24,7 @@ public static class Const
 	public static int MESSAGE_TYPE_SEND_GUILD_KICK_REQUEST = 12;
 	public static int MESSAGE_TYPE_STRUCT_PLACEMENT_REQUEST = 6;
 	public static int MESSAGE_TYPE_STRUCT_TAKEOVER_REQUEST = 4;
+	public static int PLAYER_IS_GONE_COORD = 2137;
 	public static string RESOURCE_AUFERIA = "Auferia";
 	public static string RESOURCE_BUFF = "AoE Buff";
 	public static string RESOURCE_CEMENTIA = "Cementia";
@@ -31,9 +33,10 @@ public static class Const
 	public static int RESOURCE_TYPE_2 = 2;
 	public static int RESOURCE_TYPE_3 = 3;
 	public static int RESOURCE_TYPE_4 = 4;
-	public static string SERVER_URL = "filipplotnicki.com:8000/ws/";
-    //public static string SERVER_URL = "192.168.0.120:8000/ws/";
-    public static int SPECIAL_MESSAGE_GUILD_INVITE_NOTIFICATION = 3;
+    public static string SERVER_URL = "165.227.85.22:8000/ws/";
+    //public static string SERVER_URL = "192.168.0.126:8000/ws/";
+    public static int SPECIAL_MESSAGE_CHUNK_OWNER_CHANGE_NOTIFICATION = 4;
+	public static int SPECIAL_MESSAGE_GUILD_INVITE_NOTIFICATION = 3;
 	public static int SPECIAL_MESSAGE_GUILD_MEMBER_POSITION_UPDATE = 2;
 	public static int SPECIAL_MESSAGE_MAP_UPDATE = 0;
 	public static int SPECIAL_MESSAGE_NOTIFICATION = 1;

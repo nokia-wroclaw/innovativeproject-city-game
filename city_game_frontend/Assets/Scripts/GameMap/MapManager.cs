@@ -2,14 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Sockets;
+using System;
 
 public class MapManager : MonoBehaviour
 {
 
     public Material roadMaterial;
 
-    public GameObject orePrefab;
-    public GameObject minePrefab;
+    public GameObject ore_1_small;
+    public GameObject ore_2_small;
+    public GameObject ore_3_small;
+
+    public GameObject ore_1_mid;
+    public GameObject ore_2_mid;
+    public GameObject ore_3_mid;
+
+    public GameObject mine_1_small;
+    public GameObject mine_2_small;
+    public GameObject mine_3_small;
+
+    public GameObject mine_1_mid;
+    public GameObject mine_2_mid;
+    public GameObject mine_3_mid;
+
+
+
+
     public GameObject otherPlayerModel;
     public GameObject playerPlacedStructPrefab;
 
@@ -35,7 +53,7 @@ public class MapManager : MonoBehaviour
      * Dynamic struct that will change during runtime are stored separately
      * the dictionary key is the ID of the struct
      */
-    Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
+    public Dictionary<int, GameObject> dynamicStructs = new Dictionary<int, GameObject>();
 
 
     /*
@@ -43,6 +61,9 @@ public class MapManager : MonoBehaviour
      * That means - the players which are in the same team as the client
      */
     Dictionary<int, GameObject> guildPlayersDisplayedOnMap = new Dictionary<int, GameObject>();
+
+
+    public Dictionary<Vector2, DynamicChunkData> chunkOwners = new Dictionary<Vector2, DynamicChunkData>();
 
 
     private void Awake()
@@ -73,7 +94,7 @@ public class MapManager : MonoBehaviour
 
             server.send(gameObject, JsonUtility.ToJson(new MapRequestData(longitude, latitude)), mapDataCallbackFunction);
             server.send(gameObject, JsonUtility.ToJson(new DynamicStructsRequestData(longitude, latitude)), structsDataCallbackFunction);
-
+            server.send(gameObject, JsonUtility.ToJson(new DynamicChunkDataRequestData(longitude, latitude)), dynamicChunkDataCallback);
         }
 
 
@@ -93,6 +114,24 @@ public class MapManager : MonoBehaviour
 
     });
 
+
+    // retrieve chunk data class depending on given position
+    public Request.callbackFunc dynamicChunkDataCallback = new Request.callbackFunc((GameObject sender, string error, string data) =>
+    {
+
+        //Debug.Log(data);
+        var chunkData = JsonUtility.FromJson<DynamicChunkData>(data);
+        string owner = chunkData.owner_guild == null || chunkData.owner_guild == "" ? "no one!" : chunkData.owner_guild;
+        Debug.Log(chunkData.chunk_id + "'s owner is " + owner);
+
+        Vector2 newKey = new Vector2(chunkData.lon_lower, chunkData.lat_lower);
+
+        MapManager mapManager = MapManager.Instance;
+
+        mapManager.chunkOwners[newKey] = chunkData;
+    });
+
+
     /*
      * Retrieve dynamic structs that are located on a given chunk
      */
@@ -111,13 +150,29 @@ public class MapManager : MonoBehaviour
 
     void addOrUpdateStruct(DynamicStructData structData)
     {
+        bool cameraShouldChangeFocus = false;
+
         if (dynamicStructs.ContainsKey(structData.id))
         {
 
-            //dynamicStructs[structData.id].GetComponent<Fadable>().hide();
-            //dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
+            dynamicStructs[structData.id].gameObject.transform.localScale = new Vector3(0.99F, 0.99F, 0.99F);
+
+            try { 
+            dynamicStructs[structData.id].GetComponent<Fadable>().hide();
+            dynamicStructs[structData.id].GetComponent<Fadable>().destroyAfterTime();
+
+            } catch(Exception)
+            {
+                Debug.LogError(dynamicStructs[structData.id].name + "'s fadable component not set up!");
+            }
+
+
+            if (dynamicStructs[structData.id] == cameraFollower.Instance.getObjectToFollow())
+                cameraShouldChangeFocus = true;
+
             //Destroy(dynamicStructs[structData.id]);
             dynamicStructs.Remove(structData.id);
+
 
         }
 
@@ -131,38 +186,99 @@ public class MapManager : MonoBehaviour
             LongitudeToGameCoordinate(structData.lon)), new Quaternion(0,0,0,0));
             */
 
-
+        GameObject structureToSpawn = null;
         GameObject structureObject = null;
 
-        if(structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
-        {
-            structureObject = Instantiate(playerPlacedStructPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
+        if (structData.resource_type == Const.RESOURCE_TYPE_4) // aoe buff
+        {
+            structureToSpawn = playerPlacedStructPrefab;
         }
+
         else if (structData.taken_over)
         {
-            structureObject = Instantiate(minePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //Debug.Log("Creating a taken over object!");
+            if (structData.tier == 1)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = mine_1_small;
+                } else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = mine_2_small;
+                } else
+                {
+                    structureToSpawn = mine_3_small;
+                }
+            } else if (structData.tier == 2)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = mine_1_mid;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = mine_2_mid;
+                }
+                else
+                {
+                    structureToSpawn = mine_3_mid;
+                }
+            }
 
         }
         else
         {
-            Debug.Log("ore object created");
-            structureObject = Instantiate(orePrefab, new Vector3(0, 0, 0), Quaternion.identity); //GameObject.CreatePrimitive(PrimitiveType.Cube);
-            //Debug.Log("Creating a free object!");
+            if (structData.tier == 1)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = ore_1_small;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = ore_2_small;
+                }
+                else
+                {
+                    structureToSpawn = ore_3_small;
+                }
+            }
+            else if (structData.tier == 2)
+            {
+                if (structData.resource_type == Const.RESOURCE_TYPE_1)
+                {
+                    structureToSpawn = ore_1_mid;
+                }
+                else if (structData.resource_type == Const.RESOURCE_TYPE_2)
+                {
+                    structureToSpawn = ore_2_mid;
+                }
+                else
+                {
+                    structureToSpawn = ore_3_mid;
+                }
+            }
         }
+
+        structureObject = Instantiate(structureToSpawn, new Vector3(0, 0, 0), Quaternion.identity);
 
 
         // Save the object's data as one of the objects components
         DynamicStruct structureObjectScript = structureObject.AddComponent(typeof(DynamicStruct)) as DynamicStruct;
         structureObjectScript.data = structData;
 
-        
-        //structureObject.transform.Rotate(new Vector3(-95.905F, 0,0));
+        if (cameraShouldChangeFocus)
+            cameraFollower.Instance.changeObjectToFollow(structureObject);
 
-        //Utils.rotationThatWorks(structureObject, new Vector3(0, structData.rotation, 0));
 
-        //structureObject.GetComponent<Fadable>().show();
+        try
+        {
+            structureObject.GetComponent<Fadable>().show();
+        }
+        catch (Exception)
+        {
+            Debug.LogError(structureObject.name + "'s Fadable component not set up!");
+        }
 
 
         structureObject.transform.position = new Vector3(
@@ -173,6 +289,8 @@ public class MapManager : MonoBehaviour
 
         //TODO: FIX THE SCALING
         //structureObject.transform.localScale = new Vector3(100, 100, 100);
+
+        //structureObject.transform.SetParent(this.gameObject.transform);
 
         dynamicStructs.Add(structData.id, structureObject);
     }
@@ -190,6 +308,7 @@ public class MapManager : MonoBehaviour
 
 
         var emptyChunk = new GameObject("Chunk");
+        //emptyChunk.transform.SetParent(this.gameObject.transform);
         chunks.Add(key, emptyChunk);
 
         //TODO: ENABLE THIS BACK AFTER WE HAVE TEXTURES
@@ -287,7 +406,18 @@ public class MapManager : MonoBehaviour
     {
         Assets.GuildMemberLocationData newData = JsonUtility.FromJson<Assets.GuildMemberLocationData>(data);
 
-        Debug.Log("update on " + newData.nick);
+        Debug.Log("update on " + newData.nick + " " + newData.lon + ", " + newData.lat);
+
+        if (newData.lat == Const.PLAYER_IS_GONE_COORD)
+        {
+            Debug.Log("Player logged out: " + newData.id);
+
+
+            guildPlayersDisplayedOnMap[newData.id].GetComponent<Fadable>().hide();
+            guildPlayersDisplayedOnMap[newData.id].GetComponent<Fadable>().destroyAfterTime();
+            guildPlayersDisplayedOnMap.Remove(newData.id);
+            return;
+        }
 
         if (guildPlayersDisplayedOnMap.ContainsKey(newData.id))
         {
@@ -301,17 +431,21 @@ public class MapManager : MonoBehaviour
             playerToUpdate.GetComponent<SmoothMovement>().setTargetRotation(
                 newData.rotation
             );
+
         }
         else
         {
             GameObject newDisplayedGuildMember = Instantiate(otherPlayerModel, new Vector3(
-                  Utils.LatitudeToGameCoordinate(newData.lat),
-                4.659256F,
+                Utils.LatitudeToGameCoordinate(newData.lat),
+                0,
                 Utils.LongitudeToGameCoordinate(newData.lon)
-            ), Quaternion.Euler(-89.98F, 0, 0)
-                );
+            ), Quaternion.identity
+            );
 
             guildPlayersDisplayedOnMap[newData.id] = newDisplayedGuildMember;
+            newDisplayedGuildMember.GetComponent<Fadable>().show();
         }
+
+        
     }
 }
